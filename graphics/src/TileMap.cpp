@@ -35,7 +35,7 @@ void TileMap::setSpriteGrid( std::span<const int> _spriteGrid )
     spriteGrid = std::vector( _spriteGrid.begin(), _spriteGrid.end() );
 }
 
-void TileMap::draw( Image& image ) const
+void TileMap::draw( Image& image, int xOffset, int yOffset) const
 {
     if ( !spriteSheet )
         return;
@@ -44,11 +44,11 @@ void TileMap::draw( Image& image ) const
     const int spriteHeight = static_cast<int>( spriteSheet->getSpriteHeight() );
     const int numSprites   = static_cast<int>( spriteSheet->getNumSprites() );
 
-    int x = 0;
-    int y = 0;
+    int x = xOffset;
+    int y = yOffset;
     for ( uint32_t i = 0u; i < rows; ++i )
     {
-        x = 0;
+        x = xOffset;
         for ( uint32_t j = 0; j < columns; ++j )
         {
             const int spriteId = spriteGrid[i * columns + j];

@@ -119,7 +119,7 @@ public:
     /// Draw this tile map to the image.
     /// </summary>
     /// <param name="image">The image to draw the tile map to.</param>
-    void draw( Image& image ) const;
+    void draw( Image& image, int xOffset = 0, int yOffset = 0 ) const;
 
 private:
     // The number of columns in the tile map.
