@@ -12,20 +12,25 @@
 #include <Graphics/Input.hpp>
 #include <Math/Transform2D.hpp>
 #include <Graphics/TileMap.hpp>
+#include <glm/vec2.hpp>
+#include <Math/Camera2D.hpp>
 
 #include "Player.hpp"
 
 using namespace Graphics;
+using namespace Math;
 
 Window window;
 Image image;
 Sprite sprite;
+Sprite background;
 TileMap grassTiles;
+Camera2D camera;
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
-//glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
+glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
 //Math::Transform2D PlayerTransform;
 float Player_x = SCREEN_WIDTH / 2;
 float Player_y = SCREEN_HEIGHT / 2 ;
@@ -37,13 +42,12 @@ void InitGame()
 {
 	//glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
 	player.setPosition({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 });
-	//int Player_x = SCREEN_WIDTH / 2;
-	//int Player_y = SCREEN_HEIGHT / 2;
+	//camera.setOrigin(player.getPosition());
 }
 
 int main()
 {
-	Input::mapButton( "Reload", [](std::span<const GamePadStateTracker> gamePadStates, const KeyboardStateTracker& keyboardState, const MouseStateTracker& MouseState) {
+	Input::mapButton( "Reload", [](std::span<const GamePadStateTracker> gamePadStates, const KeyboardStateTracker& keyboardState, const MouseStateTracker& mouseState) {
 		bool b = false;
 
 		for (auto& GamePadState : gamePadStates)
@@ -65,11 +69,16 @@ int main()
 	//PlayerTransform.setAnchor({32, 16});
 	//window.toggleVSync();
 
-	auto idle_sprites = ResourceManager::loadSpriteSheet("assets/Spirit Boxer/Idle.png", 137, 44, 0,0, BlendMode::AlphaBlend);	
-	player = Player({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }, SpriteAnim{ idle_sprites, 6 });
+	//auto idle_sprites = ResourceManager::loadSpriteSheet("assets/Spirit Boxer/Idle.png", 137, 44, 0,0, BlendMode::AlphaBlend);	
+	player = Player({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 });
+	camera.setSize({ SCREEN_WIDTH, SCREEN_HEIGHT });
+	camera.setPosition(player.getPosition());
 
 	// Load Tilemap 
-	auto grass_sprites = ResourceManager::loadSpriteSheet("assets/PixelArt/Texture/TX Tileset Grass.png", 16, 16 /*137, 44, 0, 0, BlendMode::AlphaBlend*/);
+	//auto backgroundmap = ResourceManager::loadImage("assets/Map.png");
+	//background = Sprite{ backgroundmap };
+
+	auto grass_sprites = ResourceManager::loadSpriteSheet("assets/PixelArt/Texture/TX Tileset Grass.png", /*16, 16 */137, 44, 0, 0, BlendMode::AlphaBlend);
 	grassTiles = TileMap(grass_sprites, 30, 30);
 
 	for(int i = 0; i < 30; ++i)
@@ -116,20 +125,21 @@ int main()
 			}
 			player.translate(correction);
 		}
-
+		camera.setPosition(player.getPosition());
 
 		if(Input::getButton("Reload"))
 		{
 			InitGame();
 		}
 
-
 		// Render loop
 		image.clear(Color::White);
 
-		grassTiles.draw(image);
+		//image.drawSprite(background, camera);
 
-		player.draw(image);
+		grassTiles.draw(image, camera);
+
+		player.draw(image, camera);
 
 		image.drawText(Font::Default, fps, 10, 10, Color::Black);
 

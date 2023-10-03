@@ -4,8 +4,15 @@
 #include <glm/vec2.hpp>
 
 #include <Math/AABB.hpp>
+namespace Math
+{
+	class Camera2D;
+}
 
-using namespace Graphics;
+namespace Graphics
+{
+	class Image;
+}
 
 class Player
 {
@@ -22,11 +29,11 @@ public:
 	// Default constructor
 	Player();
 
-	explicit Player(const glm::vec2& pos, const Graphics::SpriteAnim& sprite);
+	explicit Player(const glm::vec2& pos);
 
 	void update(float deltaTime);
 
-	void draw(Graphics::Image& image);
+	void draw(Graphics::Image& image,const glm::mat3& transform);
 
 	void setPosition(const glm::vec2& pos);
 	const glm::vec2& getPosition() const;
@@ -38,7 +45,12 @@ public:
 private:
 	void setState(State newState);
 
+	void doMovement(float delatime);
+	void doIdle(float deltaTime);
+	void doRunning(float deltaTime);
+
 	State state = State::None;
+	Math::Transform2D transform;
 	glm::vec2 position{ 0 };
 	glm::vec2 velocity{ 0 };
 	float speed{ 60.0f };
