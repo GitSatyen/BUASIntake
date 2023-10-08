@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Entity.hpp"
 #include <Graphics/SpriteAnim.hpp>
 #include <glm/vec2.hpp>
 
@@ -14,7 +15,7 @@ namespace Graphics
 	class Image;
 }
 
-class Player
+class Player : public Entity
 {
 public:
 
@@ -31,9 +32,9 @@ public:
 
 	explicit Player(const glm::vec2& pos);
 
-	void update(float deltaTime);
-
-	void draw(Graphics::Image& image,const glm::mat3& transform);
+	virtual void update(float deltaTime) override;
+	//void draw(Graphics::Image& image, const glm::mat3& transform);
+	virtual void draw(Graphics::Image& image, const Math::Camera2D& camera) override;
 
 	void setPosition(const glm::vec2& pos);
 	const glm::vec2& getPosition() const;
@@ -49,11 +50,13 @@ private:
 	void doIdle(float deltaTime);
 	void doRunning(float deltaTime);
 
-	State state = State::None;
+	
 	Math::Transform2D transform;
 	glm::vec2 position{ 0 };
 	glm::vec2 velocity{ 0 };
 	float speed{ 60.0f };
+
+	State state = State::None;
 	Graphics::SpriteAnim IdleAnim;
 	Graphics::SpriteAnim RunAnim;
 	Graphics::SpriteAnim AttackAnim;
