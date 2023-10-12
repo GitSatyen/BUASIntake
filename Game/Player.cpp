@@ -23,8 +23,8 @@ Player::Player() = default;
 
 Player::Player(const glm::vec2 & pos)
 	//: Entity{ pos, AABB{{18, 10, 0}, {36, 43, 0}} }
-	: position{ pos }
-	, aabb{ {3, 5, 0}, {30, 50, 0} }
+	//: position{ pos }
+	: aabb{ {20, 5, 0}, {45, 40, 0} }
 {
 	auto idle_sprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/01-Idle/Idle.png", 66, 40, 0, 0, BlendMode::AlphaBlend);
 	//auto idle_sprites = ResourceManager::loadSpriteSheet("assets/Spirit Boxer/Idle.png", 137, 44, 0, 0, BlendMode::AlphaBlend);
@@ -35,7 +35,8 @@ Player::Player(const glm::vec2 & pos)
 	setState(State::Idle);
 
 	//Set anchor points
-	transform.setAnchor({ -15,10 });
+	transform.setAnchor({ 35,40 });
+	transform.setPosition(pos);
 }
 
 void Player::update(float deltaTime)
@@ -44,11 +45,24 @@ void Player::update(float deltaTime)
 	auto newPos = initalPos;
 
 	newPos.x += Input::getAxis("Horizontal"), speed * deltaTime;
-	newPos.y -= Input::getAxis("Vertical"), speed* deltaTime;
+	//newPos.y -= Input::getAxis("Vertical"), speed* deltaTime;
+	newPos.y += gravity * deltaTime;
 
-	velocity = (position - initalPos) / deltaTime;
+	velocity = (newPos - initalPos) / deltaTime;
+	if(Input::getButton("Jump"))
+	{
+		Isjumping = true;
+	}
+	else
+	{
+		Isjumping = false;
+	}
+	Gravity(newPos.y * deltaTime);
 
 	transform.setPosition(newPos);
+	
+	
+
 
 	/*if(glm::length(velocity) > 0)
 	{
@@ -93,41 +107,42 @@ void Player::update(float deltaTime)
 void Player::draw(Graphics::Image& image, const Math::Camera2D& camera)
 {
 	//Translation matrix
-	glm::mat3 t = {
+	/*glm::mat3 t = {
 		1, 0, 0,
 		0, 1, 0,
 		position.x, position.y, 1
-	};
+	};*/
 	//t = transform * t;
 
 	switch (state)
 	{
 	case State::Idle:
-		image.drawSprite(IdleAnim, t);
+		image.drawSprite(IdleAnim, camera * transform);
 		break;
 	case State::Running:
-		image.drawSprite(RunAnim, t);
+		image.drawSprite(RunAnim, camera * transform);
 		break;
 	}
 #if _DEBUG
-	image.drawAABB(transform * getAABB(), Color::Yellow, {}, FillMode::WireFrame);
-	image.drawText(Font::Default, stateMap[state], t[2][0], t[2][1], Color::Black);
+	image.drawAABB(camera * getAABB(), Color::Yellow, {}, FillMode::WireFrame);
+	//image.drawText(Font::Default, stateMap[state], t[2][0], t[2][1], Color::Black);
 #endif
 }
 
-//void Player::draw(Graphics::Image& image, const glm::mat3& transform)
-//{
-//	
-//}
+void Player::Gravity(glm::vec2& newPos, float deltaTime, bool coll)
+{
+
+}
+
 
 void Player::setPosition(const glm::vec2& pos)
 {
-	position = pos;
+	transform.setPosition(pos);
 }
 
 const glm::vec2& Player::getPosition() const
 {
-	return position;
+	return transform.getPosition();
 }
 
 void Player::translate(const glm::vec2& t)
@@ -137,7 +152,7 @@ void Player::translate(const glm::vec2& t)
 
 const Math::AABB Player::getAABB() const
 {
-	return aabb + glm::vec3{ position, 0 };
+	return transform * aabb;
 }
 
 void Player::setState(State newState)
@@ -151,6 +166,8 @@ void Player::setState(State newState)
 			break;
 		case State::Running:
 			break;
+		case State::Jumping:
+			break;
 		case State::Attack:
 			break;
 		case State::Dead:
@@ -160,14 +177,26 @@ void Player::setState(State newState)
 	}
 }
 
+void Player::Gravity(float deltaTime)
+{
+	velocity.y += 150.0f * deltaTime;
+}
+
 void Player::doMovement(float deltaTime)
 {
-	auto initialPos = position;
+	auto initialPos = transform.getPosition();
+	auto newPos = initialPos;
 
-	position.x += Input::getAxis("Horizontal") * speed * deltaTime;
-	position.y -= Input::getAxis("Vertical") * speed * deltaTime;
+	newPos.x += Input::getAxis("Horizontal") * speed * deltaTime;
+	//newPos.y -= Input::getAxis("Vertical") * speed * deltaTime;
 
-	velocity = (position - initialPos) / deltaTime;
+	velocity = (newPos - initialPos) / deltaTime;
+
+	transform.setPosition(newPos);
+
+	
+	//initialPos += velocity * deltaTime;
+	//transform.setPosition(initialPos);
 }
 
 void Player::doIdle(float deltaTime)
@@ -191,6 +220,7 @@ void Player::doIdle(float deltaTime)
 void Player::doRunning(float deltaTime)
 {
 	doMovement(deltaTime);
+
 	if(glm::length(velocity) == 0.0f)
 	{
 		setState(State::Idle);
@@ -198,4 +228,9 @@ void Player::doRunning(float deltaTime)
 	RunAnim.update(deltaTime);
 
 }
+
+//void Player::doJump(float deltaTime)
+//{
+//
+//}
 
