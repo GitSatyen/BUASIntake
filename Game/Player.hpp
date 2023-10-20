@@ -33,16 +33,17 @@ public:
 	// Default constructor
 	Player();
 	//Copy constructor;
-	Player(const Player&) = default;
+	/*Player(const Player&) = default;
 	Player(Player&&) = default;
 	Player& operator=(const Player&) = default;
-	Player& operator=(Player&&) = default;
+	Player& operator=(Player&&) = default;*/
 
 	explicit Player(const glm::vec2& pos);
 
 	virtual void update(float deltaTime) override;
 	virtual void draw(Graphics::Image& image, const Math::Camera2D& camera) override;
-	virtual void Gravity(glm::vec2& newPos, float deltaTime, bool coll = false);
+	virtual void Gravity(float deltaTime);
+	virtual void Jump();
 
 	void setPosition(const glm::vec2& pos);
 	const glm::vec2& getPosition() const;
@@ -54,29 +55,30 @@ public:
 private:
 	void setState(State newState);
 
-	void Gravity(float deltaTime);
 	void doMovement(float delatime);
 	void doIdle(float deltaTime);
 	void doRunning(float deltaTime);
-	//void doJump(float deltaTime);
+	void doFalling(float deltaTime);
+	void doJumping(float deltaTime);
 
 
 	Math::Transform2D transform;
 	//glm::vec2 position{ 0 };
 	glm::vec2 velocity{ 0 };
 	float speed{ 60.0f };
-	bool Isjumping = false;
 	bool onGround = true;
 	static inline const float jumpHeight = 55.0f;
 	static inline const float jumpTime = 0.5f;
-	static inline const float jumpSpeed = -std::sqrt(2.0f * jumpHeight * jumpTime);
-	static inline const float gravity = 2 * jumpHeight / (jumpTime * jumpTime);
+	static inline const float jumpSpeed = /*55.0f; */std::sqrt(2.0f * jumpHeight * jumpTime);
+	static inline  float gravity = 10 * jumpHeight / (jumpTime * jumpTime);
 	
-
+	Graphics::Sprite* Backside;
 
 	State state = State::None;
 	Graphics::SpriteAnim IdleAnim;
 	Graphics::SpriteAnim RunAnim;
+	Graphics::SpriteAnim FallAnim;
+	Graphics::SpriteAnim JumpAnim;
 	Graphics::SpriteAnim AttackAnim;
 	Math::AABB aabb;
 };

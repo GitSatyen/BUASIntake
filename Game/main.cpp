@@ -98,6 +98,7 @@ int main()
 
 	while(window)
 	{
+		timer.tick();
 		//Update loop
 		Input::update();
 		//Animates sprite 
@@ -169,7 +170,7 @@ int main()
 			}
 		}
 		
-		timer.tick();
+		
 		++frameCount;
 
 		totalTime += timer.elapsedSeconds();
