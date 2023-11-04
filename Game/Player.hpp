@@ -54,11 +54,11 @@ public:
 
 private:
 	void setState(State newState);
-
+	float doHorizontalMovement(float deltaTime);
 	void doMovement(float delatime);
 	void doIdle(float deltaTime);
 	void doRunning(float deltaTime);
-	void doFalling(float deltaTime);
+	//void doFalling(float deltaTime);
 	void doJumping(float deltaTime);
 
 
@@ -69,16 +69,21 @@ private:
 	bool onGround = true;
 	static inline const float jumpHeight = 55.0f;
 	static inline const float jumpTime = 0.5f;
-	static inline const float jumpSpeed = /*55.0f; */std::sqrt(2.0f * jumpHeight * jumpTime);
+	static inline const float landTime = 0.2f;
 	static inline  float gravity = 10 * jumpHeight / (jumpTime * jumpTime);
-	
+	static inline const float jumpSpeed = std::sqrt(2.0f * jumpHeight * gravity);
+	float fallTimer;
+	float jumpTimer;
+
+
+
 	Graphics::Sprite* Backside;
 
 	State state = State::None;
 	Graphics::SpriteAnim IdleAnim;
-	Graphics::SpriteAnim RunAnim;
-	Graphics::SpriteAnim FallAnim;
+	Graphics::SpriteAnim RunAnim;	
 	Graphics::SpriteAnim JumpAnim;
+	Graphics::SpriteAnim FallAnim;
 	Graphics::SpriteAnim AttackAnim;
 	Math::AABB aabb;
 };
