@@ -40,8 +40,8 @@ Player::Player(const glm::vec2 & pos)
 	auto jumpSprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/03-Jump/Jump.png", 64, 40, 0, 0, BlendMode::AlphaBlend);
 	JumpAnim = SpriteAnim{ jumpSprites, 6 };
 
-	//auto fallSprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/04-Fall/Fall.png", 64, 40, 0, 0, BlendMode::AlphaBlend);
-	//FallAnim = SpriteAnim{ fallSprites, 6 };
+	auto fallSprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/04-Fall/Fall.png", 64, 40, 0, 0, BlendMode::AlphaBlend);
+	FallAnim = SpriteAnim{ fallSprites, 6 };
 
 	setState(State::Idle);
 
@@ -73,23 +73,30 @@ void Player::update(float deltaTime)
 		transform.setScale({ 1, 1 });
 	}
 
-	if (glm::length(velocity) > 0)
-	{
-		setState(State::Running);
-		doRunning(deltaTime);
-	}
-	if (Input::getButton("Jump") /*&&  velocity.y < 0*/)
-	{
-		setState(State::Jumping);
-	}
+	//if ( Input::getAxis("Horizontal") != 0  /*Input::getAxis("Horizontal") == 0 && speed == 0.0f && glm::length(velocity) == 0.0f*/ )
+	//{
+	//	setState(State::Running);
+	//	doRunning(deltaTime);
+	//}
+	//if (Input::getButton("Jump") /*&&  velocity.y < 0*/)
+	//{
+	//	setState(State::Jumping);
+	//}
 
-	else 
-	{
-		setState(State::Idle);
-	}
+	//if (velocity.y > 0.0f)
+	//{
+	//	setState(State::Falling);
+	//	doFalling(deltaTime);
+	//}
+
+	//else 
+	//{
+	//	setState(State::Idle);
+	//}
 
 	//Checks if player is on ground
-	(aabb.min.x <= 0) ? onGround = true : onGround = false; 
+	//(aabb.min.x <= 0) ? onGround = true : onGround = false; 
+
 
 	switch (state)
 	{
@@ -97,15 +104,27 @@ void Player::update(float deltaTime)
 		doIdle(deltaTime);
 		break;
 	case State::Running:
-		//doRunning(deltaTime);
+		doRunning(deltaTime);
 		break;	
 	case State::Jumping:
 		doJumping(deltaTime);
 		break;
 	case State::Falling:
-		//doFalling(deltaTime);
+		doFalling(deltaTime);
 		break;
 	}
+
+	// Update player position.
+	transform.translate(glm::vec2{ velocity.x, -velocity.y } *deltaTime);
+
+
+	// Update jump timer.
+	jumpTimer += deltaTime;
+
+	//if (currentCharacter)
+	//{
+	//	currentCharacter->update(deltaTime);
+	//}
 }
 
 void Player::draw(Graphics::Image& image, const Math::Camera2D& camera)
@@ -145,7 +164,7 @@ void Player::Gravity(float deltaTime)
 
 void Player::Jump()
 {
-	velocity.y -= jumpSpeed * jumpHeight;
+//	velocity.y -= jumpSpeed * jumpHeight;
 }
 
 void Player::setPosition(const glm::vec2& pos)
@@ -176,10 +195,13 @@ void Player::setState(State newState)
 		{
 		//Calls action when traniston away from state
 		case State::Idle:
+		{int i =  3; }
 			break;
 		case State::Running:
+		{int i = 3; }
 			break;
 		case State::Jumping:
+			velocity.y = jumpSpeed;
 			break;
 		case State::Falling:
 			break;
@@ -192,21 +214,21 @@ void Player::setState(State newState)
 	}
 }
 
-float Player::doHorizontalMovement(float deltaTime)
-{
-	const float horizontal = Input::getAxis("Horizontal") * speed * deltaTime;
-
-	if (horizontal < 0.0f)
-	{
-		transform.setScale({ -1, 1 });
-	}
-	else if (horizontal > 0.0f)
-	{
-		transform.setScale({ 1, 1 });
-	}
-
-	return horizontal;
-}
+//float Player::doHorizontalMovement(float deltaTime)
+//{
+//	const float horizontal = Input::getAxis("Horizontal") * speed * deltaTime;
+//
+//	if (horizontal < 0.0f)
+//	{
+//		transform.setScale({ -1, 1 });
+//	}
+//	else if (horizontal > 0.0f)
+//	{
+//		transform.setScale({ 1, 1 });
+//	}
+//
+//	return horizontal;
+//}
 
 void Player::doMovement(float deltaTime)
 {
@@ -217,10 +239,8 @@ void Player::doMovement(float deltaTime)
 	//newPos.y -= Input::getAxis("Vertical") * speed * deltaTime;
 
 	velocity = (newPos - initialPos) / deltaTime;
-
-	Gravity(deltaTime); 
-	//if (Input::getButton("Jump")) { Jump(); }
 	
+	//if (Input::getButton("Jump")) { Jump(); }
 
 	initialPos += velocity * deltaTime;
 
@@ -247,15 +267,15 @@ void Player::doIdle(float deltaTime)
 void Player::doRunning(float deltaTime)
 {
 	doMovement(deltaTime);
-	const float horizontal = doHorizontalMovement(deltaTime);
-	velocity.x += horizontal;
-
+	/*const float horizontal = doHorizontalMovement(deltaTime);
+	velocity.x += horizontal;*/
+	velocity.y -= gravity * deltaTime;
 	if (Input::getButton("Jump"))
 	{
 		setState(State::Jumping);
 	}
 
-	 if (horizontal == 0.0f /*Input::getAxis("Horizontal") == 0 && speed == 0.0f && glm::length(velocity) == 0.0f*/)
+	if (Input::getAxis("Horizontal") == 0)
 	{
 		setState(State::Idle);
 	}
@@ -267,41 +287,49 @@ void Player::doRunning(float deltaTime)
 void Player::doJumping(float deltaTime)
 {
 	doMovement(deltaTime);
-	const float horizontal = doHorizontalMovement(deltaTime);
-	velocity.x += horizontal;
+	/*const float horizontal = doHorizontalMovement(deltaTime);
+	velocity.x += horizontal;*/
 
-	velocity.y -= jumpHeight * deltaTime;
+	velocity.y += gravity * deltaTime;
 	//velocity.y -= jumpSpeed * jumpHeight;
 
 	if (Input::getButton("Jump"))
 	{
 		setState(State::Jumping);
 	}
-
-	else if (velocity.y < 0.0f)
+	//(aabb.min.x <= 0) ? onGround = true : onGround = false;
+	else if (jumpTime >= 0.5f /* && velocity.y < 0*/ )
 	{
-	//	setState(State::Falling);
+		setState(State::Falling);
+		jumpTime = 0;
 	}
 
-
+	jumpTime += deltaTime;
 	JumpAnim.update(deltaTime);
 }
 
-//void Player::doFalling(float deltaTime)
-//{
-//	//doMovement(deltaTime);
-//	/*const float horizontal = doHorizontalMovement(deltaTime);
-//	velocity.x += horizontal;*/
-//
-//	velocity.y -= gravity * deltaTime;
-//
-//	if (Input::getButtonDown("Jump"))
-//	{
-//		if (fallTimer < landTime)  // Allow jumping for a short time after starting to fall.
-//			setState(State::Jumping);
-//		else { jumpTimer == 0.0f; }
-//	}
-//	fallTimer += deltaTime;
-//
-//	FallAnim.update(deltaTime);
-//}
+void Player::doFalling(float deltaTime)
+{
+	doMovement(deltaTime);
+	/*const float horizontal = doHorizontalMovement(deltaTime);
+	velocity.x += horizontal;*/
+
+	velocity.y -= gravity * deltaTime;
+	//Gravity(deltaTime);
+	if (Input::getButton("Jump"))
+	{
+		//Allow jumping for a short time after starting to fall
+		if (fallTimer < landTime)  
+			setState(State::Jumping);
+		else { jumpTimer == 0.0f; }
+	}
+
+	/*if(velocity.y = 0)
+	{
+		setState(State::Idle);
+	}*/
+
+	fallTimer += deltaTime;
+
+	FallAnim.update(deltaTime);
+}

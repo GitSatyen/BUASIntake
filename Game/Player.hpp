@@ -5,6 +5,7 @@
 #include <glm/vec2.hpp>
 
 #include <Math/AABB.hpp>
+#include <vector>
 namespace Math
 {
 	class Camera2D;
@@ -58,22 +59,22 @@ private:
 	void doMovement(float delatime);
 	void doIdle(float deltaTime);
 	void doRunning(float deltaTime);
-	//void doFalling(float deltaTime);
+	void doFalling(float deltaTime);
 	void doJumping(float deltaTime);
 
 
 	Math::Transform2D transform;
 	//glm::vec2 position{ 0 };
-	glm::vec2 velocity{ 0 };
+	glm::vec2 velocity { 0 };
 	float speed{ 60.0f };
 	bool onGround = true;
 	static inline const float jumpHeight = 55.0f;
-	static inline const float jumpTime = 0.5f;
+	static inline  float jumpTime = 0.5f;
 	static inline const float landTime = 0.2f;
 	static inline  float gravity = 10 * jumpHeight / (jumpTime * jumpTime);
 	static inline const float jumpSpeed = std::sqrt(2.0f * jumpHeight * gravity);
-	float fallTimer;
-	float jumpTimer;
+	float fallTimer = 0.1f;
+	float jumpTimer = 0.25f;
 
 
 
