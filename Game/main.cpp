@@ -1,3 +1,4 @@
+#include <LDtkLoader/Project.hpp>
 #include <Graphics/Window.hpp>
 #include <Graphics/Image.hpp>
 #include <Graphics/Sprite.hpp>
@@ -14,6 +15,7 @@
 #include <Graphics/TileMap.hpp>
 #include <glm/vec2.hpp>
 #include <Math/Camera2D.hpp>
+#include "Level.hpp"
 
 #include "Player.hpp"
 
@@ -88,6 +90,10 @@ int main()
 			grassTiles(i, j) = (i * grass_sprites->getNumColumns() + j) % grass_sprites->getNumSprites();
 		}
 	}
+
+	//ldtk loader background
+	ldtk::Project project;
+	project.loadFromFile("assets/Background/lvl1.ldtk");
 
 	Timer       timer;
 	double      totalTime = 0.0;

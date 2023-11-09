@@ -241,7 +241,6 @@ void Player::doMovement(float deltaTime)
 	velocity = (newPos - initialPos) / deltaTime;
 	
 	//if (Input::getButton("Jump")) { Jump(); }
-
 	initialPos += velocity * deltaTime;
 
 	transform.setPosition(initialPos);

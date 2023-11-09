@@ -41,10 +41,21 @@ public:
 
 	explicit Player(const glm::vec2& pos);
 
+	void setState(State newState);
+
 	virtual void update(float deltaTime) override;
 	virtual void draw(Graphics::Image& image, const Math::Camera2D& camera) override;
 	virtual void Gravity(float deltaTime);
 	virtual void Jump();
+
+	void setVelocity(const glm::vec2& vel) noexcept
+	{
+		velocity = vel;
+	}
+	const glm::vec2& getVelocity() const noexcept
+	{
+		return velocity;
+	}
 
 	void setPosition(const glm::vec2& pos);
 	const glm::vec2& getPosition() const;
@@ -54,7 +65,7 @@ public:
 	const Math::AABB getAABB() const;
 
 private:
-	void setState(State newState);
+	
 	float doHorizontalMovement(float deltaTime);
 	void doMovement(float delatime);
 	void doIdle(float deltaTime);
