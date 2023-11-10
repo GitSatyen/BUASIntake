@@ -24,7 +24,11 @@ namespace ldtk {
     struct ArrayField;
 
     template <typename T>
-    struct Field : IField, optional<T> {
+#if defined LDTK_FIELD_PUBLIC_OPTIONAL
+    struct Field : IField, public optional<T> {
+#else
+    struct Field : IField, private optional<T> {
+#endif
     private:
         static ArrayField<T> m_dummy;
     public:
@@ -33,7 +37,6 @@ namespace ldtk {
         using optional<T>::optional;
         using optional<T>::value;
         using optional<T>::value_or;
-        using optional<T>::operator->;
 
         constexpr auto is_null() const -> bool {
             return !optional<T>::has_value();
@@ -49,24 +52,24 @@ namespace ldtk {
     ArrayField<T> Field<T>::m_dummy;
 
     template <class T>
-    bool operator==(const Field<T>& lhs, const T& rhs) {
+    auto operator==(const Field<T>& lhs, const T& rhs) -> bool {
         if (lhs.is_null()) return false;
         return (lhs.value() == rhs);
     }
 
     template <class T>
-    bool operator==(const T& lhs, const Field<T>& rhs) {
+    auto operator==(const T& lhs, const Field<T>& rhs) -> bool {
         if (rhs.is_null()) return false;
         return (rhs.value() == lhs);
     }
 
     template <class T>
-    bool operator!=(const Field<T>& lhs, const T& rhs) {
+    auto operator!=(const Field<T>& lhs, const T& rhs) -> bool {
         return !(lhs == rhs);
     }
 
     template <class T>
-    bool operator!=(const T& lhs, const Field<T>& rhs) {
+    auto operator!=(const T& lhs, const Field<T>& rhs) -> bool {
         return !(lhs == rhs);
     }
 

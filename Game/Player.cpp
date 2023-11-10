@@ -316,7 +316,7 @@ void Player::doFalling(float deltaTime)
 
 			if (fallTimer < landTime)
 				setState(State::Jumping);
-			else { jumpTimer == 0.0f; }
+			else { jumpTimer = 0.0f; }
 		}
 
 		/*if(velocity.y = 0)

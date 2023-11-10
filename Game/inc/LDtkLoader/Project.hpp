@@ -24,6 +24,8 @@ namespace ldtk {
         Project(Project&&) = default;
         auto operator=(const Project&) -> Project& = delete;
 
+        IID iid;
+
         void loadFromFile(const std::string& filepath);
         void loadFromFile(const std::string& filepath, const FileLoader& file_loader);
 
@@ -56,6 +58,9 @@ namespace ldtk {
         auto getWorld(const std::string& name) const -> const World&;
         auto getWorld(const IID& iid) const -> const World&;
 
+        auto allTocEntities() const -> const std::vector<EntityRef>&;
+        auto getTocEntitiesByName(const std::string& name) const -> const std::vector<EntityRef>&;
+
     private:
         void load(const nlohmann::json& j, const FileLoader& file_loader, bool from_memory);
 
@@ -63,6 +68,7 @@ namespace ldtk {
         FloatPoint m_default_pivot;
         int m_default_cell_size = 0;
         Color m_background_color;
+        std::string m_json_version;
 
         std::vector<LayerDef> m_layers_defs;
         std::vector<EntityDef> m_entities_defs;
@@ -70,5 +76,8 @@ namespace ldtk {
         std::vector<Enum> m_enums;
 
         std::vector<World> m_worlds;
+
+        std::vector<EntityRef> m_toc;
+        mutable std::map<std::string, std::vector<EntityRef>> m_toc_map;
     };
 }
