@@ -10,7 +10,6 @@
 using namespace Graphics;
 using namespace Math;
 
-
 static std::map <Player::State, std::string> stateMap = {
 	{Player::State::None, "None"},
 	{Player::State::Idle, "Idle"},
@@ -21,9 +20,7 @@ static std::map <Player::State, std::string> stateMap = {
 	{Player::State::Dead, "Dead"}
 };
 
-
-Player::Player() = default;
-	
+Player::Player() = default;	
 
 Player::Player(const glm::vec2 & pos)
 	//: Entity{ pos, AABB{{18, 10, 0}, {36, 43, 0}} }
@@ -97,8 +94,6 @@ void Player::update(float deltaTime)
 	//Checks if player is on ground
 	//(aabb.min.x <= 0) ? onGround = true : onGround = false; 
 
-
-
 	switch (state)
 	{
 	case State::Idle:
@@ -117,7 +112,6 @@ void Player::update(float deltaTime)
 
 	// Update player position.
 	transform.translate(glm::vec2{ velocity.x, -velocity.y } *deltaTime);
-
 
 	// Update jump timer.
 	jumpTimer += deltaTime;
@@ -323,7 +317,6 @@ void Player::doFalling(float deltaTime)
 				setState(State::Jumping);
 			else { jumpTimer == 0.0f; }
 		}
-
 
 		/*if(velocity.y = 0)
 		{
