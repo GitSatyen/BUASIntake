@@ -73,26 +73,6 @@ void Player::update(float deltaTime)
 		transform.setScale({ 1, 1 });
 	}
 
-	//if ( Input::getAxis("Horizontal") != 0  /*Input::getAxis("Horizontal") == 0 && speed == 0.0f && glm::length(velocity) == 0.0f*/ )
-	//{
-	//	setState(State::Running);
-	//	doRunning(deltaTime);
-	//}
-	//if (Input::getButton("Jump") /*&&  velocity.y < 0*/)
-	//{
-	//	setState(State::Jumping);
-	//}
-
-	//if (velocity.y > 0.0f)
-	//{
-	//	setState(State::Falling);
-	//	doFalling(deltaTime);
-	//}
-
-	//else 
-	//{
-	//	setState(State::Idle);
-	//}
 	if ( Input::getAxis("Horizontal") != 0  /*Input::getAxis("Horizontal") == 0 && speed == 0.0f && glm::length(velocity) == 0.0f*/ )
 	{
 		setState(State::Running);
@@ -235,22 +215,6 @@ void Player::setState(State newState)
 	}
 }
 
-//float Player::doHorizontalMovement(float deltaTime)
-//{
-//	const float horizontal = Input::getAxis("Horizontal") * speed * deltaTime;
-//
-//	if (horizontal < 0.0f)
-//	{
-//		transform.setScale({ -1, 1 });
-//	}
-//	else if (horizontal > 0.0f)
-//	{
-//		transform.setScale({ 1, 1 });
-//	}
-//
-//	return horizontal;
-//}
-
 void Player::doMovement(float deltaTime)
 {
 	auto initialPos = transform.getPosition();
@@ -313,8 +277,6 @@ void Player::doRunning(float deltaTime)
 void Player::doJumping(float deltaTime)
 {
 	doMovement(deltaTime);
-	/*const float horizontal = doHorizontalMovement(deltaTime);
-	velocity.x += horizontal;*/
 
 	velocity.y += gravity * deltaTime;
 	//velocity.y -= jumpSpeed * jumpHeight;
@@ -344,9 +306,6 @@ void Player::doJumping(float deltaTime)
 void Player::doFalling(float deltaTime)
 {
 	doMovement(deltaTime);
-	/*const float horizontal = doHorizontalMovement(deltaTime);
-	velocity.x += horizontal;*/
-
 
 	velocity.y -= gravity * deltaTime;
 	//Gravity(deltaTime);
