@@ -94,7 +94,6 @@ void Player::update(float deltaTime)
 	//Checks if player is on ground
 	//(aabb.min.x <= 0) ? onGround = true : onGround = false; 
 
-
 	switch (state)
 	{
 	case State::Idle:
@@ -271,6 +270,7 @@ void Player::doRunning(float deltaTime)
 
 void Player::doJumping(float deltaTime)
 {
+	doMovement(deltaTime);
 
 	velocity.y += gravity * deltaTime;
 	//velocity.y -= jumpSpeed * jumpHeight;
