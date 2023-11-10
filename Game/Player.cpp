@@ -94,6 +94,7 @@ void Player::update(float deltaTime)
 	//Checks if player is on ground
 	//(aabb.min.x <= 0) ? onGround = true : onGround = false; 
 
+
 	switch (state)
 	{
 	case State::Idle:
