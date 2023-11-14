@@ -12,6 +12,8 @@
 using namespace Math;
 using namespace Graphics;
 
+ldtk::Project project;
+
 Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk::Level& level)
     : world{ &world }
     ,level{ &level }
@@ -39,8 +41,8 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
 
         // Parse the level tile map.
         {
-            const auto& tilesLayer = level.getLayer("Tiles");
-            const auto& intGrid = level.getLayer("IntGrid");
+            const auto& tilesLayer = level.getLayer("TerrainLayer");
+            const auto& intGrid = level.getLayer("Background");
 
             const auto& gridSize = tilesLayer.getGridSize();
             const auto& tileSet = tilesLayer.getTileset();
@@ -77,8 +79,15 @@ void Level::setCharacter(size_t characterId)
 {
 }
 
-void Level::draw(Graphics::Image& image) const
+void Level::draw(Graphics::Image& image, const glm::mat3 transform) const
 {
+    tileMap.draw(image,  transform);
+
+    for (auto& effect : effects)
+    {
+        effect.draw(image);
+    }
+
 }
 
 void Level::addPickup(std::string_view name, const glm::vec2& pos)

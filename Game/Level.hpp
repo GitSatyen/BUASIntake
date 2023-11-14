@@ -39,8 +39,10 @@ public:
         return player;
     }
 
-    void draw(Graphics::Image& image) const;
+    void draw(Graphics::Image& image, const glm::mat3 transform) const;
 
+protected:
+    
 private:
     // Add a pickup with a name, initial position.
     void addPickup(std::string_view name, const glm::vec2& pos);
@@ -53,6 +55,7 @@ private:
 
     const ldtk::World* world = nullptr;
     const ldtk::Level* level = nullptr;
+    
 
     std::string levelName;
 
@@ -61,6 +64,7 @@ private:
 
     // All pickups
     std::vector<Pickup> allPickups;
+    std::vector<Effect> effects;
     // Sprite animation to play when a pickup is collected.
     /*Graphics::SpriteAnim pickupCollected;
     // Currently playing effects.

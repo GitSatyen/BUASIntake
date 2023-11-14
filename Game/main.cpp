@@ -15,7 +15,7 @@
 #include <Graphics/TileMap.hpp>
 #include <glm/vec2.hpp>
 #include <Math/Camera2D.hpp>
-#include "Level.hpp"
+#include "Game.hpp"
 
 #include "Player.hpp"
 
@@ -39,6 +39,7 @@ float Player_y = SCREEN_HEIGHT / 2 ;
 //float player_speed = 60.0f;
 
 Player player;
+Level level;
 
 void InitGame()
 {
@@ -94,6 +95,7 @@ int main()
 	//ldtk loader background
 	ldtk::Project project;
 	project.loadFromFile("assets/Background/lvl1.ldtk");
+	//level.loadLevel(0, 0);
 
 	Timer       timer;
 	double      totalTime = 0.0;
