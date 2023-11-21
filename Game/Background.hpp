@@ -10,7 +10,7 @@ class Background {
 public:
 	Background() = default;
 
-	Background(const std::filesystem::path& path);
+	explicit Background(const std::filesystem::path& path);
 
 	void draw(Graphics::Image& image, const glm::vec2& offset);
 

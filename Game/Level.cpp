@@ -12,7 +12,7 @@
 using namespace Math;
 using namespace Graphics;
 
-ldtk::Project project;
+//ldtk::Project project;
 
 Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk::Level& level)
     : world{ &world }

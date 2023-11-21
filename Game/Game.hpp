@@ -16,6 +16,7 @@
 
 class Game
 {
+public:
     Game(uint32_t screenWidth, uint32_t screenHeight);
     ~Game() = default;
 
@@ -35,7 +36,7 @@ class Game
 
 protected:
     ldtk::Project project;
-
+    Background background;
 
     const glm::mat3 transform;
     Graphics::Image image;

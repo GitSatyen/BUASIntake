@@ -7,8 +7,8 @@
 #include <string>
 
 Game::Game(uint32_t screenWidth, uint32_t screenHeight)
-    : image{ screenWidth, screenHeight },
-    transform{}
+    : image{ screenWidth, screenHeight }
+    ,transform{}
 {
     project.loadFromFile("assets/Background/lvl1.ldtk");
     loadLevel(0, 0);
@@ -28,6 +28,9 @@ void Game::Update()
         frames = 0;
         totalTime = 0.0;
     }
+    //Update and draw background
+    //background.update(timer);
+    //background.draw(image, transform);
 
     auto elapsedTime = static_cast<float>(timer.elapsedSeconds());
  

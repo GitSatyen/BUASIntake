@@ -28,6 +28,7 @@ Sprite sprite;
 Sprite background;
 TileMap grassTiles;
 Camera2D camera;
+ldtk::Project project;
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
@@ -41,11 +42,28 @@ float Player_y = SCREEN_HEIGHT / 2 ;
 Player player;
 Level level;
 
+size_t CurrLevelId = 0u;
+// Which level plays next
+size_t nextLevelId = 0u;
+
+
 void InitGame()
 {
 	//glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
 	player.setPosition({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 });
 	//camera.setOrigin(player.getPosition());
+}
+
+void loadLevel(size_t levelId, size_t characterId)
+{
+	auto& world = project.getWorld();
+	auto& levels = world.allLevels();
+
+	CurrLevelId = levelId % levels.size();
+
+	level = Level{ project, world, levels[CurrLevelId] };
+
+	level.setCharacter(characterId);
 }
 
 int main()
@@ -64,7 +82,10 @@ int main()
 		return b || enter || r;
 	});
 
+	
+
 	image.resize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	//Game game{ SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	window.create(L"Pixel World", SCREEN_WIDTH, SCREEN_HEIGHT);
 	window.show();
@@ -81,21 +102,20 @@ int main()
 	//auto backgroundmap = ResourceManager::loadImage("assets/Map.png");
 	//background = Sprite{ backgroundmap };
 
-	auto grass_sprites = ResourceManager::loadSpriteSheet("assets/PixelArt/Texture/TX Tileset Grass.png", /*16, 16 */137, 44, 0, 0, BlendMode::AlphaBlend);
-	grassTiles = TileMap(grass_sprites, 30, 30);
+	//auto grass_sprites = ResourceManager::loadSpriteSheet("assets/PixelArt/Texture/TX Tileset Grass.png", /*16, 16 */137, 44, 0, 0, BlendMode::AlphaBlend);
+	//grassTiles = TileMap(grass_sprites, 30, 30);
 
-	for(int i = 0; i < 30; ++i)
-	{
-		for(int j = 0; j < 30; ++j)
-		{
-			grassTiles(i, j) = (i * grass_sprites->getNumColumns() + j) % grass_sprites->getNumSprites();
-		}
-	}
+	//for(int i = 0; i < 30; ++i)
+	//{
+	//	for(int j = 0; j < 30; ++j)
+	//	{
+	//		grassTiles(i, j) = (i * grass_sprites->getNumColumns() + j) % grass_sprites->getNumSprites();
+	//	}
+	//}
 
 	//ldtk loader background
-	ldtk::Project project;
 	project.loadFromFile("assets/Background/lvl1.ldtk");
-	//level.loadLevel(0, 0);
+	loadLevel(0, 0);
 
 	Timer       timer;
 	double      totalTime = 0.0;
