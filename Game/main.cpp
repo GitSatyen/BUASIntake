@@ -114,8 +114,16 @@ int main()
 	//}
 
 	//ldtk loader background
-	project.loadFromFile("assets/Background/lvl1.ldtk");
+	try {
+		project.loadFromFile("assets/Background/lvl1.ldtk");
+	}
+	catch (std::exception& ex) {
+		std::cerr << ex.what() << std::endl;
+		return 0;
+	}
 	loadLevel(0, 0);
+
+
 
 	Timer       timer;
 	double      totalTime = 0.0;
@@ -166,7 +174,7 @@ int main()
 
 		//image.drawSprite(background, camera);
 
-		grassTiles.draw(image, camera);
+		level.draw(image, camera);
 
 		player.draw(image, camera);
 

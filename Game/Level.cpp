@@ -24,7 +24,7 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
 
         // Colected animation effect
         {
-            auto spriteSheet = ResourceManager::loadSpriteSheet(projectPath / "Treasure Hunters/Items/Coin Effect/1.png", 16, 16, 0, 0, BlendMode::AlphaBlend);
+            //auto spriteSheet = ResourceManager::loadSpriteSheet(projectPath / "Treasure Hunters/Items/Coin Effect/1.png", 16, 16, 0, 0, BlendMode::AlphaBlend);
             //pickupCollected = SpriteAnim{ spriteSheet, 20 };
         }
 
