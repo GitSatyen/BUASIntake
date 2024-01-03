@@ -2,7 +2,6 @@
 #include "Player.hpp"
 #include "Level.hpp"
 
-
 #include <Graphics/BlendMode.hpp>
 #include <Graphics/Color.hpp>
 #include <Graphics/ResourceManager.hpp>
