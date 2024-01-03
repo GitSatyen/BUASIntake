@@ -5,12 +5,16 @@
 #include "Effect.hpp"
 
 #include <Audio/Sound.hpp>
-#include <Math/AABB.hpp>
+
 #include <Graphics/Image.hpp>
 #include <Graphics/TileMap.hpp>
+#include <Math/Camera2D.hpp>
+#include <Math/AABB.hpp>
 
 #include <LDtkLoader/Level.hpp>
 #include <LDtkLoader/World.hpp>
+
+using namespace Math;
 
 struct Collider
 {
@@ -39,7 +43,7 @@ public:
         return player;
     }
 
-    void draw(Graphics::Image& image, const glm::mat3 transform) const;
+    void draw(Graphics::Image& image, const glm::mat3 transform);
 
 protected:
     
@@ -73,6 +77,9 @@ private:
     // Level tile map.
     Graphics::TileMap tileMap;
 
+    Camera2D  camera;
     Player    player;
-    glm::vec2 playerStartpos{ 0 };
+
+    glm::vec2 playerStart{ 0 };
+    glm::vec2 pos = player.getPosition();
 };

@@ -46,7 +46,6 @@ size_t CurrLevelId = 0u;
 // Which level plays next
 size_t nextLevelId = 0u;
 
-
 void InitGame()
 {
 	//glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
@@ -84,8 +83,8 @@ int main()
 
 	
 
-	image.resize(SCREEN_WIDTH, SCREEN_HEIGHT);
-	//Game game{ SCREEN_WIDTH, SCREEN_HEIGHT };
+	//image.resize(SCREEN_WIDTH, SCREEN_HEIGHT);
+	Game game{ SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	window.create(L"Pixel World", SCREEN_WIDTH, SCREEN_HEIGHT);
 	window.show();
@@ -113,17 +112,15 @@ int main()
 	//	}
 	//}
 
-	//ldtk loader background
-	try {
-		project.loadFromFile("assets/Background/lvl1.ldtk");
-	}
-	catch (std::exception& ex) {
-		std::cerr << ex.what() << std::endl;
-		return 0;
-	}
-	loadLevel(0, 0);
-
-
+	//ldtk loader level
+	//try {
+	//	project.loadFromFile("assets/Background/lvl1.ldtk");
+	//}
+	//catch (std::exception& ex) {
+	//	std::cerr << ex.what() << std::endl;
+	//	return 0;
+	//}
+	//loadLevel(0, 0);
 
 	Timer       timer;
 	double      totalTime = 0.0;
@@ -133,8 +130,14 @@ int main()
 	InitGame();
 
 	while(window)
-	{
-		timer.tick();
+	{	
+		// Render loop
+		image.clear(Color::White);
+		//Update game
+		game.Update();
+
+		window.present(game.getImage());
+		//timer.tick();
 		//Update loop
 		Input::update();
 		//Animates sprite 
@@ -162,25 +165,17 @@ int main()
 			}
 			player.translate(correction);
 		}
-		camera.setPosition(player.getPosition());
+		//camera.setPosition(player.getPosition());
 
 		if(Input::getButton("Reload"))
 		{
 			InitGame();
 		}
 
-		// Render loop
-		image.clear(Color::White);
-
 		//image.drawSprite(background, camera);
-
-		level.draw(image, camera);
-
-		player.draw(image, camera);
-
+		//level.draw(image, camera);
+		//player.draw(image, camera);
 		image.drawText(Font::Default, fps, 10, 10, Color::Black);
-
-		window.present(image);
 
 		Event e;
 		while (window.popEvent(e))
@@ -207,7 +202,7 @@ int main()
 		}
 		
 		
-		++frameCount;
+		/*++frameCount;
 
 		totalTime += timer.elapsedSeconds();
 		if (totalTime > 1.0)
@@ -218,7 +213,7 @@ int main()
 
 			frameCount = 0;
 			totalTime = 0.0;
-		}
+		}*/
 	}
 
 	std::cout << "Thanks for playing!" << std::endl;

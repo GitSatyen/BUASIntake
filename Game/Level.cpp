@@ -6,6 +6,7 @@
 #include <Graphics/BlendMode.hpp>
 #include <Graphics/Color.hpp>
 #include <Graphics/ResourceManager.hpp>
+#include <Graphics/Image.hpp>
 
 #include <numbers>
 
@@ -21,6 +22,10 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
 {
     
         const std::filesystem::path projectPath = project.getFilePath().directory();
+
+
+        //Parse Layers
+        const auto& entities = level.getLayer("Entities");
 
         // Colected animation effect
         {
@@ -41,11 +46,11 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
 
         // Parse the level tile map.
         {
-            const auto& tilesLayer = level.getLayer("TerrainLayer");
-            const auto& intGrid = level.getLayer("Background");
+            const auto& tilesLayer = level.getLayer("Terrain");
+            const auto& intGrid = level.getLayer("Terrain");
 
             const auto& gridSize = tilesLayer.getGridSize();
-            const auto& tileSet = tilesLayer.getTileset();
+            const auto& tileSet = intGrid.getTileset();
 
             auto spriteSheet = ResourceManager::loadSpriteSheet(projectPath / tileSet.path, tileSet.tile_size, tileSet.tile_size, tileSet.padding, tileSet.spacing, BlendMode::AlphaBlend);
             tileMap = TileMap(spriteSheet, gridSize.x, gridSize.y);
@@ -62,6 +67,11 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
                 tileMap(gridPos.y, gridPos.x) = tile.tileId;
             }
         }
+
+        //Player start position
+        const auto& startPos = entities.getEntitiesByName("Start")[0].get();
+        playerStart = { startPos.getPosition().x, startPos.getPosition().y };
+        player.setPosition(playerStart);
 }
 
 void Level::update(float deltaTime)
@@ -69,6 +79,11 @@ void Level::update(float deltaTime)
         updateCollisions(deltaTime);
         updatePickups(deltaTime);
         updateEffects(deltaTime);
+
+        Player::State playerState = player.getState();
+
+        //player.setPosition(pos);
+     
 }
 
 void Level::reset()
@@ -79,15 +94,16 @@ void Level::setCharacter(size_t characterId)
 {
 }
 
-void Level::draw(Graphics::Image& image, const glm::mat3 transform) const
+void Level::draw(Graphics::Image& image, const glm::mat3 transform) 
 {
     tileMap.draw(image,  transform);
 
-    for (auto& effect : effects)
+   /* for (auto& effect : effects)
     {
         effect.draw(image);
-    }
-
+    }*/
+    player.draw(image, camera);
+    
 }
 
 void Level::addPickup(std::string_view name, const glm::vec2& pos)

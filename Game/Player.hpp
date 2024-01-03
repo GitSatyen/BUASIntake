@@ -43,6 +43,11 @@ public:
 
 	void setState(State newState);
 
+	State getState() const noexcept
+	{
+		return state;
+	}
+
 	virtual void update(float deltaTime) override;
 	virtual void draw(Graphics::Image& image, const Math::Camera2D& camera) override;
 	virtual void Gravity(float deltaTime);
@@ -57,11 +62,10 @@ public:
 		return velocity;
 	}
 
-	void setPosition(const glm::vec2& pos);
+	void setPosition(const glm::vec2& pos);	
 	const glm::vec2& getPosition() const;
 
 	void translate(const glm::vec2& t);
-
 	const Math::AABB getAABB() const;
 
 private:

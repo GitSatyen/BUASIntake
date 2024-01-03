@@ -1,16 +1,30 @@
 #include "Game.hpp"
+#include "Background.hpp"
 
 #include <Graphics/Color.hpp>
 #include <Graphics/Input.hpp>
+#include <Graphics/Image.hpp>
+#include <Graphics/ResourceManager.hpp>
+
+#include <glm/vec2.hpp>
 
 #include <fmt/core.h>
 #include <string>
+
+using namespace Graphics;
 
 Game::Game(uint32_t screenWidth, uint32_t screenHeight)
     : image{ screenWidth, screenHeight }
     ,transform{}
 {
-    project.loadFromFile("assets/Background/lvl1.ldtk");
+    //ldtk loader level
+    try {
+        project.loadFromFile("assets/Background/lvl1.ldtk");
+    }
+    catch (std::exception& ex) {
+        std::cerr << ex.what() << std::endl;
+        //return 0;
+    }
     loadLevel(0, 0);
 }
 void Game::Update()
@@ -28,13 +42,17 @@ void Game::Update()
         frames = 0;
         totalTime = 0.0;
     }
+    camera.setPosition(player.getPosition());
     //Update and draw background
-    //background.update(timer);
-    //background.draw(image, transform);
+    background.update(timer);
+    //background.draw(image, offset);
+    //auto backgroundmap = ResourceManager::loadImage("assets/BG Image.png");
+    //backgroundImage = Sprite{ backgroundmap };
 
     auto elapsedTime = static_cast<float>(timer.elapsedSeconds());
  
-    level.draw(image, transform);
+    level.draw(image, camera);
+    //player.draw(image, camera);
 }
 
 void Game::loadLevel(size_t levelId, size_t characterId)
