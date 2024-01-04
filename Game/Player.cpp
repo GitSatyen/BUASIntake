@@ -20,7 +20,7 @@ static std::map <Player::State, std::string> stateMap = {
 	{Player::State::Dead, "Dead"}
 };
 
-Player::Player() = default;	
+//Player::Player() = default;	
 
 Player::Player(const glm::vec2 & pos)
 	//: Entity{ pos, AABB{{18, 10, 0}, {36, 43, 0}} }

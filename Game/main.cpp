@@ -43,7 +43,7 @@ Player player;
 Level level;
 
 size_t CurrLevelId = 0u;
-// Which level plays next
+//Which level plays next
 size_t nextLevelId = 0u;
 
 void InitGame()

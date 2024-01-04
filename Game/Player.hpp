@@ -32,7 +32,8 @@ public:
 		Dead
 	};
 	// Default constructor
-	Player();
+	Player() {};
+	//Player() = default;
 	//Copy constructor;
 	/*Player(const Player&) = default;
 	Player(Player&&) = default;

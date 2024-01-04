@@ -456,7 +456,7 @@
 			"limitScope": "PerLevel",
 			"limitBehavior": "MoveLastOne",
 			"pivotX": 0.5,
-			"pivotY": 0.5,
+			"pivotY": 1,
 			"fieldDefs": []
 		},
 		{
@@ -1572,8 +1572,8 @@
 						},
 						{
 							"__identifier": "Start",
-							"__grid": [4,10],
-							"__pivot": [0.5,0.5],
+							"__grid": [4,9],
+							"__pivot": [0.5,1],
 							"__tags": [],
 							"__tile": null,
 							"__smartColor": "#4345D7",

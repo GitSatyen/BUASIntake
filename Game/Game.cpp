@@ -42,7 +42,7 @@ void Game::Update()
         frames = 0;
         totalTime = 0.0;
     }
-    camera.setPosition(player.getPosition());
+    //camera.setPosition(player.getPosition());
     //Update and draw background
     background.update(timer);
     //background.draw(image, offset);
@@ -52,7 +52,6 @@ void Game::Update()
     auto elapsedTime = static_cast<float>(timer.elapsedSeconds());
  
     level.draw(image, camera);
-    //player.draw(image, camera);
 }
 
 void Game::loadLevel(size_t levelId, size_t characterId)

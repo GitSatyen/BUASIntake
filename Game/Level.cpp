@@ -70,7 +70,7 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
         //Player start position
         const auto& startPos = entities.getEntitiesByName("Start")[0].get();
         playerStart = { startPos.getPosition().x, startPos.getPosition().y };
-        player.setPosition(playerStart);
+        player = Player{ playerStart };
 }
 
 void Level::update(float deltaTime)

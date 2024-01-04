@@ -53,7 +53,7 @@ protected:
     Graphics::Image image;
     Graphics::Timer timer;
 
-    Player player;
+    //Player player;
     Level level;
     size_t LevelId = 0u;
     // Which level plays next
