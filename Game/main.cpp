@@ -16,6 +16,7 @@
 #include <glm/vec2.hpp>
 #include <Math/Camera2D.hpp>
 #include "Game.hpp"
+#include "Level.hpp"
 
 #include "Player.hpp"
 
@@ -35,11 +36,12 @@ const int SCREEN_HEIGHT = 600;
 
 glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
 //Math::Transform2D PlayerTransform;
-float Player_x = SCREEN_WIDTH / 2;
-float Player_y = SCREEN_HEIGHT / 2 ;
+float _x = SCREEN_WIDTH / 2;
+float _y = SCREEN_HEIGHT / 2 ;
 //float player_speed = 60.0f;
 
-Player player;
+//Player player;
+
 Level level;
 
 size_t CurrLevelId = 0u;
@@ -49,7 +51,7 @@ size_t nextLevelId = 0u;
 void InitGame()
 {
 	//glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
-	player.setPosition({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 });
+	//player.setPosition({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 });
 	//camera.setOrigin(player.getPosition());
 }
 
@@ -93,9 +95,9 @@ int main()
 	//window.toggleVSync();
 
 	//auto idle_sprites = ResourceManager::loadSpriteSheet("assets/Spirit Boxer/Idle.png", 137, 44, 0,0, BlendMode::AlphaBlend);	
-	player = Player({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 });
+	//player = Player({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 });
 	camera.setSize({ SCREEN_WIDTH, SCREEN_HEIGHT });
-	camera.setPosition(player.getPosition());
+	//camera.setPosition(player.getPosition());
 
 	// Load Tilemap 
 	//auto backgroundmap = ResourceManager::loadImage("assets/Map.png");
@@ -141,10 +143,10 @@ int main()
 		//Update loop
 		Input::update();
 		//Animates sprite 
-		player.update(timer.elapsedSeconds());
+		//player.update(timer.elapsedSeconds());
 		//Check collisions with player
 		//Screen space collsion
-		{
+		/*{
 			auto aabb = player.getAABB();
 			glm::vec2 correction{ 0 };
 			if(aabb.min.x < 0)
@@ -164,7 +166,7 @@ int main()
 				correction.y = image.getHeight() - aabb.max.y;
 			}
 			player.translate(correction);
-		}
+		}*/
 		//camera.setPosition(player.getPosition());
 
 		if(Input::getButton("Reload"))

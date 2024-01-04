@@ -42,13 +42,17 @@ void Game::Update()
         frames = 0;
         totalTime = 0.0;
     }
+    //Update level 
+    level.update(timer.elapsedSeconds());
     //camera.setPosition(player.getPosition());
     //Update and draw background
     background.update(timer);
+
+    ///Test background
     //background.draw(image, offset);
     //auto backgroundmap = ResourceManager::loadImage("assets/BG Image.png");
     //backgroundImage = Sprite{ backgroundmap };
-
+  
     auto elapsedTime = static_cast<float>(timer.elapsedSeconds());
  
     level.draw(image, camera);
