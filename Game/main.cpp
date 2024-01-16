@@ -42,7 +42,7 @@ float _y = SCREEN_HEIGHT / 2 ;
 
 //Player player;
 
-Level level;
+//Level level;
 
 size_t CurrLevelId = 0u;
 //Which level plays next
@@ -53,18 +53,6 @@ void InitGame()
 	//glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
 	//player.setPosition({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 });
 	//camera.setOrigin(player.getPosition());
-}
-
-void loadLevel(size_t levelId, size_t characterId)
-{
-	auto& world = project.getWorld();
-	auto& levels = world.allLevels();
-
-	CurrLevelId = levelId % levels.size();
-
-	level = Level{ project, world, levels[CurrLevelId] };
-
-	level.setCharacter(characterId);
 }
 
 int main()
@@ -94,15 +82,10 @@ int main()
 	//PlayerTransform.setAnchor({32, 16});
 	//window.toggleVSync();
 
-	//auto idle_sprites = ResourceManager::loadSpriteSheet("assets/Spirit Boxer/Idle.png", 137, 44, 0,0, BlendMode::AlphaBlend);	
-	//player = Player({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 });
 	camera.setSize({ SCREEN_WIDTH, SCREEN_HEIGHT });
 	//camera.setPosition(player.getPosition());
 
 	// Load Tilemap 
-	//auto backgroundmap = ResourceManager::loadImage("assets/Map.png");
-	//background = Sprite{ backgroundmap };
-
 	//auto grass_sprites = ResourceManager::loadSpriteSheet("assets/PixelArt/Texture/TX Tileset Grass.png", /*16, 16 */137, 44, 0, 0, BlendMode::AlphaBlend);
 	//grassTiles = TileMap(grass_sprites, 30, 30);
 
@@ -114,40 +97,29 @@ int main()
 	//	}
 	//}
 
-	//ldtk loader level
-	//try {
-	//	project.loadFromFile("assets/Background/lvl1.ldtk");
-	//}
-	//catch (std::exception& ex) {
-	//	std::cerr << ex.what() << std::endl;
-	//	return 0;
-	//}
-	//loadLevel(0, 0);
-
 	Timer       timer;
 	double      totalTime = 0.0;
 	uint64_t    frameCount = 0ull;
 	std::string fps = "FPS: 0";
 
-	InitGame();
+	//InitGame();
 
 	while(window)
 	{	
 		// Render loop
 		image.clear(Color::White);
 		//Update game
-		game.Update();
+		game.update();
 
 		window.present(game.getImage());
 		//timer.tick();
 		//Update loop
-		Input::update();
 		//Animates sprite 
 		//player.update(timer.elapsedSeconds());
 		//Check collisions with player
 		//Screen space collsion
 		/*{
-			auto aabb = player.getAABB();
+			auto aabb = level.getPlayer().getAABB();
 			glm::vec2 correction{ 0 };
 			if(aabb.min.x < 0)
 			{
@@ -165,7 +137,7 @@ int main()
 			{
 				correction.y = image.getHeight() - aabb.max.y;
 			}
-			player.translate(correction);
+			//player.translate(correction);
 		}*/
 		//camera.setPosition(player.getPosition());
 
@@ -175,9 +147,6 @@ int main()
 		}
 
 		//image.drawSprite(background, camera);
-		//level.draw(image, camera);
-		//player.draw(image, camera);
-		image.drawText(Font::Default, fps, 10, 10, Color::Black);
 
 		Event e;
 		while (window.popEvent(e))
@@ -202,20 +171,6 @@ int main()
 				break;
 			}
 		}
-		
-		
-		/*++frameCount;
-
-		totalTime += timer.elapsedSeconds();
-		if (totalTime > 1.0)
-		{
-			fps = fmt::format("FPS: {:.3f}", static_cast<double>(frameCount) / totalTime);
-
-			std::cout << fps << std::endl;
-
-			frameCount = 0;
-			totalTime = 0.0;
-		}*/
 	}
 
 	std::cout << "Thanks for playing!" << std::endl;

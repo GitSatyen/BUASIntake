@@ -27,7 +27,7 @@ Game::Game(uint32_t screenWidth, uint32_t screenHeight)
     }
     loadLevel(0, 0);
 }
-void Game::Update()
+void Game::update()
 {
     static double      totalTime = 0.0;
     static uint64_t    frames = 0;
@@ -41,31 +41,27 @@ void Game::Update()
         fps = fmt::format("FPS: {:.3f}", static_cast<double>(frames) / totalTime);
         frames = 0;
         totalTime = 0.0;
+
+        std::cout << fps << std::endl;
     }
+
+    //Update Input
+    auto elapsedTime = static_cast<float>(timer.elapsedSeconds());
+    Input::update();
     //Update level 
     level.update(timer.elapsedSeconds());
-    //camera.setPosition(player.getPosition());
-    //Update and draw background
-    background.update(timer);
-
-    ///Test background
-    //background.draw(image, offset);
-    //auto backgroundmap = ResourceManager::loadImage("assets/BG Image.png");
-    //backgroundImage = Sprite{ backgroundmap };
-  
-    auto elapsedTime = static_cast<float>(timer.elapsedSeconds());
- 
+    //Draw level
     level.draw(image, camera);
+    image.drawText(Font::Default, fps, 10, 10, Color::Black);
 }
 
 void Game::loadLevel(size_t levelId, size_t characterId)
 {
+    //Parse LDtk project and levels
     auto& world = project.getWorld();
     auto& levels = world.allLevels();
 
     LevelId = levelId % levels.size();
 
     level = Level{ project, world, levels[LevelId] };
-
-    level.setCharacter(characterId);
 }

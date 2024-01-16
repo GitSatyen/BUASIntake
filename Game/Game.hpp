@@ -30,7 +30,7 @@ public:
     Game& operator=(const Game&) = delete;
     Game& operator=(Game&&) = delete;
 
-    void Update();
+    void update();
 
     const Graphics::Image& getImage() const noexcept
     {

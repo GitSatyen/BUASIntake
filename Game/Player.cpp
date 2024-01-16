@@ -20,8 +20,6 @@ static std::map <Player::State, std::string> stateMap = {
 	{Player::State::Dead, "Dead"}
 };
 
-//Player::Player() = default;	
-
 Player::Player(const glm::vec2 & pos)
 	//: Entity{ pos, AABB{{18, 10, 0}, {36, 43, 0}} }
 	//: position{ pos }
@@ -83,7 +81,7 @@ void Player::update(float deltaTime)
 	if (velocity.y < 0.0f)
 	{
 		setState(State::Falling);
-		doFalling(deltaTime);
+		//doFalling(deltaTime);
 	}
 
 	else 
@@ -107,7 +105,7 @@ void Player::update(float deltaTime)
 		doJumping(deltaTime);
 		break;
 	case State::Falling:
-		doFalling(deltaTime);
+		//doFalling(deltaTime);
 		break;
 	}
 

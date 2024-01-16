@@ -32,11 +32,8 @@ public:
 
     void update(float deltaTime);
 
-    // Reset level.
+    //Reset level
     void reset();
-
-    // Choose which character to use for this level.
-    void setCharacter(size_t characterId);
 
     const Player& getPlayer() const noexcept
     {
@@ -56,6 +53,8 @@ private:
     void updatePickups(float deltaTime);
     void updateEffects(float deltaTime);
     void updateBoxes(float deltaTime);
+
+    void testUpdateCollisions(float deltaTime);
 
     const ldtk::World* world = nullptr;
     const ldtk::Level* level = nullptr;
