@@ -20,8 +20,6 @@ struct Collider
 {
     //ColliderType type = ColliderType::Default;
     Math::AABB   aabb;
-    bool         isOneWay = false;
-    bool         isTrap = false;
 };
 
 class Level

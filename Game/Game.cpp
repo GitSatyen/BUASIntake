@@ -50,9 +50,11 @@ void Game::update()
     Input::update();
     //Update level 
     level.update(timer.elapsedSeconds());
+    //Clear level image
+    image.clear(Color::Black);
     //Draw level
     level.draw(image, camera);
-    image.drawText(Font::Default, fps, 10, 10, Color::Black);
+    image.drawText(Font::Default, fps, 10, 10, Color::Magenta);
 }
 
 void Game::loadLevel(size_t levelId, size_t characterId)

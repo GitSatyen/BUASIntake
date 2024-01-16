@@ -110,7 +110,7 @@ void Level::draw(Graphics::Image& image, const glm::mat3 transform)
 #if _DEGUB
     for (const auto& collider : colliders)
     {
-        image.drawAABB(collider.aabb,  Color::Yellow, BlendMode:Disable, FillMode::WireFrame);
+        image.drawAABB(collider.aabb, Color::Yellow, BlendMode:Disable, FillMode::WireFrame);
     }
 #endif
 
@@ -186,7 +186,7 @@ void Level::updateCollisions(float deltaTime)
             if (playerAABB.intersect(bottomEdge))
             {
                 // Set the player's position to the bottom of the collider.
-                pos.y = colliderAABB.max.y + playerAABB.height();
+                //pos.y = colliderAABB.max.y + playerAABB.height();
                 // And 0 the Y velocity.
                 vel.y = 0.0f;
 
