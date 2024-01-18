@@ -8,7 +8,10 @@
 #include <Graphics/Image.hpp>
 #include <Graphics/TileMap.hpp>
 
-#include <numbers>
+#include <map>
+#include <string>
+
+//#include <numbers>
 
 using namespace Math;
 using namespace Graphics;
@@ -63,10 +66,13 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
 
         // Parse the level tile map.
         {
-            const auto& tilesLayer = level.getLayer("Terrain");
+            const auto& TerrainLayer = level.getLayer("Terrain");
             const auto& intGrid = level.getLayer("Terrain");
 
-            const auto& gridSize = tilesLayer.getGridSize();
+            /*const auto& backgroundLayer = level.getLayer("Background");
+            const auto& backgroundGrid = level.getLayer("Background");*/
+
+            const auto& gridSize = TerrainLayer.getGridSize();
             const auto& tileSet = intGrid.getTileset();
 
             auto spriteSheet = ResourceManager::loadSpriteSheet(projectPath / tileSet.path, tileSet.tile_size, tileSet.tile_size, tileSet.padding, tileSet.spacing, BlendMode::AlphaBlend);
@@ -78,7 +84,7 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
                 tileMap(gridPos.y, gridPos.x) = tile.tileId;
             }
 
-            for (auto& tile : tilesLayer.allTiles())
+            for (auto& tile : TerrainLayer.allTiles())
             {
                 const auto& gridPos = tile.getGridPosition();
                 tileMap(gridPos.y, gridPos.x) = tile.tileId;
@@ -107,19 +113,19 @@ void Level::draw(Graphics::Image& image, const glm::mat3 transform)
 {
     tileMap.draw(image,  transform);
 
-#if _DEGUB
-    for (const auto& collider : colliders)
-    {
-        image.drawAABB(collider.aabb, Color::Yellow, BlendMode:Disable, FillMode::WireFrame);
-    }
-#endif
 
    /* for (auto& effect : effects)
     {
         effect.draw(image);
     }*/
     player.draw(image, camera);
-    
+
+#if _DEBUG
+    for (const auto& collider : colliders)
+    {
+        image.drawAABB(transform * collider.aabb, Color::Red, {},FillMode::WireFrame);
+    }
+#endif
 }
 
 void Level::addPickup(std::string_view name, const glm::vec2& pos)

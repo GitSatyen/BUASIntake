@@ -3,8 +3,6 @@
 
 using namespace Graphics;
 
-
-
 Background::Background(const std::filesystem::path& path, float scale, const glm::vec2& scrollDir, float scrollSpeed)
 	: background{ Graphics::ResourceManager::loadImage(path) }
 	, scrollDir{ scrollDir }
@@ -17,11 +15,11 @@ void Background::update(const Graphics::Timer& timer)
 	textureOffset -= scrollDir * scrollSpeed * static_cast<float>(timer.elapsedSeconds());
 }
 
-void Background::draw(Graphics::Image& image/*, const glm::vec2& offset*/)
+void Background::draw(Graphics::Image& image/*, const glm::vec2& offset*/) const
 {
 	if (!background)
 		return;
-	// Cover the entire image with the tiled background image.
+	// Cover the entire image with the tiled background image
 	const float scaleWidth = static_cast<float>(image.getWidth()) / static_cast<float>(background->getWidth()) / scale;
 	const float scaledHeight = static_cast<float>(image.getHeight()) / static_cast<float>(background->getHeight()) / scale;
 

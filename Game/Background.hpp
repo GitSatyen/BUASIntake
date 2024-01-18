@@ -11,11 +11,12 @@ class Background {
 public:
 	Background() = default;
 
+	//Scrolling background sprite 
 	explicit Background(const std::filesystem::path& path, float scale = 1.0f, const glm::vec2& scrollDir = { 0.0f, 1.0f }, float scrollSpeed = 1.0f);
 
 	void update(const Graphics::Timer& timer);
 
-	void draw(Graphics::Image& image/*, const glm::vec2& offset*/);
+	void draw(Graphics::Image& image/*, const glm::vec2& offset*/) const;
 
 private:
 	std::shared_ptr<Graphics::Image> background;

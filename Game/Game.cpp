@@ -54,7 +54,13 @@ void Game::update()
     image.clear(Color::Black);
     //Draw level
     level.draw(image, camera);
+    //Update and draw background
+    background.update(timer);
+    background.draw(image);
+
+#if _DEBUG
     image.drawText(Font::Default, fps, 10, 10, Color::Magenta);
+#endif
 }
 
 void Game::loadLevel(size_t levelId, size_t characterId)
