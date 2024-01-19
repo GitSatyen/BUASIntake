@@ -23,7 +23,7 @@ static std::map <Player::State, std::string> stateMap = {
 Player::Player(const glm::vec2 & pos)
 	//: Entity{ pos, AABB{{18, 10, 0}, {36, 43, 0}} }
 	//: position{ pos }
-	: aabb{ {20, 5, 0}, {45, 40, 0} }
+	: aabb{ {25, 5, 0}, {45, 40, 0} }
 {
 	auto idle_sprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/01-Idle/Idle.png", 66, 40, 0, 0, BlendMode::AlphaBlend);
 	//auto idle_sprites = ResourceManager::loadSpriteSheet("assets/Spirit Boxer/Idle.png", 137, 44, 0, 0, BlendMode::AlphaBlend);

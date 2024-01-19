@@ -50,9 +50,6 @@ private:
     void updateCollisions(float deltaTime);
     void updatePickups(float deltaTime);
     void updateEffects(float deltaTime);
-    void updateBoxes(float deltaTime);
-
-    void testUpdateCollisions(float deltaTime);
 
     const ldtk::World* world = nullptr;
     const ldtk::Level* level = nullptr;

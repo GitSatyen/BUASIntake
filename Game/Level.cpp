@@ -32,6 +32,7 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
         const auto& entities = level.getLayer("Entities");
         //Collision layer
         const auto& collisions = entities.getEntitiesByName("Collider");
+        //Get position and size of the colliders
         for(auto& collision: collisions)
         {
             
@@ -39,9 +40,10 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
             auto& pos = get.getPosition();
             auto size = get.getSize();
 
+            //Wrap AABB around the colliders 
             Collider collider
             {
-                .aabb = AABB { {pos.x, pos.x, 0.0 }, {pos.x + size.x - 1, pos.y + size.y - 1, 0.0} }
+                .aabb = AABB { {pos.x, pos.y, 0.0 }, {pos.x + size.x - 1, pos.y + size.y - 1, 0.0} }
             };
             colliders.push_back(collider);
         }
@@ -102,7 +104,6 @@ void Level::update(float deltaTime)
         updateCollisions(deltaTime);
         updatePickups(deltaTime);
         updateEffects(deltaTime);
-        //testUpdateCollisions(deltaTime);
 }
 
 void Level::reset()
@@ -123,7 +124,7 @@ void Level::draw(Graphics::Image& image, const glm::mat3 transform)
 #if _DEBUG
     for (const auto& collider : colliders)
     {
-        image.drawAABB(transform * collider.aabb, Color::Red, {},FillMode::WireFrame);
+        image.drawAABB(transform * collider.aabb, Color::Red, BlendMode::Disable, FillMode::WireFrame);
     }
 #endif
 }
@@ -165,23 +166,17 @@ void Level::updateCollisions(float deltaTime)
         if (vel.y < 0.0f)
         {
             //Check if player collides with top edghe of collider 
-            Line topEdge{ { colliderAABB.min.x + padding, colliderAABB.min.y, 0 }, { colliderAABB.max.x - padding, colliderAABB.min.y, 0 } };
+            Line topEdge{ { colliderAABB.min.x + padding, colliderAABB.min.y, 0 }, { colliderAABB.max.x -padding, colliderAABB.min.y, 0 } };
             if (playerAABB.intersect(topEdge))
             {
-                // We only collide if the player's previous position was above the collider
-                if (prevPos.y < colliderAABB.min.y)
-                {
-                    // Set the player's position to the top of the AABB.
-                    pos.y = colliderAABB.min.y;
-                    // And 0 the Y velocity.
-                    vel.y = 0.0f;
+                // Set the player's position to the top of the AABB.
+                pos.y = colliderAABB.min.y;
+                // And 0 the Y velocity.
+                vel.y = 0.0f;
 
-                        // Change to running state
-                        player.setState(Player::State::Running);
-                        onGround = true;
-
-                    continue;
-                }
+                // Change to running state
+                player.setState(Player::State::Running);
+                onGround = true;
             }
         }
         // Player is jumping
@@ -192,7 +187,7 @@ void Level::updateCollisions(float deltaTime)
             if (playerAABB.intersect(bottomEdge))
             {
                 // Set the player's position to the bottom of the collider.
-                //pos.y = colliderAABB.max.y + playerAABB.height();
+                pos.y = colliderAABB.max.y + playerAABB.height();
                 // And 0 the Y velocity.
                 vel.y = 0.0f;
 
@@ -204,7 +199,7 @@ void Level::updateCollisions(float deltaTime)
         // Player is idle or running.
         else
         {
-            // Check to see if the player is colliding with the top edge of the collider.
+            // Check to see if the player is colliding with the top edge of the collider
             Line topEdge{ { colliderAABB.min.x + padding, colliderAABB.min.y, 0 }, { colliderAABB.max.x - padding, colliderAABB.min.y, 0 } };
             if (playerAABB.intersect(topEdge))
             {
@@ -216,29 +211,21 @@ void Level::updateCollisions(float deltaTime)
         Line leftEdge{ { colliderAABB.min.x, colliderAABB.min.y + padding, 0 }, { colliderAABB.min.x, colliderAABB.max.y - padding, 0 } };
         if (playerAABB.intersect(leftEdge))
         {
-            // Set the player's position to the left edge of the collider.
+            // Set the player's position to the left edge of the collider
             pos.x = colliderAABB.min.x - playerAABB.width() * 0.5f;
             // And 0 the X velocity.
             vel.x = 0.0f;
-
-            // On a wall that is right of the player.
-            // onRightWall = true;
             
-
             continue;
         }
-        // Check to see if the player is colliding with the right edge of the collider.
+        // Check to see if the player is colliding with the right edge of the collider
         Line rightEdge{ { colliderAABB.max.x, colliderAABB.min.y + padding, 0 }, { colliderAABB.max.x, colliderAABB.max.y - padding, 0 } };
         if (playerAABB.intersect(rightEdge))
         {
-            // Set the player's position to the right edge of the collider.
+            // Set the player's position to the right edge of the collider
             pos.x = colliderAABB.max.x + playerAABB.width() * 0.5f;
             //and 0 the X velocity
             vel.x = 0.0f;
-
-            // Player is on a wall that is to the left of the player.
-            // onLeftWall = true;
-            
 
             continue;
         }
@@ -256,32 +243,3 @@ void Level::updateEffects(float deltaTime)
 {
 }
 
-void Level::testUpdateCollisions(float deltaTime)
-{
-    bool onGround = false;
-    //Update player
-    player.update(deltaTime);
-
-    AABB playerAABB = player.getAABB();
-
-    //Get player velocity and position
-    glm::vec2 vel = player.getVelocity();
-    glm::vec2 pos = player.getPosition();
-
-    for (auto& collider : colliders) 
-    {
-        //Collider AABB
-        AABB colliderAABB = collider.aabb;
-
-        if(colliderAABB.min.x < 0)
-        {
-            vel.y = 0.0f;
-            pos.y = colliderAABB.min.y;
-            // Change to running state
-            player.setState(Player::State::Running);
-            onGround = true;
-
-            continue;
-        }
-    }
-}
