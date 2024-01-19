@@ -43,13 +43,8 @@ protected:
     ldtk::Project project;
     Background background;
     Camera2D camera;
-   // Sprite backgroundImage;
 
     const glm::mat2 transform;
-   /* glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 }; 
-    float Player_x = SCREEN_WIDTH / 2;
-    float Player_y = SCREEN_HEIGHT / 2;*/
-
     Graphics::Image image;
     Graphics::Timer timer;
 

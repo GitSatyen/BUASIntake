@@ -123,14 +123,6 @@ void Player::update(float deltaTime)
 
 void Player::draw(Graphics::Image& image, const Math::Camera2D& camera)
 {
-	//Translation matrix
-	/*glm::mat3 t = {
-		1, 0, 0,
-		0, 1, 0,
-		position.x, position.y, 1
-	};*/
-	//t = transform * t;
-
 	switch (state)
 	{
 	case State::Idle:

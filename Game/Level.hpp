@@ -18,7 +18,6 @@ using namespace Math;
 
 struct Collider
 {
-    //ColliderType type = ColliderType::Default;
     Math::AABB   aabb;
 };
 

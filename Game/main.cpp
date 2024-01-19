@@ -34,15 +34,11 @@ ldtk::Project project;
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
-glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
-//Math::Transform2D PlayerTransform;
+
 float _x = SCREEN_WIDTH / 2;
 float _y = SCREEN_HEIGHT / 2 ;
-//float player_speed = 60.0f;
 
-//Player player;
-
-//Level level;
+glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
 
 size_t CurrLevelId = 0u;
 //Which level plays next
@@ -71,9 +67,6 @@ int main()
 		return b || enter || r;
 	});
 
-	
-
-	//image.resize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	Game game{ SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	window.create(L"Pixel World", SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -83,19 +76,6 @@ int main()
 	//window.toggleVSync();
 
 	camera.setSize({ SCREEN_WIDTH, SCREEN_HEIGHT });
-	//camera.setPosition(player.getPosition());
-
-	// Load Tilemap 
-	//auto grass_sprites = ResourceManager::loadSpriteSheet("assets/PixelArt/Texture/TX Tileset Grass.png", /*16, 16 */137, 44, 0, 0, BlendMode::AlphaBlend);
-	//grassTiles = TileMap(grass_sprites, 30, 30);
-
-	//for(int i = 0; i < 30; ++i)
-	//{
-	//	for(int j = 0; j < 30; ++j)
-	//	{
-	//		grassTiles(i, j) = (i * grass_sprites->getNumColumns() + j) % grass_sprites->getNumSprites();
-	//	}
-	//}
 
 	Timer       timer;
 	double      totalTime = 0.0;
@@ -112,41 +92,11 @@ int main()
 		game.update();
 
 		window.present(game.getImage());
-		//timer.tick();
-		//Update loop
-		//Animates sprite 
-		//player.update(timer.elapsedSeconds());
-		//Check collisions with player
-		//Screen space collsion
-		/*{
-			auto aabb = level.getPlayer().getAABB();
-			glm::vec2 correction{ 0 };
-			if(aabb.min.x < 0)
-			{
-				correction.x = -aabb.min.x;
-			}
-			if(aabb.min.y < 0)
-			{
-				correction.y = -aabb.min.y;
-			}
-			if(aabb.max.x >= image.getWidth())
-			{
-				correction.x = image.getWidth() - aabb.max.x;
-			}
-			if(aabb.max.y >= image.getHeight())
-			{
-				correction.y = image.getHeight() - aabb.max.y;
-			}
-			//player.translate(correction);
-		}*/
-		//camera.setPosition(player.getPosition());
 
 		if(Input::getButton("Reload"))
 		{
 			InitGame();
 		}
-
-		//image.drawSprite(background, camera);
 
 		Event e;
 		while (window.popEvent(e))
