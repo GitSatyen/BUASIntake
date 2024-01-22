@@ -52,7 +52,6 @@ public:
 	virtual void update(float deltaTime) override;
 	virtual void draw(Graphics::Image& image, const Math::Camera2D& camera) override;
 	virtual void Gravity(float deltaTime);
-	virtual void Jump();
 
 	void setVelocity(const glm::vec2& vel) noexcept
 	{
@@ -70,8 +69,6 @@ public:
 	const Math::AABB getAABB() const;
 
 private:
-	
-	float doHorizontalMovement(float deltaTime);
 	void doMovement(float delatime);
 	void doIdle(float deltaTime);
 	void doRunning(float deltaTime);

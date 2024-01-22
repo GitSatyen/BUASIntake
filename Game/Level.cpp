@@ -155,7 +155,7 @@ void Level::updateCollisions(float deltaTime)
     // Number of pixels padding to account for collisions
     const float padding = 3.0f;
 
-    bool onGround = false;
+   // bool onGround = false;
    
     for (auto& collider : colliders)
     {
