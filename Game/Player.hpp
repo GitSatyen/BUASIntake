@@ -2,6 +2,7 @@
 
 #include "Entity.hpp"
 #include <Graphics/SpriteAnim.hpp>
+#include <Graphics/Timer.hpp>
 #include <glm/vec2.hpp>
 
 #include <Math/AABB.hpp>
@@ -69,6 +70,9 @@ public:
 	const Math::AABB getAABB() const;
 
 private:
+	void startState(State oldState, State newState);
+	void endState(State oldState, State newState);
+
 	void doMovement(float delatime);
 	void doIdle(float deltaTime);
 	void doRunning(float deltaTime);
@@ -77,21 +81,19 @@ private:
 
 
 	Math::Transform2D transform;
-	//glm::vec2 position{ 0 };
+	glm::vec2 position{ 0 };
 	glm::vec2 velocity { 0 };
 	float speed{ 60.0f };
 	bool onGround = true;
+	bool isJumping = false;
 	static inline const float jumpHeight = 55.0f;
 	static inline  float jumpTime = 0.5f;
 	static inline const float landTime = 0.2f;
 	static inline  float gravity = 10 * jumpHeight / (jumpTime * jumpTime);
-	static inline const float jumpSpeed = std::sqrt(2.0f * jumpHeight * gravity);
-	float fallTimer = 0.1f;
-	float jumpTimer = 0.25f;
+	static inline const float jumpSpeed = std::sqrt(2.0f * jumpHeight * gravity);	
+	static inline float jumptimer;
 
-
-
-	Graphics::Sprite* Backside;
+	Graphics::Timer jumpTimer;
 
 	State state = State::None;
 	Graphics::SpriteAnim IdleAnim;

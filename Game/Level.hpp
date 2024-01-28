@@ -58,8 +58,11 @@ private:
 
     std::string levelName;
 
-    // Level colliders.
+    // Level colliders
     std::vector<Collider> colliders;
+
+    //Coin sprites
+    std::map<std::string, std::shared_ptr<Graphics::SpriteSheet>> coinSprites;
 
     // All pickups
     std::vector<Pickup> allPickups;

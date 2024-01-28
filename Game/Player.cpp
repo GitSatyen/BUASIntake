@@ -2,7 +2,7 @@
 #include <Graphics/Input.hpp>
 #include <Graphics/Font.hpp>
 #include <Graphics/ResourceManager.hpp>
-#include <Graphics/Timer.hpp>
+//#include <Graphics/Timer.hpp>
 #include <Math/Camera2D.hpp>
 #include <map>
 #include <string>
@@ -112,9 +112,6 @@ void Player::update(float deltaTime)
 	// Update player position.
 	transform.translate(glm::vec2{ velocity.x, -velocity.y } *deltaTime);
 
-	// Update jump timer.
-	jumpTimer += deltaTime;
-
 	//if (currentCharacter)
 	//{
 	//	currentCharacter->update(deltaTime);
@@ -213,7 +210,7 @@ void Player::doMovement(float deltaTime)
 void Player::doIdle(float deltaTime)
 {
 	doMovement(deltaTime);
-
+	
 	if(Input::getAxis("Horizontal") != 0)
 	{
 		setState(State::Running);
@@ -242,6 +239,8 @@ void Player::doRunning(float deltaTime)
 		setState(State::Idle);
 	}
 
+	
+
 	RunAnim.update(deltaTime);
 
 }
@@ -251,15 +250,30 @@ void Player::doJumping(float deltaTime)
 	doMovement(deltaTime);
 
 	//The first int is for testing
-	velocity.y += 20 + jumpSpeed * jumpHeight;
+	velocity.y += gravity * deltaTime;
 
-	if (Input::getButton("Jump"))
+	if (Input::getButtonDown("Jump"))
 	{
 		setState(State::Jumping);
 	}
-	//(aabb.min.x <= 0) ? onGround = true : onGround = false;
 
-	jumpTime += deltaTime;
+	if(velocity.y > 0.0f)
+	{
+		jumpTimer.tick();
+	}
+
+	//(aabb.min.x <= 0) ? onGround = true : onGround = false;
+	else if (velocity.y < 0.0f)
+	{
+		setState(State::Falling);
+	}
+
+	//Test jump timer
+	else if(jumpTimer.elapsedSeconds() == 0.5f)
+	{
+		velocity.y = 0;
+		doFalling(deltaTime);
+	}
 	JumpAnim.update(deltaTime);
 }
 
@@ -268,28 +282,6 @@ void Player::doFalling(float deltaTime)
 	//The first int is for testing
 	velocity.y -= 80 + gravity * deltaTime;
 	
-	//if (Input::getButton("Jump"))
-	//{
-	//	//Allow jumping for a short time after starting to fall
 
-	//	velocity.y += gravity * deltaTime;
-	//	//Gravity(deltaTime);
-	//	if (Input::getButtonDown("Jump"))
-	//	{
-	//		// Allow jumping for a short time after starting to fall.
-
-	//		if (fallTimer < landTime)
-	//			setState(State::Jumping);
-	//		else { jumpTimer = 0.0f; }
-	//	}
-
-		/*if(velocity.y = 0)
-		{
-			setState(State::Idle);
-		}*/
-
-		fallTimer += deltaTime;
-
-		FallAnim.update(deltaTime);
-	//}
+	FallAnim.update(deltaTime);
 }

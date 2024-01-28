@@ -16,6 +16,7 @@ namespace ldtk {
     class Tileset;
 
     struct EnumValue {
+
         const std::string name;
         const Color color;
         const Enum& type;
