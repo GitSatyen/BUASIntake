@@ -58,7 +58,7 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
         const auto& tilesets = project.allTilesets();
         for (auto& tileset : tilesets)
         {
-            if (tileset.hasTag("Coin"))
+            if (tileset.name == "Coin")
             {
                 auto sprites = ResourceManager::loadSpriteSheet(projectPath / tileset.path, tileset.tile_size, tileset.tile_size, static_cast<uint32_t>(tileset.padding), static_cast<uint32_t>(tileset.spacing), BlendMode::AlphaBlend);
                 coinSprites[tileset.name] = std::move(sprites);
@@ -100,11 +100,11 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
             auto& p = e.getPosition();
             //auto& type = e.getField<ldtk::FieldType::Enum>("PickupType");
 
-
-            auto& coinSprite = coinSprites;
+            auto& coinSprite = coinSprites["Coin"];
             Sphere collider{ { p.x, p.y, 0 }, 8.0f };
 
             allPickups.emplace_back(coinSprite, collider);
+
         }
         //Player start position
         const auto& startPos = entities.getEntitiesByName("Start")[0].get();

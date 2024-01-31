@@ -272,7 +272,7 @@
 			"fillOpacity": 1,
 			"lineOpacity": 1,
 			"hollow": false,
-			"color": "#EAD4AA",
+			"color": "#FF0044",
 			"renderMode": "Rectangle",
 			"showName": true,
 			"tilesetId": null,
@@ -355,45 +355,7 @@
 			"limitBehavior": "MoveLastOne",
 			"pivotX": 0.5,
 			"pivotY": 0.5,
-			"fieldDefs": [
-				{
-					"identifier": "PickupType",
-					"doc": null,
-					"__type": "LocalEnum.Pickup",
-					"uid": 44,
-					"type": "F_Enum(43)",
-					"isArray": false,
-					"canBeNull": false,
-					"arrayMinLength": null,
-					"arrayMaxLength": null,
-					"editorDisplayMode": "Hidden",
-					"editorDisplayScale": 1,
-					"editorDisplayPos": "Above",
-					"editorLinkStyle": "StraightArrow",
-					"editorDisplayColor": null,
-					"editorAlwaysShow": false,
-					"editorShowInWorld": true,
-					"editorCutLongValues": true,
-					"editorTextSuffix": null,
-					"editorTextPrefix": null,
-					"useForSmartColor": false,
-					"exportToToc": false,
-					"searchable": false,
-					"min": null,
-					"max": null,
-					"regex": null,
-					"acceptFileTypes": null,
-					"defaultOverride": null,
-					"textLanguageMode": null,
-					"symmetricalRef": false,
-					"autoChainRef": true,
-					"allowOutOfLevelRef": true,
-					"allowedRefs": "OnlySame",
-					"allowedRefsEntityUid": null,
-					"allowedRefTags": [],
-					"tilesetUid": null
-				}
-			]
+			"fieldDefs": []
 		}
 	], "tilesets": [
 		{
@@ -917,7 +879,7 @@
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
-							"__smartColor": "#EAD4AA",
+							"__smartColor": "#FF0044",
 							"iid": "5e034270-6280-11ee-a048-11df9a47cf2c",
 							"width": 48,
 							"height": 48,
@@ -933,7 +895,7 @@
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
-							"__smartColor": "#EAD4AA",
+							"__smartColor": "#FF0044",
 							"iid": "a9ed8070-6280-11ee-b33d-ab3c845984f1",
 							"width": 160,
 							"height": 80,
@@ -949,7 +911,7 @@
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
-							"__smartColor": "#EAD4AA",
+							"__smartColor": "#FF0044",
 							"iid": "aeb98770-6280-11ee-b33d-25e0a47ea311",
 							"width": 224,
 							"height": 80,
@@ -965,7 +927,7 @@
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
-							"__smartColor": "#EAD4AA",
+							"__smartColor": "#FF0044",
 							"iid": "b4159970-6280-11ee-b33d-c1aef58d1fa2",
 							"width": 32,
 							"height": 32,
@@ -981,7 +943,7 @@
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
-							"__smartColor": "#EAD4AA",
+							"__smartColor": "#FF0044",
 							"iid": "bfc65c20-8990-11ee-b731-e550f0c3f56a",
 							"width": 32,
 							"height": 32,
@@ -997,7 +959,7 @@
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
-							"__smartColor": "#EAD4AA",
+							"__smartColor": "#FF0044",
 							"iid": "c286dbb0-8990-11ee-b731-e181d81643ca",
 							"width": 32,
 							"height": 32,
@@ -1013,7 +975,7 @@
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
-							"__smartColor": "#EAD4AA",
+							"__smartColor": "#FF0044",
 							"iid": "db288d80-8990-11ee-b731-03947ce966cc",
 							"width": 32,
 							"height": 256,
@@ -1029,7 +991,7 @@
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
-							"__smartColor": "#EAD4AA",
+							"__smartColor": "#FF0044",
 							"iid": "e30cf810-8990-11ee-b731-b5a591ede2b1",
 							"width": 96,
 							"height": 32,
@@ -1045,7 +1007,7 @@
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
-							"__smartColor": "#EAD4AA",
+							"__smartColor": "#FF0044",
 							"iid": "e4658330-8990-11ee-b731-7bfc59d1d3fb",
 							"width": 96,
 							"height": 32,
@@ -1061,7 +1023,7 @@
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
-							"__smartColor": "#EAD4AA",
+							"__smartColor": "#FF0044",
 							"iid": "e7236ab0-8990-11ee-b731-b92aaa0eef95",
 							"width": 64,
 							"height": 48,
@@ -1077,7 +1039,7 @@
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
-							"__smartColor": "#EAD4AA",
+							"__smartColor": "#FF0044",
 							"iid": "3825c210-b0a0-11ee-9ac9-a556611e8141",
 							"width": 32,
 							"height": 48,
@@ -1099,10 +1061,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [184,88],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 152,
 							"__worldY": 88
 						},
@@ -1118,10 +1077,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [200,88],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 168,
 							"__worldY": 88
 						},
@@ -1137,10 +1093,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [216,88],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 184,
 							"__worldY": 88
 						},
@@ -1156,10 +1109,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [232,88],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 200,
 							"__worldY": 88
 						},
@@ -1175,10 +1125,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [248,88],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 216,
 							"__worldY": 88
 						},
@@ -1194,10 +1141,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [264,88],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 232,
 							"__worldY": 88
 						},
@@ -1213,10 +1157,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [296,40],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 264,
 							"__worldY": 40
 						},
@@ -1232,10 +1173,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [312,40],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 280,
 							"__worldY": 40
 						},
@@ -1251,10 +1189,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [328,40],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 296,
 							"__worldY": 40
 						},
@@ -1270,10 +1205,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [344,40],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 312,
 							"__worldY": 40
 						},
@@ -1289,10 +1221,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [360,40],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 328,
 							"__worldY": 40
 						},
@@ -1308,10 +1237,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [376,40],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 344,
 							"__worldY": 40
 						},
@@ -1327,10 +1253,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [232,24],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 200,
 							"__worldY": 24
 						},
@@ -1346,10 +1269,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [216,24],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 184,
 							"__worldY": 24
 						},
@@ -1365,10 +1285,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [168,24],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 136,
 							"__worldY": 24
 						},
@@ -1384,10 +1301,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [152,24],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 120,
 							"__worldY": 24
 						},
@@ -1403,10 +1317,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [120,24],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 88,
 							"__worldY": 24
 						},
@@ -1422,10 +1333,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [104,24],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 72,
 							"__worldY": 24
 						},
@@ -1441,10 +1349,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [56,40],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 24,
 							"__worldY": 40
 						},
@@ -1460,10 +1365,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [40,40],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 8,
 							"__worldY": 40
 						},
@@ -1479,10 +1381,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [200,200],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 168,
 							"__worldY": 200
 						},
@@ -1498,10 +1397,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [216,200],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 184,
 							"__worldY": 200
 						},
@@ -1517,10 +1413,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [232,200],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 200,
 							"__worldY": 200
 						},
@@ -1536,10 +1429,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [312,120],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 280,
 							"__worldY": 120
 						},
@@ -1555,10 +1445,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [328,104],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 296,
 							"__worldY": 104
 						},
@@ -1574,10 +1461,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [344,104],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 312,
 							"__worldY": 104
 						},
@@ -1593,10 +1477,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [376,104],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 344,
 							"__worldY": 104
 						},
@@ -1612,10 +1493,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [392,120],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 360,
 							"__worldY": 120
 						},
@@ -1631,10 +1509,7 @@
 							"height": 16,
 							"defUid": 40,
 							"px": [360,104],
-							"fieldInstances": [{ "__identifier": "PickupType", "__type": "LocalEnum.Pickup", "__value": "Coin", "__tile": null, "defUid": 44, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["Coin"]
-							}] }],
+							"fieldInstances": [],
 							"__worldX": 328,
 							"__worldY": 104
 						}
