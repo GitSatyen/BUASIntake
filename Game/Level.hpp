@@ -32,6 +32,13 @@ public:
     //Reset level
     void reset();
 
+
+    //Checks for collision with the players AABBB for the pickups 
+    bool colliding(const Player& player)
+    {
+        return player.getAABB().intersect(sphere);
+    }
+
     const Player& getPlayer() const noexcept
     {
         return player;
@@ -64,6 +71,8 @@ private:
     //Coin sprites
     std::map<std::string, std::shared_ptr<Graphics::SpriteSheet>> coinSprites;
 
+    //Pickup collider sphere
+    Math::Sphere sphere;
     // All pickups
     std::vector<Pickup> allPickups;
     std::vector<Effect> effects;

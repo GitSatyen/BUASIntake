@@ -98,14 +98,16 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
         {
             auto& e = pickup.get();
             auto& p = e.getPosition();
+            auto& s = e.getSize();
+            auto& gridP = e.getGridPosition();
             //auto& type = e.getField<ldtk::FieldType::Enum>("PickupType");
 
             auto& coinSprite = coinSprites["Coin"];
-            Sphere collider{ { p.x, p.y, 0 }, 8.0f };
+            Sphere collider{ { p.x + 55, p.y + 50, 0 }, 5.7f };
 
             allPickups.emplace_back(coinSprite, collider);
-
         }
+
         //Player start position
         const auto& startPos = entities.getEntitiesByName("Start")[0].get();
         playerStart = { startPos.getPosition().x, startPos.getPosition().y };
@@ -167,7 +169,7 @@ void Level::checkPickupCollision(const Math::Sphere& pickupCollider, const Math:
     {
         //Set the position of the pickup to the bottom edge of the collider
         pos.y = colliderAABB.max.y + pickupCollider.radius;
-        //And negate the velocity.
+        //And negate the velocity
         vel.y = -vel.y;
 
         return;
@@ -206,7 +208,7 @@ void Level::updateCollisions(float deltaTime)
     //Update player
     player.update(deltaTime);
 
-    // Check player collision
+    //Check player collision
     //Get player AABB
     AABB playerAABB = player.getAABB();
 
@@ -230,9 +232,9 @@ void Level::updateCollisions(float deltaTime)
             Line topEdge{ { colliderAABB.min.x + padding, colliderAABB.min.y, 0 }, { colliderAABB.max.x -padding, colliderAABB.min.y, 0 } };
             if (playerAABB.intersect(topEdge))
             {
-                // Set the player's position to the top of the AABB.
+                // Set the player's position to the top of the AABB
                 pos.y = colliderAABB.min.y;
-                // And 0 the Y velocity.
+                // And 0 the Y velocity
                 vel.y = 0.0f;
 
                 // Change to running state
@@ -243,13 +245,13 @@ void Level::updateCollisions(float deltaTime)
         // Player is jumping
         else if (vel.y > 0.0f)
         {
-            // Check to see if the player is colliding with the bottom edge of the collider.
+            // Check to see if the player is colliding with the bottom edge of the colliders
             Line bottomEdge{ { colliderAABB.min.x + padding, colliderAABB.max.y, 0 }, { colliderAABB.max.x - padding, colliderAABB.max.y, 0 } };
             if (playerAABB.intersect(bottomEdge))
             {
-                // Set the player's position to the bottom of the collider.
+                // Set the player's position to the bottom of the collider
                 pos.y = colliderAABB.max.y + playerAABB.height();
-                // And 0 the Y velocity.
+                // And 0 the Y velocity
                 vel.y = 0.0f;
 
                 // And start falling
@@ -265,6 +267,7 @@ void Level::updateCollisions(float deltaTime)
             if (playerAABB.intersect(topEdge))
             {
                     onGround = true;   
+                    player.setState(Player::State::Idle);
             }
         }
 
@@ -297,7 +300,7 @@ void Level::updateCollisions(float deltaTime)
 }
 
 void Level::updatePickups(float deltaTime)
-{
+{ 
     for (auto& pickup : allPickups)
     {
         pickup.update(deltaTime);
@@ -312,20 +315,36 @@ void Level::updatePickups(float deltaTime)
             AABB colliderAABB = collider.aabb;
             checkPickupCollision(pickupCollider, colliderAABB, pos, vel);
         }
-         
+
+       
+        
         //Update pickup's position and velocity
         pickup.setPosition(pos);
         pickup.setVelocity(vel);
-    }   
+    }  
+
+    //Check player collision
+    //Get player AABB
+    AABB playerAABB = player.getAABB();
+
+    //Check if player collides with the pickup
+    for (auto pickups = allPickups.begin(); pickups != allPickups.end();)
+    {
+        if (pickups->collides(player))
+        {
+            pickups = allPickups.erase(pickups);
+        }
+        else ++pickups;
+    }
 }
 
-void Level::addPickup(std::string_view name, const glm::vec2& pos)
-{
-    auto coinSprite = coinSprites[std::string(name)];
-    Sphere collider{ {pos.x, pos.y,0}, 8.0f };
-
-    auto& pickup = allPickups.emplace_back(coinSprite, collider);
-}
+//void Level::addPickup(std::string_view name, const glm::vec2& pos)
+//{
+//    auto coinSprite = coinSprites[std::string(name)];
+//    Sphere collider{ {pos.x, pos.y,0}, 8.0f };
+//
+//    auto& pickup = allPickups.emplace_back(coinSprite, collider);
+//}
 
 void Level::updateEffects(float deltaTime)
 {
