@@ -62,7 +62,6 @@ private:
     const ldtk::World* world = nullptr;
     const ldtk::Level* level = nullptr;
     
-
     std::string levelName;
 
     // Level colliders
@@ -89,4 +88,7 @@ private:
 
     glm::vec2 playerStart{ 0 };
     glm::vec2 pos = player.getPosition();
+
+    uint64_t score = 0;
+    std::string scoreCount = "Gold: ";
 };

@@ -8,6 +8,7 @@
 #include <Graphics/Image.hpp>
 #include <Graphics/TileMap.hpp>
 
+#include <fmt/core.h>
 #include <map>
 #include <string>
 
@@ -100,7 +101,6 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
             auto& p = e.getPosition();
             auto& s = e.getSize();
             auto& gridP = e.getGridPosition();
-            //auto& type = e.getField<ldtk::FieldType::Enum>("PickupType");
 
             auto& coinSprite = coinSprites["Coin"];
             Sphere collider{ { p.x + 55, p.y + 50, 0 }, 5.7f };
@@ -139,6 +139,13 @@ void Level::draw(Graphics::Image& image, const glm::mat3 transform)
         effect.draw(image);
     }*/
     player.draw(image, camera);
+
+    //Keep track of the score
+    std::cout << "Score: " << score << std::endl;
+
+    //Draw score on screen
+    scoreCount = fmt::format("Gold: {:0} /56", score);
+    image.drawText(Font::Default, scoreCount, 10, 30, Color::Yellow);
 
 #if _DEBUG
     for (const auto& collider : colliders)
@@ -259,7 +266,7 @@ void Level::updateCollisions(float deltaTime)
                 continue;
             }
         }
-        // Player is idle or running.
+        //Player is idle or running
         else
         {
             // Check to see if the player is colliding with the top edge of the collider
@@ -332,7 +339,10 @@ void Level::updatePickups(float deltaTime)
     {
         if (pickups->collides(player))
         {
+            //Removes object from screen
             pickups = allPickups.erase(pickups);
+            //Ads point to the score on collision 
+            score++;
         }
         else ++pickups;
     }
