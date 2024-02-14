@@ -1,30 +1,39 @@
 #include <LDtkLoader/Project.hpp>
+#include <include/SFML/Graphics.hpp>
+#include <include/SFML/Window.hpp>
+
 #include <Graphics/Window.hpp>
 #include <Graphics/Image.hpp>
 #include <Graphics/Sprite.hpp>
 #include <Graphics/Timer.hpp>
-#include <iostream>
-#include <string_view>
-#include <fmt/core.h>
 #include <Graphics/Font.hpp>
 #include <Graphics/ResourceManager.hpp>
 #include <Graphics/SpriteAnim.hpp>
 #include <Graphics/Keyboard.hpp>
 #include <Graphics/Input.hpp>
-#include <Math/Transform2D.hpp>
 #include <Graphics/TileMap.hpp>
-#include <glm/vec2.hpp>
+#include <Math/Transform2D.hpp>
 #include <Math/Camera2D.hpp>
+
+#include <fmt/core.h>
+#include <glm/vec2.hpp>
+
+#include <iostream>
+#include <string_view>
+
 #include "Game.hpp"
 #include "Level.hpp"
-
 #include "Player.hpp"
+#include "Background.hpp"
+#include "StartEnd.hpp"
 
 using namespace Graphics;
 using namespace Math;
 
 Window window;
 Image image;
+Image startScreen;
+Image endScreen;
 Sprite sprite;
 Sprite background;
 TileMap grassTiles;
@@ -68,8 +77,9 @@ int main()
 	});
 
 	Game game{ SCREEN_WIDTH, SCREEN_HEIGHT };
+	//StartEnd startend{ SCREEN_WIDTH, SCREEN_HEIGHT };
 
-	window.create(L"Pixel World", SCREEN_WIDTH, SCREEN_HEIGHT);
+	window.create(L"Gold Fever", SCREEN_WIDTH, SCREEN_HEIGHT);
 	window.show();
 	window.setFullscreen(true);
 	//PlayerTransform.setAnchor({32, 16});
@@ -77,21 +87,30 @@ int main()
 
 	camera.setSize({ SCREEN_WIDTH, SCREEN_HEIGHT });
 
-	Timer       timer;
-	double      totalTime = 0.0;
-	uint64_t    frameCount = 0ull;
-	std::string fps = "FPS: 0";
-
 	//InitGame();
+	//startScreen.loadFromFile("assets/Texture/Startscreen.png");
+	auto start_Screen = ResourceManager::loadImage("assets/Texture/Startscreen.png");
+	auto endScreen = ResourceManager::loadImage("assets/Texture/Endscreen.png");	
+
+	//sf::RenderWindow Start(sf::VideoMode(startScreen.getSize().x, startScreen.getSize().y), "Start");
 
 	while(window)
 	{	
 		// Render loop
 		image.clear(Color::White);
-		//Update game
-		game.update();
+		//Display startscreen
+		//image.drawSprite(background);
+		//Start.clear();
+		//Start.draw(startSprite);
+		//Start.display();
 
-		window.present(game.getImage());
+		window.present(startScreen);
+		
+		//window.present(startend.getImage());
+		// Display game
+		//window.present(game.getImage());
+		// Update game
+		game.update();
 
 		if(Input::getButton("Reload"))
 		{
@@ -119,6 +138,20 @@ int main()
 					}
 				}
 				break;
+			}
+
+			//error if the image fails to load
+			if (!ResourceManager::loadImage("assets/Texture/Startscreen.png"))
+			{
+				std::cout << "Failed loading image" << std::endl;
+				return 1;
+			}
+
+			//error if the image fails to load
+			if (!ResourceManager::loadImage("assets/Texture/Endscreen.png"))
+			{
+				std::cout << "Failed loading image" << std::endl;
+				return 1;
 			}
 		}
 	}

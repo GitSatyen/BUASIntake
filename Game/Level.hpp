@@ -18,7 +18,7 @@ using namespace Math;
 
 struct Collider
 {
-    Math::AABB   aabb;
+    Math::AABB aabb;
 };
 
 class Level

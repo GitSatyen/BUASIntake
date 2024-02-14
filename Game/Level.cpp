@@ -140,9 +140,6 @@ void Level::draw(Graphics::Image& image, const glm::mat3 transform)
     }*/
     player.draw(image, camera);
 
-    //Keep track of the score
-    std::cout << "Score: " << score << std::endl;
-
     //Draw score on screen
     scoreCount = fmt::format("Gold: {:0} /56", score);
     image.drawText(Font::Default, scoreCount, 10, 30, Color::Yellow);
@@ -269,7 +266,7 @@ void Level::updateCollisions(float deltaTime)
         //Player is idle or running
         else
         {
-            // Check to see if the player is colliding with the top edge of the collider
+            //Check to see if the player is colliding with the top edge of the collider
             Line topEdge{ { colliderAABB.min.x + padding, colliderAABB.min.y, 0 }, { colliderAABB.max.x - padding, colliderAABB.min.y, 0 } };
             if (playerAABB.intersect(topEdge))
             {
@@ -278,22 +275,22 @@ void Level::updateCollisions(float deltaTime)
             }
         }
 
-        // Check to see if the player is colliding with the left edge of the collider.
+        //Check to see if the player is colliding with the left edge of the collider
         Line leftEdge{ { colliderAABB.min.x, colliderAABB.min.y + padding, 0 }, { colliderAABB.min.x, colliderAABB.max.y - padding, 0 } };
         if (playerAABB.intersect(leftEdge))
         {
-            // Set the player's position to the left edge of the collider
+            //Set the player's position to the left edge of the collider
             pos.x = colliderAABB.min.x - playerAABB.width() * 0.5f;
-            // And 0 the X velocity.
+            //And 0 the X velocity
             vel.x = 0.0f;
             
             continue;
         }
-        // Check to see if the player is colliding with the right edge of the collider
+        //Check to see if the player is colliding with the right edge of the collider
         Line rightEdge{ { colliderAABB.max.x, colliderAABB.min.y + padding, 0 }, { colliderAABB.max.x, colliderAABB.max.y - padding, 0 } };
         if (playerAABB.intersect(rightEdge))
         {
-            // Set the player's position to the right edge of the collider
+            //Set the player's position to the right edge of the collider
             pos.x = colliderAABB.max.x + playerAABB.width() * 0.5f;
             //and 0 the X velocity
             vel.x = 0.0f;
@@ -304,6 +301,9 @@ void Level::updateCollisions(float deltaTime)
 
     player.setPosition(pos);
     player.setVelocity(vel);
+
+    //Keep track of the score
+    std::cout << "Score: " << score << std::endl;
 }
 
 void Level::updatePickups(float deltaTime)
@@ -323,8 +323,6 @@ void Level::updatePickups(float deltaTime)
             checkPickupCollision(pickupCollider, colliderAABB, pos, vel);
         }
 
-       
-        
         //Update pickup's position and velocity
         pickup.setPosition(pos);
         pickup.setVelocity(vel);
