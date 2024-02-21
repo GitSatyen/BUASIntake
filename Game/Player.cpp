@@ -239,8 +239,6 @@ void Player::doRunning(float deltaTime)
 		setState(State::Idle);
 	}
 
-	
-
 	RunAnim.update(deltaTime);
 
 }

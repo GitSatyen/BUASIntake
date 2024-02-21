@@ -6,6 +6,7 @@
 #include <Graphics/Color.hpp>
 #include <Graphics/ResourceManager.hpp>
 #include <Graphics/Image.hpp>
+#include <Graphics/Sprite.hpp>
 #include <Graphics/TileMap.hpp>
 
 #include <fmt/core.h>
@@ -125,7 +126,13 @@ void Level::reset()
 {
 }
 
-void Level::draw(Graphics::Image& image, const glm::mat3 transform) 
+
+void Level::startscreen(Graphics::Image& image)
+{
+    
+}
+
+void Level::draw(Graphics::Image& image, const glm::mat3 transform)
 {
     tileMap.draw(image,  transform);
 
@@ -137,7 +144,7 @@ void Level::draw(Graphics::Image& image, const glm::mat3 transform)
    /* for (auto& effect : effects)
     {
         effect.draw(image);
-    }*/
+    }*/ 
     player.draw(image, camera);
 
     //Draw score on screen
@@ -300,10 +307,7 @@ void Level::updateCollisions(float deltaTime)
     }
 
     player.setPosition(pos);
-    player.setVelocity(vel);
-
-    //Keep track of the score
-    std::cout << "Score: " << score << std::endl;
+    player.setVelocity(vel);      
 }
 
 void Level::updatePickups(float deltaTime)
@@ -341,6 +345,8 @@ void Level::updatePickups(float deltaTime)
             pickups = allPickups.erase(pickups);
             //Ads point to the score on collision 
             score++;
+            //Keep track of the score
+            std::cout << "Score: " << score << std::endl;
         }
         else ++pickups;
     }

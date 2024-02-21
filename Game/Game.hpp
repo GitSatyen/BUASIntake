@@ -53,8 +53,5 @@ protected:
     size_t LevelId = 0u;
     // Which level plays next
     size_t nextLevelId = 0u;
-
-    // Player character
-    size_t currentCharacterId = 0u;
 };
 

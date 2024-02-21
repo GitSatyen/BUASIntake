@@ -25,24 +25,20 @@
 #include "Level.hpp"
 #include "Player.hpp"
 #include "Background.hpp"
-#include "StartEnd.hpp"
 
 using namespace Graphics;
 using namespace Math;
 
+const int SCREEN_WIDTH = 1920;
+const int SCREEN_HEIGHT = 1080;
+
 Window window;
-Image image;
-Image startScreen;
-Image endScreen;
+Image image{ SCREEN_WIDTH , SCREEN_HEIGHT};
 Sprite sprite;
-Sprite background;
 TileMap grassTiles;
 Camera2D camera;
 ldtk::Project project;
-
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
-
+glm::mat3 transform;
 
 float _x = SCREEN_WIDTH / 2;
 float _y = SCREEN_HEIGHT / 2 ;
@@ -77,7 +73,6 @@ int main()
 	});
 
 	Game game{ SCREEN_WIDTH, SCREEN_HEIGHT };
-	//StartEnd startend{ SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	window.create(L"Gold Fever", SCREEN_WIDTH, SCREEN_HEIGHT);
 	window.show();
@@ -89,27 +84,30 @@ int main()
 
 	//InitGame();
 	//startScreen.loadFromFile("assets/Texture/Startscreen.png");
-	auto start_Screen = ResourceManager::loadImage("assets/Texture/Startscreen.png");
-	auto endScreen = ResourceManager::loadImage("assets/Texture/Endscreen.png");	
+	auto startImage = ResourceManager::loadImage("assets/Texture/Startscreen.png");
+	
+	//error if the image fails to load
+	if (!ResourceManager::loadImage("assets/Texture/Startscreen.png"))
+	{
+		std::cout << "Failed loading image" << std::endl;
+		return 1;
+	}
 
-	//sf::RenderWindow Start(sf::VideoMode(startScreen.getSize().x, startScreen.getSize().y), "Start");
+	auto endImage = ResourceManager::loadImage("assets/Texture/Endscreen.png");	
 
+	Sprite startScr(startImage);
+	//startScreen(startImage);
 	while(window)
 	{	
 		// Render loop
-		image.clear(Color::White);
-		//Display startscreen
-		//image.drawSprite(background);
-		//Start.clear();
-		//Start.draw(startSprite);
-		//Start.display();
 
-		window.present(startScreen);
-		
-		//window.present(startend.getImage());
+		// Display startscreen		
+		image.copy(*startImage);
+		window.present(image);
+
 		// Display game
 		//window.present(game.getImage());
-		// Update game
+		//Update game
 		game.update();
 
 		if(Input::getButton("Reload"))
@@ -141,14 +139,7 @@ int main()
 			}
 
 			//error if the image fails to load
-			if (!ResourceManager::loadImage("assets/Texture/Startscreen.png"))
-			{
-				std::cout << "Failed loading image" << std::endl;
-				return 1;
-			}
-
-			//error if the image fails to load
-			if (!ResourceManager::loadImage("assets/Texture/Endscreen.png"))
+			if (!ResourceManager::loadImage("assets/Texture/Endscreeen.png"))
 			{
 				std::cout << "Failed loading image" << std::endl;
 				return 1;

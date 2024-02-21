@@ -52,9 +52,9 @@ void Game::update()
     level.update(timer.elapsedSeconds());
     //Clear level image
     image.clear(Color::Black);
-    //Draw level
+    // Draw level
     level.draw(image, camera);
-    //Update and draw background
+    // Update and draw background
     background.update(timer);
     background.draw(image);
 

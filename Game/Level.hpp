@@ -44,7 +44,9 @@ public:
         return player;
     }
 
-    void draw(Graphics::Image& image, const glm::mat3 transform);
+    void startscreen(Graphics::Image& image);
+
+    void draw(Graphics::Image& image, const glm::mat3 transform);  
 
     bool onGround = false;
 
@@ -82,6 +84,7 @@ private:
 
     // Level tile map.
     Graphics::TileMap tileMap;
+    Graphics::Image startScreen;
 
     Camera2D  camera;
     Player    player;
