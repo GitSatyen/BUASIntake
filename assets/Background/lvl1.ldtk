@@ -354,7 +354,7 @@
 			"limitScope": "PerLevel",
 			"limitBehavior": "MoveLastOne",
 			"pivotX": 0.5,
-			"pivotY": 0,
+			"pivotY": 0.5,
 			"fieldDefs": []
 		}
 	], "tilesets": [
@@ -1381,7 +1381,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [6,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1397,7 +1397,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [7,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1413,7 +1413,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [8,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1429,7 +1429,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [9,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1445,7 +1445,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [10,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1461,7 +1461,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [11,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1477,7 +1477,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [12,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1493,7 +1493,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [13,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1509,7 +1509,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [14,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1525,7 +1525,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [15,17],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1541,7 +1541,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [16,17],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1557,7 +1557,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [17,17],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1573,7 +1573,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [18,17],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1589,7 +1589,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [19,17],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1605,7 +1605,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [20,17],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1621,7 +1621,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [19,12],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1637,7 +1637,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [16,12],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1653,7 +1653,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [15,12],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1669,7 +1669,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [20,12],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1685,7 +1685,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [21,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1701,7 +1701,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [23,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1717,7 +1717,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [22,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1733,7 +1733,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [24,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1749,7 +1749,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [25,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1765,7 +1765,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [27,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1781,7 +1781,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [26,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1797,7 +1797,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [28,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1813,7 +1813,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [29,19],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1829,7 +1829,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [31,17],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1845,7 +1845,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [32,17],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1861,7 +1861,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [33,17],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1877,7 +1877,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [26,9],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1893,7 +1893,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [24,10],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1909,7 +1909,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [27,10],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1925,7 +1925,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [28,11],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1941,7 +1941,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [28,13],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1957,7 +1957,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [29,13],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1973,7 +1973,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [25,9],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -1989,7 +1989,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [7,13],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2005,7 +2005,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [8,13],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2021,7 +2021,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [8,12],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2037,7 +2037,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [11,10],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2053,7 +2053,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [10,9],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2069,7 +2069,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [9,9],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2085,7 +2085,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [8,10],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2101,7 +2101,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [8,11],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2117,7 +2117,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [2,9],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2133,7 +2133,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [3,9],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2149,7 +2149,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [32,9],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2165,7 +2165,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [33,9],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2181,7 +2181,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [13,8],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2197,7 +2197,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [14,8],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2213,7 +2213,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [15,8],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2229,7 +2229,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [20,8],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2245,7 +2245,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [21,8],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",
@@ -2261,7 +2261,7 @@
 						{
 							"__identifier": "Pickup",
 							"__grid": [22,8],
-							"__pivot": [0.5,0],
+							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
 							"__smartColor": "#FEE761",

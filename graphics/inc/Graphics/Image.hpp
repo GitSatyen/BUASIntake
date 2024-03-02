@@ -422,6 +422,9 @@ public:
     /// <returns></returns>
     Math::RectI getRect() const noexcept
     {
+
+
+
         return { 0, 0, static_cast<int>( m_width ), static_cast<int>( m_height ) };
     }
 

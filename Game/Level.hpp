@@ -24,6 +24,13 @@ struct Collider
 class Level
 {
 public:
+
+    enum class State
+    {
+        None,
+        EndState
+    };
+    //Default constructor
 	Level() = default;
 	Level(const ldtk::Project& project, const ldtk::World& world, const ldtk::Level& level);
 
@@ -31,6 +38,13 @@ public:
 
     //Reset level
     void reset();
+
+    void setState(State newState);
+
+    State getState() const noexcept
+    {
+        return state;
+    }
 
 
     //Checks for collision with the players AABBB for the pickups 
@@ -43,8 +57,6 @@ public:
     {
         return player;
     }
-
-    void startscreen(Graphics::Image& image);
 
     void draw(Graphics::Image& image, const glm::mat3 transform);  
 
@@ -94,4 +106,6 @@ private:
 
     uint64_t score = 0;
     std::string scoreCount = "Gold: ";
+
+    State state = State::None;
 };

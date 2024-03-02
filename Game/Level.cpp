@@ -102,9 +102,10 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
             auto& p = e.getPosition();
             auto& s = e.getSize();
             auto& gridP = e.getGridPosition();
+            
 
             auto& coinSprite = coinSprites["Coin"];
-            Sphere collider{ { p.x + 55, p.y + 50, 0 }, 5.7f };
+            Sphere collider{ { p.x + 55, p.y + 50, 0 }, 4.5f };
 
             allPickups.emplace_back(coinSprite, collider);
         }
@@ -120,16 +121,27 @@ void Level::update(float deltaTime)
         updateCollisions(deltaTime);
         updatePickups(deltaTime);
         updateEffects(deltaTime);
+
+        if(score == 10)
+        {
+            setState(State::EndState);
+        }
 }
 
 void Level::reset()
 {
 }
 
-
-void Level::startscreen(Graphics::Image& image)
+void Level::setState(State newState)
 {
-    
+    if (newState != state)
+    {
+        switch (newState)
+        {
+        case State::EndState:
+            break;
+        }
+    }
 }
 
 void Level::draw(Graphics::Image& image, const glm::mat3 transform)
@@ -146,7 +158,7 @@ void Level::draw(Graphics::Image& image, const glm::mat3 transform)
         effect.draw(image);
     }*/ 
     player.draw(image, camera);
-
+    
     //Draw score on screen
     scoreCount = fmt::format("Gold: {:0} /56", score);
     image.drawText(Font::Default, scoreCount, 10, 30, Color::Yellow);

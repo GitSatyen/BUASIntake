@@ -124,7 +124,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)lib\$(Configuration);c:\SFML-2.6.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>audio.lib;graphics.lib;glad.lib;math.lib;fmt.lib;LDtkLoader.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml.audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>audio.lib;graphics.lib;glad.lib;math.lib;fmt.lib;LDtkLoader.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>

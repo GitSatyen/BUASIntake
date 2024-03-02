@@ -1,6 +1,7 @@
 #include <LDtkLoader/Project.hpp>
 #include <include/SFML/Graphics.hpp>
 #include <include/SFML/Window.hpp>
+#include <stb_image.h>
 
 #include <Graphics/Window.hpp>
 #include <Graphics/Image.hpp>
@@ -32,6 +33,9 @@ using namespace Math;
 const int SCREEN_WIDTH = 1920;
 const int SCREEN_HEIGHT = 1080;
 
+float _x = SCREEN_WIDTH / 2;
+float _y = SCREEN_HEIGHT / 2;
+
 Window window;
 Image image{ SCREEN_WIDTH , SCREEN_HEIGHT};
 Sprite sprite;
@@ -40,8 +44,7 @@ Camera2D camera;
 ldtk::Project project;
 glm::mat3 transform;
 
-float _x = SCREEN_WIDTH / 2;
-float _y = SCREEN_HEIGHT / 2 ;
+extern Level::State state;
 
 glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
 
@@ -72,7 +75,7 @@ int main()
 		return b || enter || r;
 	});
 
-	Game game{ SCREEN_WIDTH, SCREEN_HEIGHT };
+	Game game{ 800, 600 };
 
 	window.create(L"Gold Fever", SCREEN_WIDTH, SCREEN_HEIGHT);
 	window.show();
@@ -84,7 +87,7 @@ int main()
 
 	//InitGame();
 	//startScreen.loadFromFile("assets/Texture/Startscreen.png");
-	auto startImage = ResourceManager::loadImage("assets/Texture/Startscreen.png");
+	auto startScreen = ResourceManager::loadImage("assets/Texture/Startscreen.png");
 	
 	//error if the image fails to load
 	if (!ResourceManager::loadImage("assets/Texture/Startscreen.png"))
@@ -93,22 +96,34 @@ int main()
 		return 1;
 	}
 
-	auto endImage = ResourceManager::loadImage("assets/Texture/Endscreen.png");	
+	auto endScreen = ResourceManager::loadImage("assets/Texture/Endscreen.png");	
 
-	Sprite startScr(startImage);
-	//startScreen(startImage);
 	while(window)
 	{	
 		// Render loop
 
 		// Display startscreen		
-		image.copy(*startImage);
-		window.present(image);
-
+		image.copy(*startScreen);
+		image.copy(*endScreen);
+		//window.present(image);
+		
+		//if (Input::getKey(KeyCode::Enter))
+		//{
+		//	//startScreen.swap(game.getImage());
+		//	startScreen = nullptr;
+		//	window.present(game.getImage());
+		//}
 		// Display game
-		//window.present(game.getImage());
+		window.present(game.getImage());
 		//Update game
 		game.update();
+
+		switch(Level::State::None)
+		{
+		case Level::State::EndState:
+			window.present(image);
+				break;
+		}
 
 		if(Input::getButton("Reload"))
 		{
