@@ -20,12 +20,21 @@ using namespace Graphics;
 
 //ldtk::Project project;
 
+static std::map <Level::State, std::string> statemap = {
+    {Level::State::None, "State: None"},
+     {Level::State::StartState, "State: Startstate"},
+     {Level::State::EndState, "State: Endstate"}
+};
+
 Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk::Level& level)
     : world{ &world }
     ,level{ &level }
     ,levelName{ level.name }
 
 {
+
+        setState(State::None);
+
         const std::filesystem::path projectPath = project.getFilePath().directory();
 
         //Parse Layers
@@ -118,14 +127,10 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
 
 void Level::update(float deltaTime)
 {
-        updateCollisions(deltaTime);
-        updatePickups(deltaTime);
-        updateEffects(deltaTime);
+    updateCollisions(deltaTime);
+    updatePickups(deltaTime);
+    updateEffects(deltaTime);
 
-        if(score == 10)
-        {
-            setState(State::EndState);
-        }
 }
 
 void Level::reset()
@@ -138,14 +143,22 @@ void Level::setState(State newState)
     {
         switch (newState)
         {
+        case State::None:
+            break;
         case State::EndState:
             break;
         }
+        state = newState;
     }
 }
 
 void Level::draw(Graphics::Image& image, const glm::mat3 transform)
 {
+
+    auto startScreen = ResourceManager::loadImage("assets/Texture/Startscreen.png");
+    Sprite start(startScreen);
+   
+    
     tileMap.draw(image,  transform);
 
     for (auto& pickup : allPickups)
@@ -162,12 +175,14 @@ void Level::draw(Graphics::Image& image, const glm::mat3 transform)
     //Draw score on screen
     scoreCount = fmt::format("Gold: {:0} /56", score);
     image.drawText(Font::Default, scoreCount, 10, 30, Color::Yellow);
+    image.drawText(Font::Default, statemap[state], 10, 50, Color::Cyan);
 
 #if _DEBUG
     for (const auto& collider : colliders)
     {
         image.drawAABB(transform * collider.aabb, Color::Red, BlendMode::Disable, FillMode::WireFrame);
     }
+    image.drawText(Font::Default, statemap[state], 10, 50, Color::Cyan);
 #endif
 }
 
@@ -362,6 +377,12 @@ void Level::updatePickups(float deltaTime)
         }
         else ++pickups;
     }
+
+    if (score == 10)
+    {
+        setState(State::EndState);
+    }
+   
 }
 
 //void Level::addPickup(std::string_view name, const glm::vec2& pos)

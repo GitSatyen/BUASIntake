@@ -28,8 +28,10 @@ public:
     enum class State
     {
         None,
+        StartState,
         EndState
     };
+
     //Default constructor
 	Level() = default;
 	Level(const ldtk::Project& project, const ldtk::World& world, const ldtk::Level& level);
@@ -96,7 +98,6 @@ private:
 
     // Level tile map.
     Graphics::TileMap tileMap;
-    Graphics::Image startScreen;
 
     Camera2D  camera;
     Player    player;

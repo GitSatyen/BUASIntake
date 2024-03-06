@@ -21,36 +21,44 @@
 
 #include <iostream>
 #include <string_view>
+#include <Windows.h>
 
 #include "Game.hpp"
-#include "Level.hpp"
+//#include "Level.hpp"
 #include "Player.hpp"
 #include "Background.hpp"
 
 using namespace Graphics;
 using namespace Math;
 
-const int SCREEN_WIDTH = 1920;
-const int SCREEN_HEIGHT = 1080;
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
 
 float _x = SCREEN_WIDTH / 2;
 float _y = SCREEN_HEIGHT / 2;
 
 Window window;
-Image image{ SCREEN_WIDTH , SCREEN_HEIGHT};
+Image image/*{ SCREEN_WIDTH , SCREEN_HEIGHT}*/;
 Sprite sprite;
 TileMap grassTiles;
 Camera2D camera;
 ldtk::Project project;
 glm::mat3 transform;
 
-extern Level::State state;
-
 glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
 
 size_t CurrLevelId = 0u;
-//Which level plays next
+// Which level plays next
 size_t nextLevelId = 0u;
+
+ enum class Status
+    {
+        Start,
+        Active,
+        End
+    };
+
+ Status status = Status::Start;
 
 void InitGame()
 {
@@ -58,6 +66,7 @@ void InitGame()
 	//player.setPosition({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 });
 	//camera.setOrigin(player.getPosition());
 }
+
 
 int main()
 {
@@ -75,9 +84,9 @@ int main()
 		return b || enter || r;
 	});
 
-	Game game{ 800, 600 };
+	Game game{ SCREEN_WIDTH, SCREEN_HEIGHT };
 
-	window.create(L"Gold Fever", SCREEN_WIDTH, SCREEN_HEIGHT);
+	window.create(L"Gold Adventure", SCREEN_WIDTH, SCREEN_HEIGHT);
 	window.show();
 	window.setFullscreen(true);
 	//PlayerTransform.setAnchor({32, 16});
@@ -89,7 +98,7 @@ int main()
 	//startScreen.loadFromFile("assets/Texture/Startscreen.png");
 	auto startScreen = ResourceManager::loadImage("assets/Texture/Startscreen.png");
 	
-	//error if the image fails to load
+	// error if the image fails to load
 	if (!ResourceManager::loadImage("assets/Texture/Startscreen.png"))
 	{
 		std::cout << "Failed loading image" << std::endl;
@@ -100,30 +109,30 @@ int main()
 
 	while(window)
 	{	
-		// Render loop
-
-		// Display startscreen		
-		image.copy(*startScreen);
-		image.copy(*endScreen);
-		//window.present(image);
-		
-		//if (Input::getKey(KeyCode::Enter))
-		//{
-		//	//startScreen.swap(game.getImage());
-		//	startScreen = nullptr;
-		//	window.present(game.getImage());
-		//}
-		// Display game
-		window.present(game.getImage());
-		//Update game
-		game.update();
-
-		switch(Level::State::None)
+		switch(status)
 		{
-		case Level::State::EndState:
-			window.present(image);
-				break;
+		case Status::Start:
+			if (Input::getKey(KeyCode::Enter))
+				status = Status::Active;
+			window.present(*startScreen);
+			break;
+		case Status::Active:
+			window.present(game.getImage());
+			if (Input::getKey(KeyCode::Q))
+				status = Status::End;
+			break;
+		case Status::End:
+			window.present(*endScreen);
+			break;
 		}
+
+		// Render loop
+		// Display startscreen		
+	
+		// Display game
+		//window.present(game.getImage());
+		// Update game
+		game.update();
 
 		if(Input::getButton("Reload"))
 		{
@@ -148,13 +157,16 @@ int main()
 					case KeyCode::V:
 						window.toggleVSync();
 						break;
+					case KeyCode::F11:
+						window.toggleFullscreen();
+						break;
 					}
 				}
 				break;
 			}
 
 			//error if the image fails to load
-			if (!ResourceManager::loadImage("assets/Texture/Endscreeen.png"))
+			if (!ResourceManager::loadImage("assets/Texture/Endscreen.png"))
 			{
 				std::cout << "Failed loading image" << std::endl;
 				return 1;

@@ -58,6 +58,7 @@ void Game::update()
     background.update(timer);
     background.draw(image);
 
+    image.drawText(Font::Default, fps, 10, 10, Color::Magenta);
 #if _DEBUG
     image.drawText(Font::Default, fps, 10, 10, Color::Magenta);
 #endif

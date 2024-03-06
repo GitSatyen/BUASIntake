@@ -27,7 +27,7 @@ Image::Image( const std::filesystem::path& fileName )
     unsigned char* data = stbi_load( fileName.string().c_str(), &x, &y, &n, STBI_rgb_alpha );
     if ( !data )
     {
-        std::cerr << "ERROR: Could not load: " << fileName.string() << std::endl;
+        std::cerr << "ERROR: Could not load: " << (std::filesystem::current_path() / fileName).string() << std::endl;
         return;
     }
 
@@ -627,10 +627,11 @@ void Image::drawSprite( const Sprite& sprite, int x, int y ) noexcept
         const int sx = ( sX + uv.x ) + x;
         const int sy = ( sY + uv.y ) + y;
 
-        Color dC = dst[dy * m_width + dx];
-        Color sC = src[sy * iW + sx] * color;
+        //Color dC = dst[dy * m_width + dx];
+        Color sC = src[sy * iW + sx];// * color;
 
-        dst[dy * m_width + dx] = blendMode.Blend( sC, dC );
+        if (sC.a > 127)
+            dst[dy * m_width + dx] = sC; // blendMode.Blend( sC, dC );
     }
 }
 

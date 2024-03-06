@@ -111,11 +111,6 @@ void Player::update(float deltaTime)
 
 	// Update player position.
 	transform.translate(glm::vec2{ velocity.x, -velocity.y } *deltaTime);
-
-	//if (currentCharacter)
-	//{
-	//	currentCharacter->update(deltaTime);
-	//}
 }
 
 void Player::draw(Graphics::Image& image, const Math::Camera2D& camera)

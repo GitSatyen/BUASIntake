@@ -32,4 +32,6 @@ void Background::draw(Graphics::Image& image/*, const glm::vec2& offset*/) const
 	};
 
 	image.drawQuad(v[0], v[1], v[2], v[3], *background, AddressMode::Wrap);
+
+	
 }
