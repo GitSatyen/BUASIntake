@@ -36,7 +36,7 @@ public:
 
 	void update(float deltaTime) override;
 
-	void draw(Graphics::Image& image, const Math::Camera2D& camera) override;
+	void draw(Graphics::Image& image) override;
 
 private:
 	void setState(State newState);

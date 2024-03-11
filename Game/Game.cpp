@@ -46,10 +46,9 @@ void Game::update()
     }
 
     //Update Input
-    auto elapsedTime = static_cast<float>(timer.elapsedSeconds());
-    Input::update();
+    auto elapsedTime = std::min(static_cast<float>(timer.elapsedSeconds()), 1.0f/30.0f);
     //Update level 
-    level.update(timer.elapsedSeconds());
+    level.update(elapsedTime);
     //Clear level image
     image.clear(Color::Black);
     // Draw level

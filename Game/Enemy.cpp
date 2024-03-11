@@ -41,21 +41,21 @@ void Enemy::update(float deltaTime)
 }
 
 
-void Enemy::draw(Graphics::Image& image, const Math::Camera2D& camera)
+void Enemy::draw(Graphics::Image& image)
 {
     switch (state)
     {
     case State::Idle:
-        image.drawSprite(idleAnim, camera * transform);
+        image.drawSprite(idleAnim, transform);
         break;
     case State::Running:
         // TODO: draw running animation.
         break;
     }
 #if _DEBUG
-    image.drawAABB(camera * getAABB(), Color::Yellow, {}, FillMode::WireFrame);
-    auto pos = camera * transform;
-    image.drawText(Font::Default, "State...", pos[2][0], pos[2][1], Color::Black);
+    image.drawAABB(getAABB(), Color::Yellow, {}, FillMode::WireFrame);
+    auto pos = transform.getPosition();
+    image.drawText(Font::Default, "State...", pos.x, pos.y, Color::Black);
 #endif
 }
 

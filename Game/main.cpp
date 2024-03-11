@@ -1,6 +1,4 @@
 #include <LDtkLoader/Project.hpp>
-#include <include/SFML/Graphics.hpp>
-#include <include/SFML/Window.hpp>
 #include <stb_image.h>
 
 #include <Graphics/Window.hpp>
@@ -88,7 +86,7 @@ int main()
 
 	window.create(L"Gold Adventure", SCREEN_WIDTH, SCREEN_HEIGHT);
 	window.show();
-	window.setFullscreen(true);
+//	window.setFullscreen(true);
 	//PlayerTransform.setAnchor({32, 16});
 	//window.toggleVSync();
 
@@ -108,7 +106,9 @@ int main()
 	auto endScreen = ResourceManager::loadImage("assets/Texture/Endscreen.png");	
 
 	while(window)
-	{	
+	{
+		Input::update();
+
 		switch(status)
 		{
 		case Status::Start:
@@ -117,6 +117,7 @@ int main()
 			window.present(*startScreen);
 			break;
 		case Status::Active:
+			game.update();
 			window.present(game.getImage());
 			if (Input::getKey(KeyCode::Q))
 				status = Status::End;
@@ -132,7 +133,6 @@ int main()
 		// Display game
 		//window.present(game.getImage());
 		// Update game
-		game.update();
 
 		if(Input::getButton("Reload"))
 		{

@@ -21,11 +21,10 @@ static std::map <Player::State, std::string> stateMap = {
 };
 
 Player::Player(const glm::vec2 & pos)
-	//: Entity{ pos, AABB{{18, 10, 0}, {36, 43, 0}} }
-	//: position{ pos }
-	: aabb{ {25, 5, 0}, {45, 40, 0} }
 {
-	auto idle_sprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/01-Idle/Idle.png", 66, 40, 0, 0, BlendMode::AlphaBlend);
+	aabb = AABB{ {25, 5, 0}, {45, 40, 0} };
+
+    auto idle_sprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/01-Idle/Idle.png", 66, 40, 0, 0, BlendMode::AlphaBlend);
 	IdleAnim = SpriteAnim{ idle_sprites, 6 };
 
 	auto runSprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/02-Run/Run.png", 66, 40, 0, 0, BlendMode::AlphaBlend);
@@ -113,52 +112,32 @@ void Player::update(float deltaTime)
 	transform.translate(glm::vec2{ velocity.x, -velocity.y } *deltaTime);
 }
 
-void Player::draw(Graphics::Image& image, const Math::Camera2D& camera)
+void Player::draw(Graphics::Image& image)
 {
 	switch (state)
 	{
 	case State::Idle:
-		image.drawSprite(IdleAnim, camera * transform);
+		image.drawSprite(IdleAnim, transform);
 		break;
 	case State::Running:
-		image.drawSprite(RunAnim, camera * transform);
+		image.drawSprite(RunAnim, transform);
 		break;
 	case State::Jumping:
-		image.drawSprite(JumpAnim, camera * transform);
+		image.drawSprite(JumpAnim, transform);
 		break;
 	case State::Falling:
-		image.drawSprite(FallAnim, camera * transform);
+		image.drawSprite(FallAnim, transform);
 	}
 #if _DEBUG
-	image.drawAABB(camera * getAABB(), Color::Yellow, {}, FillMode::WireFrame);
-	auto pos = camera * transform;
-	image.drawText(Font::Default, stateMap[state], pos[2][0], pos[2][1], Color::Cyan);
+	image.drawAABB(getAABB(), Color::Yellow, {}, FillMode::WireFrame);
+	auto pos = transform.getPosition();
+	image.drawText(Font::Default, stateMap[state], pos.x, pos.y - 50.0f, Color::Cyan);
 #endif
 }
 
 void Player::Gravity(float deltaTime)
 {
 	velocity.y += gravity * deltaTime;
-}
-
-void Player::setPosition(const glm::vec2& pos)
-{
-	transform.setPosition(pos);
-}
-
-const glm::vec2& Player::getPosition() const
-{
-	return transform.getPosition();
-}
-
-void Player::translate(const glm::vec2& t)
-{
-	transform.translate(t);
-}
-
-const Math::AABB Player::getAABB() const
-{
-	return transform * aabb;
 }
 
 void Player::setState(State newState)

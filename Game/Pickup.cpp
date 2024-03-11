@@ -32,7 +32,7 @@ void Pickup::draw(Graphics::Image& image) const
         return;
 
     const size_t frame = static_cast<size_t>(time * static_cast<float>(frameRate)) % spriteSheet->getNumSprites();
-    image.drawSprite((*spriteSheet)[frame], transform);
+//    image.drawSprite((*spriteSheet)[frame], transform);
 
 #if _DEBUG
     image.drawCircle(sphere, Graphics::Color::Yellow, {}, Graphics::FillMode::WireFrame);
