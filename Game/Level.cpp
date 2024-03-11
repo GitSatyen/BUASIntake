@@ -13,11 +13,10 @@
 #include <map>
 #include <string>
 
-//#include <numbers>
-
 using namespace Math;
 using namespace Graphics;
 
+bool Finished = false;
 //ldtk::Project project;
 
 static std::map <Level::State, std::string> statemap = {
@@ -32,9 +31,6 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
     ,levelName{ level.name }
 
 {
-
-        setState(State::None);
-
         const std::filesystem::path projectPath = project.getFilePath().directory();
 
         //Parse Layers
@@ -137,29 +133,9 @@ void Level::reset()
 {
 }
 
-void Level::setState(State newState)
-{
-    if (newState != state)
-    {
-        switch (newState)
-        {
-        case State::None:
-            break;
-        case State::EndState:
-            break;
-        }
-        state = newState;
-    }
-}
-
 void Level::draw(Graphics::Image& image, const glm::mat3 transform)
 {
-
-    auto startScreen = ResourceManager::loadImage("assets/Texture/Startscreen.png");
-    Sprite start(startScreen);
-   
-    
-    tileMap.draw(image,  transform);
+   tileMap.draw(image,  transform);
 
     for (auto& pickup : allPickups)
     {
@@ -175,20 +151,26 @@ void Level::draw(Graphics::Image& image, const glm::mat3 transform)
     //Draw score on screen
     scoreCount = fmt::format("Gold: {:0} /56", score);
     image.drawText(Font::Default, scoreCount, 10, 30, Color::Yellow);
-    image.drawText(Font::Default, statemap[state], 10, 50, Color::Cyan);
+    //image.drawText(Font::Default, statemap[state], 10, 50, Color::Cyan);
 
 #if _DEBUG
     for (const auto& collider : colliders)
     {
         image.drawAABB(transform * collider.aabb, Color::Red, BlendMode::Disable, FillMode::WireFrame);
     }
-    image.drawText(Font::Default, statemap[state], 10, 50, Color::Cyan);
+    //image.drawText(Font::Default, statemap[state], 10, 50, Color::Cyan);
 #endif
 }
 
 
 void Level::checkPickupCollision(const Math::Sphere& pickupCollider, const Math::AABB& colliderAABB, glm::vec2& pos, glm::vec2& vel)
 {
+
+    if(colliderAABB.intersect(pickupCollider))
+    {
+
+    }
+
     //Check to see if the pickup is colliding with the top edge of the collider
     Line topEdge{ { colliderAABB.min.x, colliderAABB.min.y, 0 }, { colliderAABB.max.x, colliderAABB.min.y, 0 } };
     if (pickupCollider.intersect(topEdge))
@@ -307,6 +289,10 @@ void Level::updateCollisions(float deltaTime)
                     onGround = true;   
                     player.setState(Player::State::Idle);
             }
+            else if (onGround = false) 
+            {
+
+            }
         }
 
         //Check to see if the player is colliding with the left edge of the collider
@@ -339,25 +325,25 @@ void Level::updateCollisions(float deltaTime)
 
 void Level::updatePickups(float deltaTime)
 { 
-    for (auto& pickup : allPickups)
-    {
-        pickup.update(deltaTime);
+    //for (auto& pickup : allPickups)
+    //{
+    //    pickup.update(deltaTime);
 
-        Sphere    pickupCollider = pickup.getCollider();
-        glm::vec2 pos = pickup.getPosition();
-        glm::vec2 vel = pickup.getVelocity();
+    //    Sphere    pickupCollider = pickup.getCollider();
+    //    glm::vec2 pos = pickup.getPosition();
+    //    glm::vec2 vel = pickup.getVelocity();
 
-        //Check if the pickup collides with a level collider
-        for (auto& collider : colliders)
-        {
-            AABB colliderAABB = collider.aabb;
-            checkPickupCollision(pickupCollider, colliderAABB, pos, vel);
-        }
+    //    //Check if the pickup collides with a level collider
+    //    for (auto& collider : colliders)
+    //    {
+    //        AABB colliderAABB = collider.aabb;
+    //        checkPickupCollision(pickupCollider, colliderAABB, pos, vel);
+    //    }
 
-        //Update pickup's position and velocity
-        pickup.setPosition(pos);
-        pickup.setVelocity(vel);
-    }  
+    //    //Update pickup's position and velocity
+    //    pickup.setPosition(pos);
+    //    pickup.setVelocity(vel);
+    //}  
 
     //Check player collision
     //Get player AABB
@@ -380,7 +366,7 @@ void Level::updatePickups(float deltaTime)
 
     if (score == 10)
     {
-        setState(State::EndState);
+        Finished = true;
     }
    
 }

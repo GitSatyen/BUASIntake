@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "Background.hpp"
+#include "States.hpp"
 
 #include <Graphics/Color.hpp>
 #include <Graphics/Input.hpp>
@@ -9,9 +10,17 @@
 #include <glm/vec2.hpp>
 
 #include <fmt/core.h>
+#include <thread>
 #include <string>
 
+extern bool gameActive;
 using namespace Graphics;
+
+static std::map <Status, std::string> statemap = {
+    {Status::Start, "State: Start"},
+     {Status::Active, "State: Active"},
+     {Status::End, "State: End"}
+};
 
 Game::Game(uint32_t screenWidth, uint32_t screenHeight)
     : image{ screenWidth, screenHeight }
@@ -49,7 +58,9 @@ void Game::update()
     auto elapsedTime = static_cast<float>(timer.elapsedSeconds());
     Input::update();
     //Update level 
-    level.update(timer.elapsedSeconds());
+    if (gameActive == true) {
+        level.update(timer.elapsedSeconds());
+    }
     //Clear level image
     image.clear(Color::Black);
     // Draw level
@@ -61,6 +72,7 @@ void Game::update()
     image.drawText(Font::Default, fps, 10, 10, Color::Magenta);
 #if _DEBUG
     image.drawText(Font::Default, fps, 10, 10, Color::Magenta);
+    image.drawText(Font::Default, statemap[state], 10, 50, Color::Cyan);
 #endif
 }
 
