@@ -135,7 +135,7 @@ void Level::reset()
 
 void Level::draw(Graphics::Image& image, const glm::mat3 transform)
 {
-   tileMap.draw(image,  transform);
+
 
     for (auto& pickup : allPickups)
     {
@@ -146,7 +146,7 @@ void Level::draw(Graphics::Image& image, const glm::mat3 transform)
     {
         effect.draw(image);
     }*/ 
-    player.draw(image, camera);
+    player.draw(image);
     
     //Draw score on screen
     scoreCount = fmt::format("Gold: {:0} /56", score);
@@ -325,25 +325,6 @@ void Level::updateCollisions(float deltaTime)
 
 void Level::updatePickups(float deltaTime)
 { 
-    //for (auto& pickup : allPickups)
-    //{
-    //    pickup.update(deltaTime);
-
-    //    Sphere    pickupCollider = pickup.getCollider();
-    //    glm::vec2 pos = pickup.getPosition();
-    //    glm::vec2 vel = pickup.getVelocity();
-
-    //    //Check if the pickup collides with a level collider
-    //    for (auto& collider : colliders)
-    //    {
-    //        AABB colliderAABB = collider.aabb;
-    //        checkPickupCollision(pickupCollider, colliderAABB, pos, vel);
-    //    }
-
-    //    //Update pickup's position and velocity
-    //    pickup.setPosition(pos);
-    //    pickup.setVelocity(vel);
-    //}  
 
     //Check player collision
     //Get player AABB

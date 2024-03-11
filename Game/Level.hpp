@@ -92,7 +92,6 @@ private:
     // Level tile map.
     Graphics::TileMap tileMap;
 
-    Camera2D  camera;
     Player    player;
 
     glm::vec2 playerStart{ 0 };

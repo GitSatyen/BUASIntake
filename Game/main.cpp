@@ -89,7 +89,7 @@ int main()
 
 	window.create(L"Gold Adventure", SCREEN_WIDTH, SCREEN_HEIGHT);
 	window.show();
-	window.setFullscreen(true);
+//	window.setFullscreen(true);
 	//PlayerTransform.setAnchor({32, 16});
 	//window.toggleVSync();
 
@@ -109,7 +109,9 @@ int main()
 	auto endScreen = ResourceManager::loadImage("assets/Texture/Endscreen.png");	
 
 	while(window)
-	{	
+	{
+		Input::update();
+
 		switch(status)
 		{
 		case Status::Start:
@@ -118,10 +120,7 @@ int main()
 			window.present(*startScreen);
 			break;
 		case Status::Active:
-			
-			gameActive = true;
-			window.present(game.getImage());		
-			if(Finished == true || Input::getKey(KeyCode::G))
+
 				status = Status::End;
 			break;
 		case Status::End:
@@ -133,7 +132,6 @@ int main()
 
 		// Render loop
 		// Update game
-		game.update();
 
 		if(Input::getButton("Reload"))
 		{

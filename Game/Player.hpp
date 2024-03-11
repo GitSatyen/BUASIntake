@@ -33,8 +33,7 @@ public:
 		Dead
 	};
 	// Default constructor
-	Player() {};
-	//Player() = default;
+	Player() = default;
 	//Copy constructor;
 	/*Player(const Player&) = default;
 	Player(Player&&) = default;
@@ -51,7 +50,7 @@ public:
 	}
 
 	virtual void update(float deltaTime) override;
-	virtual void draw(Graphics::Image& image, const Math::Camera2D& camera) override;
+	virtual void draw(Graphics::Image& image) override;
 	virtual void Gravity(float deltaTime);
 
 	void setVelocity(const glm::vec2& vel) noexcept
@@ -63,16 +62,7 @@ public:
 		return velocity;
 	}
 
-	void setPosition(const glm::vec2& pos);	
-	const glm::vec2& getPosition() const;
-
-	void translate(const glm::vec2& t);
-	const Math::AABB getAABB() const;
-
 private:
-	void startState(State oldState, State newState);
-	void endState(State oldState, State newState);
-
 	void doMovement(float delatime);
 	void doIdle(float deltaTime);
 	void doRunning(float deltaTime);
@@ -80,8 +70,6 @@ private:
 	void doJumping(float deltaTime);
 
 
-	Math::Transform2D transform;
-	glm::vec2 position{ 0 };
 	glm::vec2 velocity { 0 };
 	float speed{ 60.0f };
 	bool onGround = true;
@@ -101,5 +89,4 @@ private:
 	Graphics::SpriteAnim JumpAnim;
 	Graphics::SpriteAnim FallAnim;
 	Graphics::SpriteAnim AttackAnim;
-	Math::AABB aabb;
 };

@@ -11,7 +11,7 @@ public:
 	virtual ~Entity() = default;
 
 	virtual void update(float deltaTime) = 0;
-	virtual void draw(Graphics::Image& image, const Math::Camera2D& camera) = 0;
+	virtual void draw(Graphics::Image& image) = 0;
 
 	void setPosition(const glm::vec2& pos);
 	const glm::vec2& getPosition() const;
