@@ -41,14 +41,6 @@ public:
     //Reset level
     void reset();
 
-    void setState(State newState);
-
-    State getState() const noexcept
-    {
-        return state;
-    }
-
-
     //Checks for collision with the players AABBB for the pickups 
     bool colliding(const Player& player)
     {
@@ -63,6 +55,7 @@ public:
     void draw(Graphics::Image& image, const glm::mat3 transform);  
 
     bool onGround = false;
+    
 
 protected:
     

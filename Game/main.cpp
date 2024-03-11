@@ -14,6 +14,7 @@
 #include <Math/Transform2D.hpp>
 #include <Math/Camera2D.hpp>
 
+
 #include <fmt/core.h>
 #include <glm/vec2.hpp>
 
@@ -22,9 +23,10 @@
 #include <Windows.h>
 
 #include "Game.hpp"
-//#include "Level.hpp"
+#include "Level.hpp"
 #include "Player.hpp"
 #include "Background.hpp"
+#include "States.hpp"
 
 using namespace Graphics;
 using namespace Math;
@@ -36,7 +38,7 @@ float _x = SCREEN_WIDTH / 2;
 float _y = SCREEN_HEIGHT / 2;
 
 Window window;
-Image image/*{ SCREEN_WIDTH , SCREEN_HEIGHT}*/;
+Image image{ SCREEN_WIDTH , SCREEN_HEIGHT};
 Sprite sprite;
 TileMap grassTiles;
 Camera2D camera;
@@ -49,12 +51,8 @@ size_t CurrLevelId = 0u;
 // Which level plays next
 size_t nextLevelId = 0u;
 
- enum class Status
-    {
-        Start,
-        Active,
-        End
-    };
+bool gameActive = false;
+extern bool Finished;
 
  Status status = Status::Start;
 
@@ -65,6 +63,9 @@ void InitGame()
 	//camera.setOrigin(player.getPosition());
 }
 
+void update()
+{
+}
 
 int main()
 {
@@ -81,6 +82,8 @@ int main()
 
 		return b || enter || r;
 	});
+
+	Input::update();
 
 	Game game{ SCREEN_WIDTH, SCREEN_HEIGHT };
 
@@ -117,21 +120,17 @@ int main()
 			window.present(*startScreen);
 			break;
 		case Status::Active:
-			game.update();
-			window.present(game.getImage());
-			if (Input::getKey(KeyCode::Q))
+
 				status = Status::End;
 			break;
 		case Status::End:
 			window.present(*endScreen);
+			if (Input::getKey(KeyCode::Enter))
+				window.destroy();
 			break;
 		}
 
 		// Render loop
-		// Display startscreen		
-	
-		// Display game
-		//window.present(game.getImage());
 		// Update game
 
 		if(Input::getButton("Reload"))

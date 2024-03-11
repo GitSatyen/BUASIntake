@@ -3,6 +3,7 @@
 #include "Background.hpp"
 #include "Level.hpp"
 #include "Player.hpp"
+#include "States.hpp"
 
 #include <Graphics/Events.hpp>
 #include <Graphics/Font.hpp>
@@ -53,5 +54,8 @@ protected:
     size_t LevelId = 0u;
     // Which level plays next
     size_t nextLevelId = 0u;
+
+    //Current status of the game
+    Status state;
 };
 
