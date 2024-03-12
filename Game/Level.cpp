@@ -72,7 +72,7 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
             }
         }
 
-        // Parse the level tile map.
+        // Parse the level tile map
         {
             const auto& TerrainLayer = level.getLayer("Terrain");
             const auto& intGrid = level.getLayer("Terrain");
@@ -135,7 +135,7 @@ void Level::reset()
 
 void Level::draw(Graphics::Image& image, const glm::mat3 transform)
 {
-
+    tileMap.draw(image, transform);
 
     for (auto& pickup : allPickups)
     {
@@ -325,7 +325,6 @@ void Level::updateCollisions(float deltaTime)
 
 void Level::updatePickups(float deltaTime)
 { 
-
     //Check player collision
     //Get player AABB
     AABB playerAABB = player.getAABB();
@@ -345,7 +344,7 @@ void Level::updatePickups(float deltaTime)
         else ++pickups;
     }
 
-    if (score == 10)
+    if (score == 56)
     {
         Finished = true;
     }

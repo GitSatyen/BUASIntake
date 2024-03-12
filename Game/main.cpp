@@ -14,7 +14,6 @@
 #include <Math/Transform2D.hpp>
 #include <Math/Camera2D.hpp>
 
-
 #include <fmt/core.h>
 #include <glm/vec2.hpp>
 
@@ -25,7 +24,6 @@
 #include "Game.hpp"
 #include "Level.hpp"
 #include "Player.hpp"
-#include "Background.hpp"
 #include "States.hpp"
 
 using namespace Graphics;
@@ -54,17 +52,13 @@ size_t nextLevelId = 0u;
 bool gameActive = false;
 extern bool Finished;
 
- Status status = Status::Start;
+Status status = Status::Start;
 
 void InitGame()
 {
 	//glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
 	//player.setPosition({ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 });
 	//camera.setOrigin(player.getPosition());
-}
-
-void update()
-{
 }
 
 int main()
@@ -89,7 +83,7 @@ int main()
 
 	window.create(L"Gold Adventure", SCREEN_WIDTH, SCREEN_HEIGHT);
 	window.show();
-//	window.setFullscreen(true);
+	window.setFullscreen(true);
 	//PlayerTransform.setAnchor({32, 16});
 	//window.toggleVSync();
 
@@ -120,8 +114,10 @@ int main()
 			window.present(*startScreen);
 			break;
 		case Status::Active:
-
-				status = Status::End;
+			gameActive = true;
+			window.present(game.getImage());
+			if (Finished == true || Input::getKey(KeyCode::G))
+			status = Status::End;
 			break;
 		case Status::End:
 			window.present(*endScreen);
@@ -132,6 +128,7 @@ int main()
 
 		// Render loop
 		// Update game
+		game.update();
 
 		if(Input::getButton("Reload"))
 		{

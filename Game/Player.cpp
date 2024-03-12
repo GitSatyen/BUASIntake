@@ -108,7 +108,7 @@ void Player::update(float deltaTime)
 		break;
 	}
 
-	// Update player position.
+	// Update player position
 	transform.translate(glm::vec2{ velocity.x, -velocity.y } *deltaTime);
 }
 

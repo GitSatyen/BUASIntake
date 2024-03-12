@@ -52,7 +52,7 @@ public:
         return player;
     }
 
-    void draw(Graphics::Image& image, const glm::mat3 transform);  
+    void draw(Graphics::Image& image, const glm::mat3 transform);
 
     bool onGround = false;
     
