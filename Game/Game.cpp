@@ -60,7 +60,7 @@ void Game::update()
     //Update level 
     if (gameActive == true) 
     {
-        level.update(timer.elapsedSeconds());
+        level.update(elapsedTime);
     }
     //Clear level image
     image.clear(Color::Black);

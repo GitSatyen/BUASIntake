@@ -293,27 +293,34 @@ void Level::updateCollisions(float deltaTime)
             }
         }
 
-        //Check to see if the player is colliding with the left edge of the collider
-        Line leftEdge{ { colliderAABB.min.x, colliderAABB.min.y + padding, 0 }, { colliderAABB.min.x, colliderAABB.max.y - padding, 0 } };
-        if (playerAABB.intersect(leftEdge))
+        if(vel.x > 0)
         {
-            //Set the player's position to the left edge of the collider
-            pos.x = colliderAABB.min.x - playerAABB.width() * 0.5f;
-            //And 0 the X velocity
-            vel.x = 0.0f;
-            
-            continue;
-        }
-        //Check to see if the player is colliding with the right edge of the collider
-        Line rightEdge{ { colliderAABB.max.x, colliderAABB.min.y + padding, 0 }, { colliderAABB.max.x, colliderAABB.max.y - padding, 0 } };
-        if (playerAABB.intersect(rightEdge))
-        {
-            //Set the player's position to the right edge of the collider
-            pos.x = colliderAABB.max.x + playerAABB.width() * 0.5f;
-            //and 0 the X velocity
-            vel.x = 0.0f;
+            //Check to see if the player is colliding with the left edge of the collider
+            Line leftEdge{ { colliderAABB.min.x, colliderAABB.min.y + padding, 0 }, { colliderAABB.min.x, colliderAABB.max.y - padding, 0 } };
+            if (playerAABB.intersect(leftEdge))
+            {
+                //Set the player's position to the left edge of the collider
+                pos.x = colliderAABB.min.x - playerAABB.width() * 0.5f;
+                //And 0 the X velocity
+                vel.x = 0.0f;
 
-            continue;
+                continue;
+            }
+        }
+
+        else if(vel.x < 0)
+        {
+            //Check to see if the player is colliding with the right edge of the collider
+            Line rightEdge{ { colliderAABB.max.x, colliderAABB.min.y + padding, 0 }, { colliderAABB.max.x, colliderAABB.max.y - padding, 0 } };
+            if (playerAABB.intersect(rightEdge))
+            {
+                //Set the player's position to the right edge of the collider
+                pos.x = colliderAABB.max.x + playerAABB.width() * 0.5f;
+                //and 0 the X velocity
+                vel.x = 0.0f;
+
+                continue;
+            }
         }
     }
 

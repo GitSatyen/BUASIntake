@@ -48,11 +48,15 @@ void Player::update(float deltaTime)
 	auto initalPos = transform.getPosition();
 	auto newPos = initalPos;
 
-	newPos.x += Input::getAxis("Horizontal"), speed * deltaTime;
+	newPos.x += Input::getAxis("Horizontal") * speed * deltaTime;
 	//newPos.y -= Input::getAxis("Vertical"), speed* deltaTime;
 	//newPos.y += gravity * deltaTime;
 
 	velocity = (newPos - initalPos) / deltaTime;
+	if(abs(newPos.x - initalPos.x) >= 16)
+	{
+ 		int i = 3;
+	}
 
 	transform.setPosition(newPos);
 

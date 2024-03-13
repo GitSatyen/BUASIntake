@@ -5,12 +5,12 @@
 		"doc": "https://ldtk.io/json",
 		"schema": "https://ldtk.io/files/JSON_SCHEMA.json",
 		"appAuthor": "Sebastien 'deepnight' Benard",
-		"appVersion": "1.5.0",
+		"appVersion": "1.5.3",
 		"url": "https://ldtk.io"
 	},
 	"iid": "809e9990-3b70-11ee-ad01-59d9a3b6c6aa",
-	"jsonVersion": "1.5.0",
-	"appBuildId": 473583,
+	"jsonVersion": "1.5.3",
+	"appBuildId": 473703,
 	"nextUid": 45,
 	"identifierStyle": "Capitalize",
 	"toc": [],
@@ -2273,6 +2273,22 @@
 							"fieldInstances": [],
 							"__worldX": 328,
 							"__worldY": 24
+						},
+						{
+							"__identifier": "Collider",
+							"__grid": [0,0],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#FF0044",
+							"iid": "0e88a970-d7b0-11ee-8686-15bc01be9bb6",
+							"width": 576,
+							"height": 32,
+							"defUid": 25,
+							"px": [0,0],
+							"fieldInstances": [],
+							"__worldX": -32,
+							"__worldY": -112
 						}
 					]
 				},
