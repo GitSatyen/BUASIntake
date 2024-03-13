@@ -43,7 +43,6 @@ public:
 protected:
     ldtk::Project project;
     Background background;
-    Camera2D camera;
 
     const glm::mat2 transform;
     Graphics::Image image;

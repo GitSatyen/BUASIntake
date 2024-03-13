@@ -36,7 +36,7 @@ void TileMap::setSpriteGrid( std::span<const int> _spriteGrid )
     spriteGrid = std::vector( _spriteGrid.begin(), _spriteGrid.end() );
 }
 
-void TileMap::draw( Image& image, const glm::mat3& transform ) const
+void TileMap::draw( Image& image ) const
 {
     if ( !spriteSheet )
         return;
@@ -60,7 +60,7 @@ void TileMap::draw( Image& image, const glm::mat3& transform ) const
                     0, 1, 0,
                     x, y, 1
                 };
-                image.drawSprite( spriteSheet->getSprite( spriteId ), transform * t);
+                image.drawSprite( spriteSheet->getSprite( spriteId ), t);
             }
             x += spriteWidth;
         }

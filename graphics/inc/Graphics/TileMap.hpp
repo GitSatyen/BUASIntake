@@ -119,7 +119,7 @@ public:
     /// Draw this tile map to the image.
     /// </summary>
     /// <param name="image">The image to draw the tile map to.</param>
-    void draw( Image& image, const glm::mat3& transform ) const;
+    void draw( Image& image ) const;
 
 private:
     // The number of columns in the tile map.

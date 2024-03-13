@@ -42,9 +42,9 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
         for(auto& collision: collisions)
         {
             
-            auto& get = collision.get();
-            auto& pos = get.getPosition();
-            auto size = get.getSize();
+            auto& e = collision.get();
+            auto& pos = e.getPosition();
+            auto size = e.getSize();
 
             //Wrap AABB around the colliders 
             Collider collider
@@ -110,7 +110,7 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
             
 
             auto& coinSprite = coinSprites["Coin"];
-            Sphere collider{ { p.x + 55, p.y + 50, 0 }, 4.5f };
+            Sphere collider{ { p.x, p.y, 0 }, 4.5f };
 
             allPickups.emplace_back(coinSprite, collider);
         }
@@ -125,17 +125,15 @@ void Level::update(float deltaTime)
 {
     updateCollisions(deltaTime);
     updatePickups(deltaTime);
-    updateEffects(deltaTime);
-
 }
 
 void Level::reset()
 {
 }
 
-void Level::draw(Graphics::Image& image, const glm::mat3 transform)
+void Level::draw(Graphics::Image& image)
 {
-    tileMap.draw(image, transform);
+    tileMap.draw(image);
 
     for (auto& pickup : allPickups)
     {
@@ -156,7 +154,7 @@ void Level::draw(Graphics::Image& image, const glm::mat3 transform)
 #if _DEBUG
     for (const auto& collider : colliders)
     {
-        image.drawAABB(transform * collider.aabb, Color::Red, BlendMode::Disable, FillMode::WireFrame);
+        image.drawAABB(collider.aabb, Color::Red, BlendMode::Disable, FillMode::WireFrame);
     }
     //image.drawText(Font::Default, statemap[state], 10, 50, Color::Cyan);
 #endif
@@ -320,7 +318,7 @@ void Level::updateCollisions(float deltaTime)
     }
 
     player.setPosition(pos);
-    player.setVelocity(vel);      
+    player.setVelocity(vel);
 }
 
 void Level::updatePickups(float deltaTime)
@@ -349,17 +347,5 @@ void Level::updatePickups(float deltaTime)
         Finished = true;
     }
    
-}
-
-//void Level::addPickup(std::string_view name, const glm::vec2& pos)
-//{
-//    auto coinSprite = coinSprites[std::string(name)];
-//    Sphere collider{ {pos.x, pos.y,0}, 8.0f };
-//
-//    auto& pickup = allPickups.emplace_back(coinSprite, collider);
-//}
-
-void Level::updateEffects(float deltaTime)
-{
 }
 
