@@ -70,10 +70,10 @@ void Game::update()
     //background.update(timer);
     //background.draw(image);
 
-    image.drawText(Font::Default, fps, 10, 10, Color::Magenta);
+    image.drawText(Font::Default, fps, 700, 10, Color::Magenta);
 #if _DEBUG
-    image.drawText(Font::Default, fps, 10, 10, Color::Magenta);
-    image.drawText(Font::Default, statemap[state], 10, 50, Color::Cyan);
+    image.drawText(Font::Default, fps, 700, 10, Color::Magenta);
+    image.drawText(Font::Default, statemap[state], 700, 50, Color::Cyan);
 #endif
 }
 

@@ -53,14 +53,17 @@ void Player::update(float deltaTime)
 	//newPos.y += gravity * deltaTime;
 
 	velocity = (newPos - initalPos) / deltaTime;
-	if(abs(newPos.x - initalPos.x) >= 16)
+
+	// Tested with Jeremiah  
+	// Detecing if player position goes out of colliders bounds
+	/*if(abs(newPos.x - initalPos.x) >= 16)
 	{
  		int i = 3;
-	}
+	}*/
 
 	transform.setPosition(newPos);
 
-	//Detects players direction its facing
+	// Detects players direction its facing
 	if(velocity.x < 0.0f)
 	{
 		transform.setScale({ -1, 1 });

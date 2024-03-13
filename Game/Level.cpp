@@ -148,7 +148,7 @@ void Level::draw(Graphics::Image& image)
     
     //Draw score on screen
     scoreCount = fmt::format("Gold: {:0} /56", score);
-    image.drawText(Font::Default, scoreCount, 10, 30, Color::Yellow);
+    image.drawText(Font::Default, scoreCount, 700, 30, Color::Yellow);
     //image.drawText(Font::Default, statemap[state], 10, 50, Color::Cyan);
 
 #if _DEBUG
