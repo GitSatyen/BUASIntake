@@ -28,8 +28,8 @@ public:
     enum class State
     {
         None,
-        StartState,
-        EndState
+        OnGround,
+        OffGround
     };
 
     //Default constructor
@@ -48,13 +48,10 @@ public:
 
     void draw( Graphics::Image& image );
 
-    bool onGround = false;
-    
-
 protected:
     
 private:
-    // Check collision with a pickup and an AABB collider.
+    // Check collision with a pickup and an AABB collider
     void checkPickupCollision(const Math::Sphere& pickupCollider, const Math::AABB& colliderAABB, glm::vec2& pos, glm::vec2& vel);
     void updateCollisions(float deltaTime);
     void updatePickups(float deltaTime);

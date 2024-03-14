@@ -24,10 +24,10 @@ Player::Player(const glm::vec2 & pos)
 {
 	aabb = AABB{ {25, 5, 0}, {45, 40, 0} };
 
-    auto idle_sprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/01-Idle/Idle.png", 66, 40, 0, 0, BlendMode::AlphaBlend);
+    auto idle_sprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/01-Idle/Idle.png", 64, 40, 0, 0, BlendMode::AlphaBlend);
 	IdleAnim = SpriteAnim{ idle_sprites, 6 };
 
-	auto runSprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/02-Run/Run.png", 66, 40, 0, 0, BlendMode::AlphaBlend);
+	auto runSprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/02-Run/Run.png", 64, 40, 0, 0, BlendMode::AlphaBlend);
 	RunAnim = SpriteAnim{ runSprites, 6 };
 
 	auto jumpSprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/03-Jump/Jump.png", 64, 40, 0, 0, BlendMode::AlphaBlend);
@@ -54,7 +54,7 @@ void Player::update(float deltaTime)
 
 	velocity = (newPos - initalPos) / deltaTime;
 
-	// Tested with Jeremiah  
+	// Test function from Jeremiah  
 	// Detecing if player position goes out of colliders bounds
 	/*if(abs(newPos.x - initalPos.x) >= 16)
 	{
@@ -73,31 +73,34 @@ void Player::update(float deltaTime)
 		transform.setScale({ 1, 1 });
 	}
 
-	if ( Input::getAxis("Horizontal") != 0  /*Input::getAxis("Horizontal") == 0 && speed == 0.0f && glm::length(velocity) == 0.0f*/ )
+	// Set player to Idle
+	if (Input::getAxis("Horizontal") == 0 && velocity.x == 0.0f)
+	{
+		setState(State::Idle);
+	}
+
+	// Set player to Running
+	if ( Input::getAxis("Horizontal") != 0 )
 	{
 		setState(State::Running);
 		doRunning(deltaTime);
 	}
-	if (Input::getButton("Jump") /*&&  velocity.y < 0*/)
+
+	// Set player to Jumping
+	if (Input::getButton("Jump"))
 	{
 		setState(State::Jumping);
+		doJumping(deltaTime);
 	}
 
+	// Set player to Falling
 	if (velocity.y <= 0.0f)
 	{
 		setState(State::Falling);
 		doFalling(deltaTime);
 	}
 
-	else 
-	{
-		setState(State::Idle);
-	}
-
-	//Checks if player is on ground
-	//(aabb.min.x <= 0) ? onGround = true : onGround = false; 
 	Gravity(deltaTime);
-
 
 	switch (state)
 	{
@@ -208,6 +211,7 @@ void Player::doIdle(float deltaTime)
 void Player::doRunning(float deltaTime)
 {
 	doMovement(deltaTime);
+
 	velocity.y -= gravity * deltaTime;
 
 	if (Input::getButton("Jump"))
@@ -221,44 +225,37 @@ void Player::doRunning(float deltaTime)
 	}
 
 	RunAnim.update(deltaTime);
-
 }
 
 void Player::doJumping(float deltaTime)
 {
 	doMovement(deltaTime);
 
-	//The first int is for testing
-	velocity.y += gravity * deltaTime;
+	//***Adjust this
+	velocity.y +=  jumpSpeed + gravity * deltaTime;
 
 	if (Input::getButtonDown("Jump"))
 	{
 		setState(State::Jumping);
 	}
 
-	if(velocity.y > 0.0f)
-	{
-		jumpTimer.tick();
-	}
-
-	//(aabb.min.x <= 0) ? onGround = true : onGround = false;
-	else if (velocity.y < 0.0f)
+	if (velocity.y < 0.0f)
 	{
 		setState(State::Falling);
 	}
 
 	//Test jump timer
-	else if(jumpTimer.elapsedSeconds() == 0.5f)
+	/*else if(jumpTimer.elapsedSeconds() == 0.5f)
 	{
 		velocity.y = 0;
 		doFalling(deltaTime);
-	}
+	}*/
 	JumpAnim.update(deltaTime);
 }
 
 void Player::doFalling(float deltaTime)
 {
-	//The first int is for testing
+	//The first number is for testing
 	velocity.y -= 80 + gravity * deltaTime;
 	
 

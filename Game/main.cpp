@@ -1,6 +1,3 @@
-#include <LDtkLoader/Project.hpp>
-#include <stb_image.h>
-
 #include <Graphics/Window.hpp>
 #include <Graphics/Image.hpp>
 #include <Graphics/Sprite.hpp>

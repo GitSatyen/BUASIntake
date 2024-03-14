@@ -17,12 +17,12 @@ using namespace Math;
 using namespace Graphics;
 
 bool Finished = false;
+std::string check;
 //ldtk::Project project;
 
 static std::map <Level::State, std::string> statemap = {
-    {Level::State::None, "State: None"},
-     {Level::State::StartState, "State: Startstate"},
-     {Level::State::EndState, "State: Endstate"}
+    {Level::State::OnGround, "OnGround: True"},
+     {Level::State::OffGround, "OffGround: False"}
 };
 
 Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk::Level& level)
@@ -147,7 +147,7 @@ void Level::draw(Graphics::Image& image)
     player.draw(image);
     
     //Draw score on screen
-    scoreCount = fmt::format("Gold: {:0} /56", score);
+    scoreCount = fmt::format("Gold: {:0} /57", score);
     image.drawText(Font::Default, scoreCount, 700, 30, Color::Yellow);
     //image.drawText(Font::Default, statemap[state], 10, 50, Color::Cyan);
 
@@ -156,7 +156,14 @@ void Level::draw(Graphics::Image& image)
     {
         image.drawAABB(collider.aabb, Color::Red, BlendMode::Disable, FillMode::WireFrame);
     }
-    //image.drawText(Font::Default, statemap[state], 10, 50, Color::Cyan);
+    //image.drawText(Font::Default, statemap[state], 670, 70, Color::Cyan);
+    /*if (onGround = true) {
+        image.drawText(Font::Default, "onGround = True", 500, 70, Color::Green);
+    }
+    if (onGround = false) {
+        image.drawText(Font::Default, "onGround = False", 500, 70, Color::Green);
+    }*/
+    image.drawText(Font::Default, check, 650, 70, Color::Green);
 #endif
 }
 
@@ -192,6 +199,8 @@ void Level::checkPickupCollision(const Math::Sphere& pickupCollider, const Math:
 
         return;
     }
+
+   
 
     //Check to see if the pickup is colliding with the left edge of the collider
     Line leftEdge{ { colliderAABB.min.x, colliderAABB.min.y, 0 }, { colliderAABB.min.x, colliderAABB.max.y, 0 } };
@@ -235,8 +244,6 @@ void Level::updateCollisions(float deltaTime)
 
     // Number of pixels padding to account for collisions
     const float padding = 3.0f;
-
-   // bool onGround = false;
    
     for (auto& collider : colliders)
     {
@@ -257,7 +264,6 @@ void Level::updateCollisions(float deltaTime)
 
                 // Change to running state
                 player.setState(Player::State::Running);
-                onGround = true;
             }
         }
         // Player is jumping
@@ -284,12 +290,7 @@ void Level::updateCollisions(float deltaTime)
             Line topEdge{ { colliderAABB.min.x + padding, colliderAABB.min.y, 0 }, { colliderAABB.max.x - padding, colliderAABB.min.y, 0 } };
             if (playerAABB.intersect(topEdge))
             {
-                    onGround = true;   
                     player.setState(Player::State::Idle);
-            }
-            else if (onGround = false) 
-            {
-
             }
         }
 
@@ -349,7 +350,7 @@ void Level::updatePickups(float deltaTime)
         else ++pickups;
     }
 
-    if (score == 56)
+    if (score == 57)
     {
         Finished = true;
     }
