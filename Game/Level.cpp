@@ -239,6 +239,8 @@ void Level::updateCollisions(float deltaTime)
 
     // Number of pixels padding to account for collisions
     const float padding = 3.0f;
+
+    bool onGround = false;
    
     for (auto& collider : colliders)
     {
@@ -260,6 +262,7 @@ void Level::updateCollisions(float deltaTime)
                 // Change to running state
                 player.setState(Player::State::Running);
 
+                onGround = true;
                 jumpTimer = 0;
             }
         }
@@ -287,7 +290,7 @@ void Level::updateCollisions(float deltaTime)
             Line topEdge{ { colliderAABB.min.x + padding, colliderAABB.min.y, 0 }, { colliderAABB.max.x - padding, colliderAABB.min.y, 0 } };
             if (playerAABB.intersect(topEdge))
             {
-                    player.setState(Player::State::Idle);
+                onGround = true;
             }
         }
 
@@ -320,6 +323,11 @@ void Level::updateCollisions(float deltaTime)
                 continue;
             }
         }
+    }
+
+    if (player.getState() == Player::State::Running && !onGround)
+    {
+        player.setState(Player::State::Falling);
     }
 
     player.setPosition(pos);
