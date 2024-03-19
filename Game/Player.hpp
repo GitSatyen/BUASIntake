@@ -77,11 +77,8 @@ private:
 	static inline const float jumpHeight = 55.0f;
 	static inline  float jumpTime = 0.5f;
 	static inline const float landTime = 0.2f;
-	static inline  float gravity = 10 * jumpHeight / (jumpTime * jumpTime);
+	static inline  float gravity = 30 * jumpHeight / (jumpTime * jumpTime);
 	static inline const float jumpSpeed = std::sqrt(2.0f * jumpHeight * gravity);	
-	static inline float jumptimer;
-
-	Graphics::Timer jumpTimer;
 
 	State state = State::None;
 	Graphics::SpriteAnim IdleAnim;

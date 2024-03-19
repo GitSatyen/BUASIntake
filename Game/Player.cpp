@@ -10,6 +10,9 @@
 using namespace Graphics;
 using namespace Math;
 
+// Time inverval in seconds
+float jumpTimer = 1.0f;
+
 static std::map <Player::State, std::string> stateMap = {
 	{Player::State::None, "None"},
 	{Player::State::Idle, "Idle"},
@@ -74,17 +77,18 @@ void Player::update(float deltaTime)
 	}
 
 	// Set player to Idle
-	if (Input::getAxis("Horizontal") == 0 && velocity.x == 0.0f)
+	/*if (Input::getAxis("Horizontal") == 0 && velocity.x == 0.0f)
 	{
 		setState(State::Idle);
-	}
+		doRunning(deltaTime);
+	}*/
 
 	// Set player to Running
-	if ( Input::getAxis("Horizontal") != 0 )
+	/*if ( Input::getAxis("Horizontal") != 0 )
 	{
 		setState(State::Running);
 		doRunning(deltaTime);
-	}
+	}*/
 
 	// Set player to Jumping
 	if (Input::getButton("Jump"))
@@ -102,6 +106,7 @@ void Player::update(float deltaTime)
 
 	Gravity(deltaTime);
 
+	// Switch animation based on state its in
 	switch (state)
 	{
 	case State::Idle:
@@ -119,7 +124,7 @@ void Player::update(float deltaTime)
 	}
 
 	// Update player position
-	transform.translate(glm::vec2{ velocity.x, -velocity.y } *deltaTime);
+	transform.translate(glm::vec2{ velocity.x, velocity.y } *deltaTime);
 }
 
 void Player::draw(Graphics::Image& image)
@@ -158,13 +163,15 @@ void Player::setState(State newState)
 		{
 		//Calls action when traniston away from state
 		case State::Idle:
-		{int i =  3; }
-			break;
+			if (Input::getAxis("Horizontal") != 0)
+				newState = State::Running;
+			break;	
 		case State::Running:
-		{int i = 3; }
+			if (Input::getAxis("Horizontal") == 0 && velocity.x == 0.0f)
+				newState = State::Idle;
 			break;
 		case State::Jumping:
-			velocity.y = jumpSpeed;
+			//velocity.y = jumpSpeed;
 			break;
 		case State::Falling:
 			break;
@@ -195,11 +202,6 @@ void Player::doIdle(float deltaTime)
 {
 	doMovement(deltaTime);
 	
-	if(Input::getAxis("Horizontal") != 0)
-	{
-		setState(State::Running);
-	}
-
 	if (Input::getButton("Jump"))
 	{
 		setState(State::Jumping);
@@ -219,11 +221,6 @@ void Player::doRunning(float deltaTime)
 		setState(State::Jumping);
 	}
 
-	if (Input::getAxis("Horizontal") == 0 && speed == 0.0f && glm::length(velocity) == 0.0f)
-	{
-		setState(State::Idle);
-	}
-
 	RunAnim.update(deltaTime);
 }
 
@@ -232,17 +229,25 @@ void Player::doJumping(float deltaTime)
 	doMovement(deltaTime);
 
 	//***Adjust this
-	velocity.y +=  jumpSpeed + gravity * deltaTime;
+	velocity.y -=  jumpSpeed + gravity * deltaTime;
 
-	if (Input::getButtonDown("Jump"))
+	/*jumpTime += 0.1f;
+	std::this_thread::sleep_for(std::chrono::duration<float>(jumpTimer));*/
+
+	if (Input::getButton("Jump"))
 	{
 		setState(State::Jumping);
 	}
 
-	if (velocity.y < 0.0f)
-	{
-		setState(State::Falling);
-	}
+	//if(jumpTime == 0.5f )
+	//{
+	//	velocity.y = 0;
+	//}
+
+	//if (velocity.y < 0.0f || jumpTime == 0.5f)
+	//{
+	//	setState(State::Falling);
+	//}
 
 	//Test jump timer
 	/*else if(jumpTimer.elapsedSeconds() == 0.5f)
@@ -256,8 +261,8 @@ void Player::doJumping(float deltaTime)
 void Player::doFalling(float deltaTime)
 {
 	//The first number is for testing
-	velocity.y -= 80 + gravity * deltaTime;
+	//velocity.y -= 80 + gravity * deltaTime;
+	Gravity(deltaTime);
 	
-
 	FallAnim.update(deltaTime);
 }

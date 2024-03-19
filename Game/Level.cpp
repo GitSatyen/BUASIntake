@@ -19,6 +19,7 @@ using namespace Graphics;
 bool Finished = false;
 std::string check;
 //ldtk::Project project;
+extern float jumpTimer;
 
 static std::map <Level::State, std::string> statemap = {
     {Level::State::OnGround, "OnGround: True"},
@@ -157,12 +158,6 @@ void Level::draw(Graphics::Image& image)
         image.drawAABB(collider.aabb, Color::Red, BlendMode::Disable, FillMode::WireFrame);
     }
     //image.drawText(Font::Default, statemap[state], 670, 70, Color::Cyan);
-    /*if (onGround = true) {
-        image.drawText(Font::Default, "onGround = True", 500, 70, Color::Green);
-    }
-    if (onGround = false) {
-        image.drawText(Font::Default, "onGround = False", 500, 70, Color::Green);
-    }*/
     image.drawText(Font::Default, check, 650, 70, Color::Green);
 #endif
 }
@@ -251,7 +246,7 @@ void Level::updateCollisions(float deltaTime)
         AABB colliderAABB = collider.aabb;
 
         // Player is falling
-        if (vel.y < 0.0f)
+        if (vel.y > 0.0f)
         {
             //Check if player collides with top edghe of collider 
             Line topEdge{ { colliderAABB.min.x + padding, colliderAABB.min.y, 0 }, { colliderAABB.max.x -padding, colliderAABB.min.y, 0 } };
@@ -264,10 +259,12 @@ void Level::updateCollisions(float deltaTime)
 
                 // Change to running state
                 player.setState(Player::State::Running);
+
+                jumpTimer = 0;
             }
         }
         // Player is jumping
-        else if (vel.y > 0.0f)
+        else if (vel.y < 0.0f)
         {
             // Check to see if the player is colliding with the bottom edge of the colliders
             Line bottomEdge{ { colliderAABB.min.x + padding, colliderAABB.max.y, 0 }, { colliderAABB.max.x - padding, colliderAABB.max.y, 0 } };
