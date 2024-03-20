@@ -71,10 +71,11 @@ private:
 
 
 	glm::vec2 velocity { 0 };
-	float speed{ 60.0f };
-	static inline const float jumpHeight = 35.0f;
-	static inline const float jumpTime = 0.5f;
-	static inline const float gravity = 1.5f * jumpHeight / (jumpTime * jumpTime);
+	float accel{ 120.0f };
+	float maxSpeed = 60.0f;
+	static inline const float jumpHeight = 50.0f;
+	static inline const float jumpTime = 0.3f;
+	static inline const float gravity = 3.0f * jumpHeight / (jumpTime * jumpTime);
 	static inline const float jumpSpeed = std::sqrt(2.0f * jumpHeight * gravity);	
 
 	State state = State::None;

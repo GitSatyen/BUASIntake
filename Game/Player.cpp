@@ -138,11 +138,28 @@ void Player::doMovement(float deltaTime)
 {
 	auto initialPos = transform.getPosition();
 
-    velocity.x += Input::getAxis("Horizontal") * speed * deltaTime;
+    velocity.x += Input::getAxis("Horizontal") * accel * deltaTime;
+
+	// Drag speed
+	if (velocity.x > maxSpeed)
+	{
+		velocity.x = maxSpeed;
+	}
+
+	if (velocity.x < -maxSpeed)
+	{
+		velocity.x = -maxSpeed;
+	}
 
 	initialPos += velocity * deltaTime;
 
+	
 	transform.setPosition(initialPos);
+
+	if(Input::getAxis("Horizontal") == 0)
+	{
+		velocity.x = 0;
+	}
 }
 
 void Player::doIdle(float deltaTime)
@@ -190,13 +207,12 @@ void Player::doJumping(float deltaTime)
 
 	Gravity(deltaTime);
 
+	
 	JumpAnim.update(deltaTime);
 }
 
 void Player::doFalling(float deltaTime)
 {
-	//The first number is for testing
-	//velocity.y -= 80 + gravity * deltaTime;
 	Gravity(deltaTime);
 	
 	FallAnim.update(deltaTime);
