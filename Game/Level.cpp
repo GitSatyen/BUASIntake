@@ -250,6 +250,8 @@ void Level::updateCollisions(float deltaTime)
         // Player is falling
         if (vel.y > 0.0f)
         {
+            player.setState(Player::State::Falling);
+
             //Check if player collides with top edghe of collider 
             Line topEdge{ { colliderAABB.min.x + padding, colliderAABB.min.y, 0 }, { colliderAABB.max.x -padding, colliderAABB.min.y, 0 } };
             if (playerAABB.intersect(topEdge))

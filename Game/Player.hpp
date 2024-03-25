@@ -71,8 +71,8 @@ private:
 
 
 	glm::vec2 velocity { 0 };
-	float accel{ 120.0f };
-	float maxSpeed = 60.0f;
+	float accel{ 180.0f };
+	float maxSpeed = 90.0f;
 	static inline const float jumpHeight = 50.0f;
 	static inline const float jumpTime = 0.3f;
 	static inline const float gravity = 3.0f * jumpHeight / (jumpTime * jumpTime);

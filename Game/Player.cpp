@@ -140,6 +140,8 @@ void Player::doMovement(float deltaTime)
 
     velocity.x += Input::getAxis("Horizontal") * accel * deltaTime;
 
+	velocity.x = velocity.x / deltaTime;
+
 	// Drag speed
 	if (velocity.x > maxSpeed)
 	{
@@ -207,6 +209,10 @@ void Player::doJumping(float deltaTime)
 
 	Gravity(deltaTime);
 
+	if(jumpHeight > 50.0f)
+	{
+		setState(State::Falling);
+	}
 	
 	JumpAnim.update(deltaTime);
 }
