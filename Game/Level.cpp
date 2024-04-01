@@ -100,6 +100,31 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
             }
         }
 
+        //Parse background 
+        /*{
+            const auto& BackgroundLayer = level.getLayer("Background");
+            const auto& bgGrid = level.getLayer("Background");
+            const auto& tileSet = bgGrid.getTileset();
+
+            const auto& gridSize = BackgroundLayer.getGridSize();
+
+            auto spriteSheet = ResourceManager::loadSpriteSheet(projectPath / tileSet.path, tileSet.tile_size, tileSet.tile_size, tileSet.padding, tileSet.spacing, BlendMode::AlphaBlend);
+            tileMap = TileMap(spriteSheet, gridSize.x, gridSize.y);
+
+            for (auto& tile : bgGrid.allTiles())
+            {
+                const auto& gridPos = tile.getGridPosition();
+                tileMap(gridPos.y, gridPos.x) = tile.tileId;
+            }
+
+            for (const auto& tile : BackgroundLayer.allTiles())
+            {
+                const auto& gridPos = tile.getGridPosition();
+                tileMap(gridPos.y, gridPos.x) = tile.tileId;
+            }
+        }*/
+
+
         //Parse collectables 
         const auto& pickups = entities.getEntitiesByName("Pickup");
         for (auto& pickup : pickups)
