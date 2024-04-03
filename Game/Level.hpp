@@ -15,6 +15,7 @@
 #include <LDtkLoader/World.hpp>
 
 using namespace Math;
+using namespace Graphics;
 
 struct Collider
 {
@@ -75,8 +76,9 @@ private:
     // Currently playing effects.
     std::vector<Effect> effects;*/
 
-    // Level tile map.
-    Graphics::TileMap tileMap;
+    // Level tile map
+    TileMap tileMap; // Terrain layer
+    TileMap bg_Map; // Background layer
 
     Player    player;
 

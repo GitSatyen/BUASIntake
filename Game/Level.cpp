@@ -101,28 +101,29 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
         }
 
         //Parse background 
-        /*{
-            const auto& BackgroundLayer = level.getLayer("Background");
-            const auto& bgGrid = level.getLayer("Background");
-            const auto& tileSet = bgGrid.getTileset();
+        {
+            const auto& BG_Layer = level.getLayer("Background");
+            const auto& BG_Grid = level.getLayer("Background");
+            const auto& tileSet = BG_Grid.getTileset();
 
-            const auto& gridSize = BackgroundLayer.getGridSize();
+            const auto& gridSize = BG_Layer.getGridSize();
 
             auto spriteSheet = ResourceManager::loadSpriteSheet(projectPath / tileSet.path, tileSet.tile_size, tileSet.tile_size, tileSet.padding, tileSet.spacing, BlendMode::AlphaBlend);
-            tileMap = TileMap(spriteSheet, gridSize.x, gridSize.y);
+            bg_Map = TileMap(spriteSheet, gridSize.x, gridSize.y);
 
-            for (auto& tile : bgGrid.allTiles())
+            
+            for (auto& tile : BG_Grid.allTiles())
             {
                 const auto& gridPos = tile.getGridPosition();
-                tileMap(gridPos.y, gridPos.x) = tile.tileId;
+                bg_Map(gridPos.y, gridPos.x) = tile.tileId;
             }
 
-            for (const auto& tile : BackgroundLayer.allTiles())
+            for (const auto& tile : BG_Layer.allTiles())
             {
                 const auto& gridPos = tile.getGridPosition();
-                tileMap(gridPos.y, gridPos.x) = tile.tileId;
+                bg_Map(gridPos.y, gridPos.x) = tile.tileId;
             }
-        }*/
+        }
 
 
         //Parse collectables 
@@ -159,6 +160,7 @@ void Level::reset()
 
 void Level::draw(Graphics::Image& image)
 {
+    bg_Map.draw(image);
     tileMap.draw(image);
 
     for (auto& pickup : allPickups)
