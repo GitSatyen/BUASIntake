@@ -30,6 +30,7 @@ public:
 		Falling,
 		Landing,
 		Attack,
+		Hit,
 		Dead
 	};
 	// Default constructor
@@ -68,8 +69,10 @@ private:
 	void doRunning(float deltaTime);
 	void doFalling(float deltaTime);
 	void doJumping(float deltaTime);
+	void doHit(float deltaTime);
+	void doDead(float deltaTime);
 
-
+	int hp = 3;
 	glm::vec2 velocity { 0 };
 	float accel{ 180.0f };
 	float maxSpeed = 90.0f;
@@ -83,5 +86,6 @@ private:
 	Graphics::SpriteAnim RunAnim;	
 	Graphics::SpriteAnim JumpAnim;
 	Graphics::SpriteAnim FallAnim;
-	Graphics::SpriteAnim AttackAnim;
+	Graphics::SpriteAnim HitAnim;
+	Graphics::SpriteAnim DeadAnim;
 };

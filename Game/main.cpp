@@ -35,7 +35,6 @@ float _y = SCREEN_HEIGHT / 2;
 Window window;
 Image image{ SCREEN_WIDTH , SCREEN_HEIGHT};
 Sprite sprite;
-TileMap grassTiles;
 Camera2D camera;
 ldtk::Project project;
 glm::mat3 transform;

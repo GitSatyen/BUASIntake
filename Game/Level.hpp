@@ -20,6 +20,7 @@ using namespace Graphics;
 struct Collider
 {
     Math::AABB aabb;
+    bool Spike;
 };
 
 class Level
@@ -79,6 +80,7 @@ private:
     // Level tile map
     TileMap tileMap; // Terrain layer
     TileMap bg_Map; // Background layer
+    TileMap spikeMap; // Spikes layer
 
     Player    player;
 

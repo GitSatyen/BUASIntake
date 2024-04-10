@@ -2,16 +2,15 @@
 #include <Graphics/Input.hpp>
 #include <Graphics/Font.hpp>
 #include <Graphics/ResourceManager.hpp>
-//#include <Graphics/Timer.hpp>
 #include <Math/Camera2D.hpp>
+
 #include <map>
 #include <string>
+#include <fmt/core.h>
+#include <iostream>
 
 using namespace Graphics;
 using namespace Math;
-
-// Time inverval in seconds
-float jumpTimer = 1.0f;
 
 static std::map <Player::State, std::string> stateMap = {
 	{Player::State::None, "None"},
@@ -20,6 +19,7 @@ static std::map <Player::State, std::string> stateMap = {
 	{Player::State::Jumping, "Jumping"},
 	{Player::State::Falling, "Falling"},
 	{Player::State::Attack, "Attack"},
+	{Player::State::Hit, "Hit"},
 	{Player::State::Dead, "Dead"}
 };
 
@@ -38,6 +38,12 @@ Player::Player(const glm::vec2 & pos)
 
 	auto fallSprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/04-Fall/Fall.png", 64, 40, 0, 0, BlendMode::AlphaBlend);
 	FallAnim = SpriteAnim{ fallSprites, 6 };
+
+	auto hitSprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/06-Hit/Hit.png", 64, 40, 0, 0, BlendMode::AlphaBlend);
+	HitAnim = SpriteAnim{ fallSprites, 6 };
+
+	auto deadSprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/07-Dead Hit/Dead Hit.png", 64, 40, 0, 0, BlendMode::AlphaBlend);
+	HitAnim = SpriteAnim{ fallSprites, 6 };
 
 	setState(State::Idle);
 
@@ -63,7 +69,14 @@ void Player::update(float deltaTime)
 	case State::Falling:
 		doFalling(deltaTime);
 		break;
+	case State::Hit:
+		doHit(deltaTime);
+		break;
+	case State::Dead:
+		doHit(deltaTime);
+		break;
 	}
+
 
 	// Detects players direction its facing
 	if (velocity.x < 0.0f)
@@ -94,11 +107,15 @@ void Player::draw(Graphics::Image& image)
 		break;
 	case State::Falling:
 		image.drawSprite(FallAnim, transform);
+		break;
+	case State::Hit:
+		image.drawSprite(HitAnim, transform);
 	}
 #if _DEBUG
 	image.drawAABB(getAABB(), Color::Yellow, {}, FillMode::WireFrame);
 	auto pos = transform.getPosition();
 	image.drawText(Font::Default, stateMap[state], pos.x, pos.y - 50.0f, Color::Cyan);
+	image.drawText(Font::Default, fmt::format("HP:{:}", hp), 700, 70, Color::Green);
 #endif
 }
 
@@ -125,7 +142,9 @@ void Player::setState(State newState)
 		case State::Falling:
 		{int i = 3; }
 			break;
-		case State::Attack:
+		case State::Hit:
+			hp--;
+			velocity.y -= 5;
 			break;
 		case State::Dead:
 			break;
@@ -222,4 +241,17 @@ void Player::doFalling(float deltaTime)
 	Gravity(deltaTime);
 	
 	FallAnim.update(deltaTime);
+}
+
+void Player::doHit(float deltaTime)
+{
+
+	HitAnim.update(deltaTime);
+	//Keep track of the hp
+	std::cout << "Score: " << hp << std::endl;
+}
+
+void Player::doDead(float deltaTime)
+{
+	DeadAnim.update(deltaTime);
 }

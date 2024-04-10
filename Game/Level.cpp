@@ -19,7 +19,6 @@ using namespace Graphics;
 bool Finished = false;
 std::string check;
 //ldtk::Project project;
-extern float jumpTimer;
 
 static std::map <Level::State, std::string> statemap = {
     {Level::State::OnGround, "OnGround: True"},
@@ -46,13 +45,18 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
             auto& e = collision.get();
             auto& pos = e.getPosition();
             auto size = e.getSize();
+            bool spike = e.getField<ldtk::FieldType::Bool>("Spike").value_or(false);
+           
 
             //Wrap AABB around the colliders 
             Collider collider
             {
-                .aabb = AABB { {pos.x, pos.y, 0.0 }, {pos.x + size.x - 1, pos.y + size.y - 1, 0.0} }
+                .aabb = AABB { {pos.x, pos.y, 0.0 }, {pos.x + size.x - 1, pos.y + size.y - 1, 0.0} },
+                .Spike = spike
             };
             colliders.push_back(collider);
+
+
         }
 
 
@@ -62,7 +66,7 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
             //pickupCollected = SpriteAnim{ spriteSheet, 20 };
         }
 
-        //Loads coin sprites
+        // Loads coin sprites
         const auto& tilesets = project.allTilesets();
         for (auto& tileset : tilesets)
         {
@@ -77,9 +81,6 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
         {
             const auto& TerrainLayer = level.getLayer("Terrain");
             const auto& intGrid = level.getLayer("Terrain");
-
-            /*const auto& backgroundLayer = level.getLayer("Background");
-            const auto& backgroundGrid = level.getLayer("Background");*/
 
             const auto& gridSize = TerrainLayer.getGridSize();
             const auto& tileSet = intGrid.getTileset();
@@ -125,6 +126,29 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
             }
         }
 
+        // Parse spikes
+        {
+            const auto& spikeLayer = level.getLayer("Spikes");
+            const auto& spikeGrid = level.getLayer("Spikes");
+            const auto& tileSet = spikeGrid.getTileset();
+
+            const auto& gridSize = spikeLayer.getGridSize();
+
+            auto spriteSheet = ResourceManager::loadSpriteSheet(projectPath / tileSet.path, tileSet.tile_size, tileSet.tile_size, tileSet.padding, tileSet.spacing, BlendMode::AlphaBlend);
+            spikeMap = TileMap(spriteSheet, gridSize.x, gridSize.y);
+
+            for (auto& tile : spikeGrid.allTiles())
+            {
+                const auto& gridPos = tile.getGridPosition();
+                spikeMap(gridPos.y, gridPos.x) = tile.tileId;
+            }
+
+            for (const auto& tile : spikeLayer.allTiles())
+            {
+                const auto& gridPos = tile.getGridPosition();
+                spikeMap(gridPos.y, gridPos.x) = tile.tileId;
+            }
+        }
 
         //Parse collectables 
         const auto& pickups = entities.getEntitiesByName("Pickup");
@@ -134,7 +158,6 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
             auto& p = e.getPosition();
             auto& s = e.getSize();
             auto& gridP = e.getGridPosition();
-            
 
             auto& coinSprite = coinSprites["Coin"];
             Sphere collider{ { p.x, p.y, 0 }, 4.5f };
@@ -160,8 +183,10 @@ void Level::reset()
 
 void Level::draw(Graphics::Image& image)
 {
+    //!Mind that images are drawn over eachother on top to down order
     bg_Map.draw(image);
     tileMap.draw(image);
+    spikeMap.draw(image);
 
     for (auto& pickup : allPickups)
     {
@@ -175,8 +200,7 @@ void Level::draw(Graphics::Image& image)
     player.draw(image);
     
     //Draw score on screen
-    scoreCount = fmt::format("Gold: {:0} /57", score);
-    image.drawText(Font::Default, scoreCount, 700, 30, Color::Yellow);
+    image.drawText(Font::Default, fmt::format("Gold: {:0} /46", score), 700, 30, Color::Yellow);
     //image.drawText(Font::Default, statemap[state], 10, 50, Color::Cyan);
 
 #if _DEBUG
@@ -274,6 +298,14 @@ void Level::updateCollisions(float deltaTime)
         //Collider AABB
         AABB colliderAABB = collider.aabb;
 
+        /*if (playerAABB.intersect(colliderAABB))
+        {
+            if (collider.Spike)
+            {
+                player.setState(Player::State::Hit);
+            }
+        }*/
+
         // Player is falling
         if (vel.y > 0.0f)
         {
@@ -291,8 +323,7 @@ void Level::updateCollisions(float deltaTime)
                 // Change to running state
                 player.setState(Player::State::Running);
 
-                onGround = true;
-                jumpTimer = 0;
+                onGround = true;   
             }
         }
         // Player is jumping
@@ -351,13 +382,13 @@ void Level::updateCollisions(float deltaTime)
 
                 continue;
             }
-        }
+        }  
     }
 
     if (player.getState() == Player::State::Running && !onGround)
     {
         player.setState(Player::State::Falling);
-    }
+    } 
 
     player.setPosition(pos);
     player.setVelocity(vel);
@@ -384,7 +415,7 @@ void Level::updatePickups(float deltaTime)
         else ++pickups;
     }
 
-    if (score == 57)
+    if (score == 46)
     {
         Finished = true;
     }
