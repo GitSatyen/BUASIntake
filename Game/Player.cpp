@@ -12,6 +12,8 @@
 using namespace Graphics;
 using namespace Math;
 
+bool isDead = false;
+
 static std::map <Player::State, std::string> stateMap = {
 	{Player::State::None, "None"},
 	{Player::State::Idle, "Idle"},
@@ -40,10 +42,10 @@ Player::Player(const glm::vec2 & pos)
 	FallAnim = SpriteAnim{ fallSprites, 6 };
 
 	auto hitSprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/06-Hit/Hit.png", 64, 40, 0, 0, BlendMode::AlphaBlend);
-	HitAnim = SpriteAnim{ fallSprites, 6 };
+	HitAnim = SpriteAnim{ hitSprites, 6 };
 
-	auto deadSprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/07-Dead Hit/Dead Hit.png", 64, 40, 0, 0, BlendMode::AlphaBlend);
-	HitAnim = SpriteAnim{ fallSprites, 6 };
+	auto deadSprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/08-Dead Ground/Dead.png", 64, 40, 0, 0, BlendMode::AlphaBlend);
+	DeadAnim = SpriteAnim{ deadSprites, 6 };
 
 	setState(State::Idle);
 
@@ -73,7 +75,7 @@ void Player::update(float deltaTime)
 		doHit(deltaTime);
 		break;
 	case State::Dead:
-		doHit(deltaTime);
+		doDead(deltaTime);
 		break;
 	}
 
@@ -110,6 +112,9 @@ void Player::draw(Graphics::Image& image)
 		break;
 	case State::Hit:
 		image.drawSprite(HitAnim, transform);
+		break;
+	case State::Dead:
+		image.drawSprite(DeadAnim, transform);
 	}
 #if _DEBUG
 	image.drawAABB(getAABB(), Color::Yellow, {}, FillMode::WireFrame);
@@ -247,11 +252,13 @@ void Player::doHit(float deltaTime)
 {
 
 	HitAnim.update(deltaTime);
-	//Keep track of the hp
-	std::cout << "Score: " << hp << std::endl;
 }
 
 void Player::doDead(float deltaTime)
 {
+	isDead = true;
+	velocity.y = 0;
+	velocity.x = 0;
+	
 	DeadAnim.update(deltaTime);
 }

@@ -8,6 +8,7 @@
 #include <Graphics/Image.hpp>
 #include <Graphics/Sprite.hpp>
 #include <Graphics/TileMap.hpp>
+#include <Graphics/Input.hpp>
 
 #include <fmt/core.h>
 #include <map>
@@ -17,6 +18,8 @@ using namespace Math;
 using namespace Graphics;
 
 bool Finished = false;
+extern bool isDead;
+
 std::string check;
 //ldtk::Project project;
 
@@ -193,6 +196,11 @@ void Level::draw(Graphics::Image& image)
         pickup.draw(image);
     }
 
+    if(isDead == true)
+    {
+        image.drawText(Font::Default, "You died", 300, 300, Color::Red);
+    }
+
    /* for (auto& effect : effects)
     {
         effect.draw(image);
@@ -298,13 +306,20 @@ void Level::updateCollisions(float deltaTime)
         //Collider AABB
         AABB colliderAABB = collider.aabb;
 
-        /*if (playerAABB.intersect(colliderAABB))
+        if (playerAABB.intersect(colliderAABB))
         {
             if (collider.Spike)
             {
-                player.setState(Player::State::Hit);
+                player.setState(Player::State::Dead);
+                if (Input::getKey("enter"))
+                {
+                    pos = (playerStart);
+                    player.setState(Player::State::Idle);
+                    isDead = false;
+                }
+                
             }
-        }*/
+        }
 
         // Player is falling
         if (vel.y > 0.0f)
