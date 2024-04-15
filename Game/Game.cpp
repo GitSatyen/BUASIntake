@@ -66,14 +66,10 @@ void Game::update()
     image.clear(Color::Black);
     // Draw level
     level.draw(image);
-    // Update and draw background
-    //background.update(timer);
-    //background.draw(image);
 
     image.drawText(Font::Default, fps, 700, 10, Color::Magenta);
 #if _DEBUG
-    image.drawText(Font::Default, fps, 700, 10, Color::Magenta);
-    image.drawText(Font::Default, statemap[state], 700, 50, Color::Cyan);
+    //image.drawText(Font::Default, statemap[state], 700, 50, Color::Cyan);
 #endif
 }
 

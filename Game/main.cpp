@@ -16,7 +16,6 @@
 
 #include <iostream>
 #include <string_view>
-#include <Windows.h>
 
 #include "Game.hpp"
 #include "Level.hpp"
@@ -38,6 +37,8 @@ Sprite sprite;
 Camera2D camera;
 ldtk::Project project;
 glm::mat3 transform;
+// Sound effects
+Audio::Sound bgMusic;
 
 glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
 
@@ -98,6 +99,20 @@ int main()
 
 	auto endScreen = ResourceManager::loadImage("assets/Texture/Endscreen.png");	
 
+
+	// Background music
+	std::string filePath = "assets\\sounds\\music.mp3";
+	if (filePath, NULL != 0)
+	{
+		std::cerr << "Failed to open MP3 file" << std::endl;
+		{int i = 3; };
+	}
+
+	bgMusic.loadMusic(filePath);
+	bgMusic.setLooping(true);
+	bgMusic.setVolume(0.2f);
+	
+		
 	while(window)
 	{
 		Input::update();
@@ -112,11 +127,13 @@ int main()
 		case Status::Active:
 			gameActive = true;
 			window.present(game.getImage());
+			bgMusic.play();
 			if (Finished == true || Input::getKey(KeyCode::G))
 			status = Status::End;
 			break;
 		case Status::End:
 			window.present(*endScreen);
+			bgMusic.stop();
 			if (Input::getKey(KeyCode::Enter))
 				window.destroy();
 			break;

@@ -120,7 +120,7 @@ void Player::draw(Graphics::Image& image)
 	image.drawAABB(getAABB(), Color::Yellow, {}, FillMode::WireFrame);
 	auto pos = transform.getPosition();
 	image.drawText(Font::Default, stateMap[state], pos.x, pos.y - 50.0f, Color::Cyan);
-	image.drawText(Font::Default, fmt::format("HP:{:}", hp), 700, 70, Color::Green);
+	//image.drawText(Font::Default, fmt::format("HP:{:}", hp), 700, 70, Color::Green);
 #endif
 }
 

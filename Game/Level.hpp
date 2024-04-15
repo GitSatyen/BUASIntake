@@ -80,7 +80,9 @@ private:
     // Level tile map
     TileMap tileMap; // Terrain layer
     TileMap bg_Map; // Background layer
-    TileMap spikeMap; // Spikes layer
+    TileMap spikeMap; // Spikes layer   
+
+    Audio::Sound deathSound;
 
     Player    player;
 

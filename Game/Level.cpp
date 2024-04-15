@@ -172,6 +172,9 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
         const auto& startPos = entities.getEntitiesByName("Start")[0].get();
         playerStart = { startPos.getPosition().x, startPos.getPosition().y };
         player = Player{ playerStart };
+
+
+       
 }
 
 void Level::update(float deltaTime)
@@ -288,6 +291,11 @@ void Level::updateCollisions(float deltaTime)
 
     //Update player
     player.update(deltaTime);
+    if(player.getState() == Player::State::Dead)
+    {
+        return ;
+
+    }
 
     //Check player collision
     //Get player AABB
@@ -300,7 +308,17 @@ void Level::updateCollisions(float deltaTime)
     const float padding = 3.0f;
 
     bool onGround = false;
-   
+
+    // Death sound effect
+    std::string death_filePath = "assets\\sounds\\death.mp3";
+    if (death_filePath, NULL != 0)
+    {
+        std::cerr << "Failed to open MP3 file" << std::endl;
+        {int i = 3; };
+    }
+    deathSound.loadMusic(death_filePath);
+    deathSound.setLooping(false);
+
     for (auto& collider : colliders)
     {
         //Collider AABB
@@ -311,6 +329,7 @@ void Level::updateCollisions(float deltaTime)
             if (collider.Spike)
             {
                 player.setState(Player::State::Dead);
+                deathSound.play();
                 if (Input::getKey("enter"))
                 {
                     pos = (playerStart);
