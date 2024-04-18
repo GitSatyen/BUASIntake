@@ -259,6 +259,6 @@ void Player::doDead(float deltaTime)
 	isDead = true;
 	velocity.y = 0;
 	velocity.x = 0;
-	
+	//aabb = AABB{ {0, 0, 0}, {0,0, 0} };
 	DeadAnim.update(deltaTime);
 }

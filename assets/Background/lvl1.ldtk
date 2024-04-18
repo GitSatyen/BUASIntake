@@ -709,7 +709,7 @@
 					"layerDefUid": 30,
 					"pxOffsetX": 0,
 					"pxOffsetY": 0,
-					"visible": true,
+					"visible": false,
 					"optionalRules": [],
 					"intGridCsv": [],
 					"autoLayerTiles": [],
@@ -1303,7 +1303,7 @@
 					"layerDefUid": 26,
 					"pxOffsetX": 0,
 					"pxOffsetY": 0,
-					"visible": true,
+					"visible": false,
 					"optionalRules": [],
 					"intGridCsv": [],
 					"autoLayerTiles": [],
@@ -2435,7 +2435,10 @@
 							"height": 16,
 							"defUid": 25,
 							"px": [224,224],
-							"fieldInstances": [{ "__identifier": "Spike", "__type": "Bool", "__value": false, "__tile": null, "defUid": 47, "realEditorValues": [] }],
+							"fieldInstances": [{ "__identifier": "Spike", "__type": "Bool", "__value": true, "__tile": null, "defUid": 47, "realEditorValues": [{
+								"id": "V_Bool",
+								"params": [ true ]
+							}] }],
 							"__worldX": 112,
 							"__worldY": -16
 						},

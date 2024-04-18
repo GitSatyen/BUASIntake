@@ -58,8 +58,6 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
                 .Spike = spike
             };
             colliders.push_back(collider);
-
-
         }
 
 
@@ -166,6 +164,7 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
             Sphere collider{ { p.x, p.y, 0 }, 4.5f };
 
             allPickups.emplace_back(coinSprite, collider);
+
         }
 
         //Player start position
@@ -181,15 +180,22 @@ void Level::update(float deltaTime)
 {
     updateCollisions(deltaTime);
     updatePickups(deltaTime);
+    player.update(deltaTime);
 }
 
 void Level::reset()
 {
+    player = Player{ playerStart };
+    isDead = false;
+    score = 0;
+    //allPickups.assign(allPickups.size());
+    //std::fill(allPickups.begin(), allPickups.end(), 46);
+    
 }
 
 void Level::draw(Graphics::Image& image)
 {
-    //!Mind that images are drawn over eachother on top to down order
+    //! Mind that images are drawn over eachother on top to down order
     bg_Map.draw(image);
     tileMap.draw(image);
     spikeMap.draw(image);
@@ -289,12 +295,14 @@ void Level::updateCollisions(float deltaTime)
     //Store the previous position
     glm::vec2 prevPos = player.getPosition();
 
-    //Update player
-    player.update(deltaTime);
+    
     if(player.getState() == Player::State::Dead)
     {
-        return ;
-
+        if (Input::getKey("enter"))
+        {
+            reset();
+        }
+        return;
     }
 
     //Check player collision
@@ -330,15 +338,11 @@ void Level::updateCollisions(float deltaTime)
             {
                 player.setState(Player::State::Dead);
                 deathSound.play();
-                if (Input::getKey("enter"))
-                {
-                    pos = (playerStart);
-                    player.setState(Player::State::Idle);
-                    isDead = false;
-                }
+                return;
                 
             }
         }
+        
 
         // Player is falling
         if (vel.y > 0.0f)
@@ -448,6 +452,8 @@ void Level::updatePickups(float deltaTime)
         }
         else ++pickups;
     }
+
+    //if(player.getState)
 
     if (score == 46)
     {
