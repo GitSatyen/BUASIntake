@@ -10,4 +10,6 @@ enum class Status
     End
 };
 
+static bool doReset;
+
 #endif

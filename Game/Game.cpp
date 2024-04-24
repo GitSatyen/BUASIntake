@@ -35,6 +35,17 @@ Game::Game(uint32_t screenWidth, uint32_t screenHeight)
         //return 0;
     }
     loadLevel(0, 0);
+   
+    //Reset level
+   /* if(doReset = true)
+    {
+        if (Input::getKey("enter")) 
+        {
+            loadLevel(0, 0);
+            doReset = false;
+        }
+    }*/
+
 }
 void Game::update()
 {
@@ -78,7 +89,7 @@ void Game::loadLevel(size_t levelId, size_t characterId)
     //Parse LDtk project and levels
     auto& world = project.getWorld();
     auto& levels = world.allLevels();
-
+ 
     LevelId = levelId % levels.size();
 
     level = Level{ project, world, levels[LevelId] };

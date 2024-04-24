@@ -2186,7 +2186,7 @@
 						},
 						{
 							"__identifier": "Pickup",
-							"__grid": [22,10],
+							"__grid": [23,10],
 							"__pivot": [0.5,0.5],
 							"__tags": ["Coin"],
 							"__tile": { "tilesetUid": 42, "x": 0, "y": 0, "w": 16, "h": 16 },
@@ -2195,9 +2195,9 @@
 							"width": 16,
 							"height": 16,
 							"defUid": 40,
-							"px": [360,168],
+							"px": [376,168],
 							"fieldInstances": [],
-							"__worldX": 248,
+							"__worldX": 264,
 							"__worldY": -72
 						},
 						{

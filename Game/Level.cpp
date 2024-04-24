@@ -1,6 +1,7 @@
 #include "LDtkLoader/Project.hpp"
 #include "Player.hpp"
 #include "Level.hpp"
+#include "States.hpp"
 
 #include <Graphics/BlendMode.hpp>
 #include <Graphics/Color.hpp>
@@ -151,29 +152,12 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
             }
         }
 
-        //Parse collectables 
-        const auto& pickups = entities.getEntitiesByName("Pickup");
-        for (auto& pickup : pickups)
-        {
-            auto& e = pickup.get();
-            auto& p = e.getPosition();
-            auto& s = e.getSize();
-            auto& gridP = e.getGridPosition();
-
-            auto& coinSprite = coinSprites["Coin"];
-            Sphere collider{ { p.x, p.y, 0 }, 4.5f };
-
-            allPickups.emplace_back(coinSprite, collider);
-
-        }
+        parsePickups();
 
         //Player start position
         const auto& startPos = entities.getEntitiesByName("Start")[0].get();
         playerStart = { startPos.getPosition().x, startPos.getPosition().y };
-        player = Player{ playerStart };
-
-
-       
+        player = Player{ playerStart };       
 }
 
 void Level::update(float deltaTime)
@@ -183,14 +167,35 @@ void Level::update(float deltaTime)
     player.update(deltaTime);
 }
 
+void Level::parsePickups()
+{
+     //Parse collectables 
+     const auto& entities = level->getLayer("Entities");
+     const auto& pickups = entities.getEntitiesByName("Pickup");
+     for (auto& pickup : pickups)
+     {
+         auto& e = pickup.get();
+         auto& p = e.getPosition();
+         auto& s = e.getSize();
+         auto& gridP = e.getGridPosition();
+
+         auto& coinSprite = coinSprites["Coin"];
+         Sphere collider{ { p.x, p.y, 0 }, 4.5f };
+
+         allPickups.emplace_back(coinSprite, collider);
+     }
+}
+
 void Level::reset()
 {
     player = Player{ playerStart };
     isDead = false;
     score = 0;
-    //allPickups.assign(allPickups.size());
-    //std::fill(allPickups.begin(), allPickups.end(), 46);
-    
+    allPickups.clear();
+    parsePickups();
+
+    // Reset boolean
+    doReset = true;
 }
 
 void Level::draw(Graphics::Image& image)
@@ -203,6 +208,14 @@ void Level::draw(Graphics::Image& image)
     for (auto& pickup : allPickups)
     {
         pickup.draw(image);
+
+        if(player.getState() == Player::State::Dead)
+        {
+            if (Input::getKey("enter")) 
+            {
+                pickup.draw(image);
+            }
+        }
     }
 
     if(isDead == true)
@@ -263,8 +276,6 @@ void Level::checkPickupCollision(const Math::Sphere& pickupCollider, const Math:
         return;
     }
 
-   
-
     //Check to see if the pickup is colliding with the left edge of the collider
     Line leftEdge{ { colliderAABB.min.x, colliderAABB.min.y, 0 }, { colliderAABB.min.x, colliderAABB.max.y, 0 } };
     if (pickupCollider.intersect(leftEdge))
@@ -294,13 +305,13 @@ void Level::updateCollisions(float deltaTime)
 {
     //Store the previous position
     glm::vec2 prevPos = player.getPosition();
-
     
     if(player.getState() == Player::State::Dead)
     {
         if (Input::getKey("enter"))
         {
             reset();
+            score = 0;
         }
         return;
     }
@@ -319,7 +330,7 @@ void Level::updateCollisions(float deltaTime)
 
     // Death sound effect
     std::string death_filePath = "assets\\sounds\\death.mp3";
-    if (death_filePath, NULL != 0)
+    if (death_filePath; NULL != 0)
     {
         std::cerr << "Failed to open MP3 file" << std::endl;
         {int i = 3; };
@@ -338,11 +349,10 @@ void Level::updateCollisions(float deltaTime)
             {
                 player.setState(Player::State::Dead);
                 deathSound.play();
-                return;
-                
+                std::cout << "Player died" << std::endl;
+                return;               
             }
-        }
-        
+        }      
 
         // Player is falling
         if (vel.y > 0.0f)
@@ -438,6 +448,16 @@ void Level::updatePickups(float deltaTime)
     //Get player AABB
     AABB playerAABB = player.getAABB();
 
+    // Collect sound effect
+    std::string sound_filePath = "assets\\sounds\\collect.mp3";
+    if (sound_filePath; NULL != 0)
+    {
+        std::cerr << "Failed to open MP3 file" << std::endl;
+        {int i = 3; };
+    }
+    collectSound.loadMusic(sound_filePath);
+    collectSound.setLooping(false);
+
     //Check if player collides with the pickup
     for (auto pickups = allPickups.begin(); pickups != allPickups.end();)
     {
@@ -445,17 +465,17 @@ void Level::updatePickups(float deltaTime)
         {
             //Removes object from screen
             pickups = allPickups.erase(pickups);
+            collectSound.play();
             //Ads point to the score on collision 
-            score++;
+            ++score;
             //Keep track of the score
             std::cout << "Score: " << score << std::endl;
+            return;
         }
         else ++pickups;
     }
 
-    //if(player.getState)
-
-    if (score == 46)
+    if (allPickups.empty())
     {
         Finished = true;
     }

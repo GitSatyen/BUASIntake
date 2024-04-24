@@ -40,6 +40,8 @@ public:
 
     void update(float deltaTime);
 
+    void parsePickups();
+
     //Reset level
     void reset();
 
@@ -47,6 +49,8 @@ public:
     {
         return player;
     }
+
+   
 
     void draw( Graphics::Image& image );
 
@@ -59,7 +63,7 @@ private:
     void updatePickups(float deltaTime);
 
     const ldtk::World* world = nullptr;
-    const ldtk::Level* level = nullptr;
+    const ldtk::Level* level;
     
     std::string levelName;
 
@@ -73,9 +77,8 @@ private:
     std::vector<Pickup> allPickups;
     std::vector<Effect> effects;
     // Sprite animation to play when a pickup is collected.
-    /*Graphics::SpriteAnim pickupCollected;
-    // Currently playing effects.
-    std::vector<Effect> effects;*/
+    //Graphics::SpriteAnim pickupCollected;
+
 
     // Level tile map
     TileMap tileMap; // Terrain layer
@@ -83,6 +86,7 @@ private:
     TileMap spikeMap; // Spikes layer   
 
     Audio::Sound deathSound;
+    Audio::Sound collectSound;
 
     Player    player;
 

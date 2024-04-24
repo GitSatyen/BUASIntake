@@ -110,7 +110,7 @@ int main()
 
 	bgMusic.loadMusic(filePath);
 	bgMusic.setLooping(true);
-	bgMusic.setVolume(0.2f);
+	bgMusic.setVolume(0.1f);
 	
 		
 	while(window)
