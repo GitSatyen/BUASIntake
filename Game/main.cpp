@@ -10,6 +10,7 @@
 #include <Graphics/TileMap.hpp>
 #include <Math/Transform2D.hpp>
 #include <Math/Camera2D.hpp>
+#include <Audio/Sound.hpp>
 
 #include <fmt/core.h>
 #include <glm/vec2.hpp>
@@ -39,6 +40,7 @@ ldtk::Project project;
 glm::mat3 transform;
 // Sound effects
 Audio::Sound bgMusic;
+Audio::Sound winSound;
 
 glm::vec2 Player_pos{ SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 };
 
@@ -102,17 +104,28 @@ int main()
 
 	// Background music
 	std::string filePath = "assets\\sounds\\music.mp3";
-	if (filePath, NULL != 0)
+	if (filePath; NULL != 0)
 	{
-		std::cerr << "Failed to open MP3 file" << std::endl;
+		std::cerr << "Failed to open sound file" << std::endl;
 		{int i = 3; };
 	}
 
 	bgMusic.loadMusic(filePath);
 	bgMusic.setLooping(true);
 	bgMusic.setVolume(0.1f);
+
 	
-		
+	// Win sound effect
+	std::string winFile = "assets\\sounds\\win.mp3";
+	if (winFile; NULL != 0)
+	{
+		std::cerr << "Failed to open sound file" << std::endl;
+		{int i = 3; };
+	}
+	winSound.loadMusic(winFile);
+	//winSound.setLooping(false);
+	winSound.setVolume(1.0f);
+
 	while(window)
 	{
 		Input::update();
@@ -128,12 +141,19 @@ int main()
 			gameActive = true;
 			window.present(game.getImage());
 			bgMusic.play();
+
+			
 			if (Finished == true || Input::getKey(KeyCode::G))
 			status = Status::End;
 			break;
 		case Status::End:
 			window.present(*endScreen);
-			bgMusic.stop();
+			//winSound.play();
+			
+			if(winSound.isEnd() == true)
+			{
+				winSound.stop();
+			}
 			if (Input::getKey(KeyCode::Enter))
 				window.destroy();
 			break;

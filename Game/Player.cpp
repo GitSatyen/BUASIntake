@@ -27,7 +27,7 @@ static std::map <Player::State, std::string> stateMap = {
 
 Player::Player(const glm::vec2 & pos)
 {
-	aabb = AABB{ {25, 5, 0}, {45, 40, 0} };
+	aabb = AABB{ {25, 5, 0}, {40, 35, 0} };
 
     auto idle_sprites = ResourceManager::loadSpriteSheet("assets/Treasure Hunters/Player/01-Idle/Idle.png", 64, 40, 0, 0, BlendMode::AlphaBlend);
 	IdleAnim = SpriteAnim{ idle_sprites, 6 };
@@ -50,7 +50,7 @@ Player::Player(const glm::vec2 & pos)
 	setState(State::Idle);
 
 	//Set anchor points
-	transform.setAnchor({ 35,40 });
+	transform.setAnchor({ 30,35 });
 	transform.setPosition(pos);
 }
 

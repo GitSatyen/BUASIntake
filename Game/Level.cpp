@@ -24,9 +24,9 @@ extern bool isDead;
 std::string check;
 //ldtk::Project project;
 
-static std::map <Level::State, std::string> statemap = {
-    {Level::State::OnGround, "OnGround: True"},
-     {Level::State::OffGround, "OffGround: False"}
+static std::map <Level::groundState, std::string> statemap = {
+    {Level::groundState::OnGround, "OnGround: True"},
+     {Level::groundState::OffGround, "OffGround: False"}
 };
 
 Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk::Level& level)
@@ -152,12 +152,29 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
             }
         }
 
-        parsePickups();
+        parseCollectables();
 
         //Player start position
         const auto& startPos = entities.getEntitiesByName("Start")[0].get();
         playerStart = { startPos.getPosition().x, startPos.getPosition().y };
-        player = Player{ playerStart };       
+        player = Player{ playerStart };    
+
+        //// Win sound effect
+       /* std::string winFile = "assets\\sounds\\win.mp3";
+        if (winFile; NULL != 0)
+        {
+            std::cerr << "Failed to open sound file" << std::endl;
+            {int i = 3; };
+        }
+        winSound.loadMusic(winFile);
+        winSound.setLooping(false);
+        winSound.setVolume(1.0f);
+
+        if(status == Status::End)
+        {
+            winSound.play();
+            return;
+        }*/
 }
 
 void Level::update(float deltaTime)
@@ -167,7 +184,7 @@ void Level::update(float deltaTime)
     player.update(deltaTime);
 }
 
-void Level::parsePickups()
+void Level::parseCollectables()
 {
      //Parse collectables 
      const auto& entities = level->getLayer("Entities");
@@ -192,7 +209,7 @@ void Level::reset()
     isDead = false;
     score = 0;
     allPickups.clear();
-    parsePickups();
+    parseCollectables();
 
     // Reset boolean
     doReset = true;
@@ -243,64 +260,6 @@ void Level::draw(Graphics::Image& image)
 #endif
 }
 
-
-void Level::checkPickupCollision(const Math::Sphere& pickupCollider, const Math::AABB& colliderAABB, glm::vec2& pos, glm::vec2& vel)
-{
-
-    if(colliderAABB.intersect(pickupCollider))
-    {
-
-    }
-
-    //Check to see if the pickup is colliding with the top edge of the collider
-    Line topEdge{ { colliderAABB.min.x, colliderAABB.min.y, 0 }, { colliderAABB.max.x, colliderAABB.min.y, 0 } };
-    if (pickupCollider.intersect(topEdge))
-    {
-        // Set the position of the pickup to the top edge of the collider
-        pos.y = colliderAABB.min.y - pickupCollider.radius;
-        // And negate the velocity
-        vel.y = -vel.y;
-
-        return;
-    }
-
-    //Check to see if the pickup is colliding with the bottom edge of the collider
-    Line bottomEdge{ { colliderAABB.min.x, colliderAABB.max.y, 0 }, { colliderAABB.max.x, colliderAABB.max.y, 0 } };
-    if (pickupCollider.intersect(bottomEdge))
-    {
-        //Set the position of the pickup to the bottom edge of the collider
-        pos.y = colliderAABB.max.y + pickupCollider.radius;
-        //And negate the velocity
-        vel.y = -vel.y;
-
-        return;
-    }
-
-    //Check to see if the pickup is colliding with the left edge of the collider
-    Line leftEdge{ { colliderAABB.min.x, colliderAABB.min.y, 0 }, { colliderAABB.min.x, colliderAABB.max.y, 0 } };
-    if (pickupCollider.intersect(leftEdge))
-    {
-        //Set the position of the pickup to the left edge of the collider
-        pos.x = colliderAABB.min.x - pickupCollider.radius;
-        // And negate the x velocity
-        vel.x = -vel.x;
-
-        return;
-    }
-
-    //Check to see if the pickup is colliding with the right edge of the collider
-    Line rightEdge{ { colliderAABB.max.x, colliderAABB.min.y, 0 }, { colliderAABB.max.x, colliderAABB.max.y, 0 } };
-    if (pickupCollider.intersect(rightEdge))
-    {
-        //Set the position of the pickup to the right edge of the collider
-        pos.x = colliderAABB.max.x + pickupCollider.radius;
-        //And negate the x velocity
-        vel.x = -vel.x;
-
-        return;
-    }
-}
-
 void Level::updateCollisions(float deltaTime)
 {
     //Store the previous position
@@ -332,11 +291,12 @@ void Level::updateCollisions(float deltaTime)
     std::string death_filePath = "assets\\sounds\\death.mp3";
     if (death_filePath; NULL != 0)
     {
-        std::cerr << "Failed to open MP3 file" << std::endl;
+        std::cerr << "Failed to open sound file" << std::endl;
         {int i = 3; };
     }
     deathSound.loadMusic(death_filePath);
     deathSound.setLooping(false);
+    deathSound.setVolume(0.5f);
 
     for (auto& collider : colliders)
     {
@@ -444,7 +404,6 @@ void Level::updateCollisions(float deltaTime)
 
 void Level::updatePickups(float deltaTime)
 { 
-    //Check player collision
     //Get player AABB
     AABB playerAABB = player.getAABB();
 
@@ -465,7 +424,7 @@ void Level::updatePickups(float deltaTime)
         {
             //Removes object from screen
             pickups = allPickups.erase(pickups);
-            collectSound.play();
+            collectSound.replay();
             //Ads point to the score on collision 
             ++score;
             //Keep track of the score

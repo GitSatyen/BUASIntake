@@ -2434,12 +2434,12 @@
 							"width": 32,
 							"height": 16,
 							"defUid": 25,
-							"px": [224,224],
+							"px": [232,224],
 							"fieldInstances": [{ "__identifier": "Spike", "__type": "Bool", "__value": true, "__tile": null, "defUid": 47, "realEditorValues": [{
 								"id": "V_Bool",
 								"params": [ true ]
 							}] }],
-							"__worldX": 112,
+							"__worldX": 120,
 							"__worldY": -16
 						},
 						{

@@ -3,6 +3,7 @@
 #include "Player.hpp"
 #include "Pickup.hpp"
 #include "Effect.hpp"
+#include "States.hpp"
 
 #include <Audio/Sound.hpp>
 
@@ -27,7 +28,7 @@ class Level
 {
 public:
 
-    enum class State
+    enum class groundState
     {
         None,
         OnGround,
@@ -40,7 +41,7 @@ public:
 
     void update(float deltaTime);
 
-    void parsePickups();
+    void parseCollectables();
 
     //Reset level
     void reset();
@@ -50,7 +51,10 @@ public:
         return player;
     }
 
-   
+    const Status& getStatus() const noexcept
+    {
+        return status;
+    }
 
     void draw( Graphics::Image& image );
 
@@ -79,7 +83,6 @@ private:
     // Sprite animation to play when a pickup is collected.
     //Graphics::SpriteAnim pickupCollected;
 
-
     // Level tile map
     TileMap tileMap; // Terrain layer
     TileMap bg_Map; // Background layer
@@ -87,6 +90,7 @@ private:
 
     Audio::Sound deathSound;
     Audio::Sound collectSound;
+    Audio::Sound winSound;
 
     Player    player;
 
@@ -96,5 +100,5 @@ private:
     uint64_t score = 0;
     std::string scoreCount = "Gold: ";
 
-    State state = State::None;
+    Status status = Status::Start;
 };

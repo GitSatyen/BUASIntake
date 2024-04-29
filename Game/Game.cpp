@@ -82,6 +82,12 @@ void Game::update()
 #if _DEBUG
     //image.drawText(Font::Default, statemap[state], 700, 50, Color::Cyan);
 #endif
+
+    // Allows player to reset the level
+    if (Input::getKey(KeyCode::Back))
+    {
+        level.reset();
+    }
 }
 
 void Game::loadLevel(size_t levelId, size_t characterId)
