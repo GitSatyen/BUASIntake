@@ -38,6 +38,7 @@ Sprite sprite;
 Camera2D camera;
 ldtk::Project project;
 glm::mat3 transform;
+
 // Sound effects
 Audio::Sound bgMusic;
 Audio::Sound winSound;
@@ -76,20 +77,17 @@ int main()
 		return b || enter || r;
 	});
 
-	Input::update();
-
+	//Input::update();
 	Game game{ SCREEN_WIDTH, SCREEN_HEIGHT };
+	Level level;
 
 	window.create(L"Gold Adventure", SCREEN_WIDTH, SCREEN_HEIGHT);
 	window.show();
-	//window.setFullscreen(true);
-	//PlayerTransform.setAnchor({32, 16});
+	window.setFullscreen(true);
 	//window.toggleVSync();
 
 	camera.setSize({ SCREEN_WIDTH, SCREEN_HEIGHT });
 
-	//InitGame();
-	//startScreen.loadFromFile("assets/Texture/Startscreen.png");
 	auto startScreen = ResourceManager::loadImage("assets/Texture/Startscreen.png");
 	
 	// error if the image fails to load
@@ -100,7 +98,6 @@ int main()
 	}
 
 	auto endScreen = ResourceManager::loadImage("assets/Texture/Endscreen.png");	
-
 
 	// Background music
 	std::string filePath = "assets\\sounds\\music.mp3";
@@ -114,8 +111,7 @@ int main()
 	bgMusic.setLooping(true);
 	bgMusic.setVolume(0.1f);
 
-	
-	// Win sound effect
+	//// Win sound effect
 	std::string winFile = "assets\\sounds\\win.mp3";
 	if (winFile; NULL != 0)
 	{
@@ -123,13 +119,12 @@ int main()
 		{int i = 3; };
 	}
 	winSound.loadMusic(winFile);
-	//winSound.setLooping(false);
+	winSound.setLooping(false);
 	winSound.setVolume(1.0f);
 
 	while(window)
 	{
 		Input::update();
-
 		switch(status)
 		{
 		case Status::Start:
@@ -140,20 +135,16 @@ int main()
 		case Status::Active:
 			gameActive = true;
 			window.present(game.getImage());
-			bgMusic.play();
+			bgMusic.play();	
 
-			
-			if (Finished == true || Input::getKey(KeyCode::G))
-			status = Status::End;
+			if (Finished == true) 
+			{
+				status = Status::End;				
+				winSound.play();
+			}
 			break;
 		case Status::End:
 			window.present(*endScreen);
-			//winSound.play();
-			
-			if(winSound.isEnd() == true)
-			{
-				winSound.stop();
-			}
 			if (Input::getKey(KeyCode::Enter))
 				window.destroy();
 			break;
@@ -168,6 +159,13 @@ int main()
 			InitGame();
 		}
 
+//Skip game to end screen
+#if _DEBUG
+		if (Input::getKey(KeyCode::G))
+		{
+			Finished = true;
+		}
+#endif
 		Event e;
 		while (window.popEvent(e))
 		{
@@ -203,6 +201,9 @@ int main()
 		}
 	}
 
-	std::cout << "Thanks for playing!" << std::endl;
+	// Make sure sound doesn't get called after program gets destroyed 
+	bgMusic.reset();
+	winSound.reset();
+	std::cout << "Thanks for playing!" << std::endl;	
 	return 0;
 };

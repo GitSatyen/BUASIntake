@@ -35,16 +35,12 @@ Game::Game(uint32_t screenWidth, uint32_t screenHeight)
         //return 0;
     }
     loadLevel(0, 0);
-   
+
     //Reset level
-   /* if(doReset = true)
+    if (Input::getKey(KeyCode::Back))
     {
-        if (Input::getKey("enter")) 
-        {
-            loadLevel(0, 0);
-            doReset = false;
-        }
-    }*/
+        level.reset();
+    }
 
 }
 void Game::update()
@@ -73,6 +69,7 @@ void Game::update()
     {
         level.update(elapsedTime);
     }
+
     //Clear level image
     image.clear(Color::Black);
     // Draw level
@@ -82,12 +79,7 @@ void Game::update()
 #if _DEBUG
     //image.drawText(Font::Default, statemap[state], 700, 50, Color::Cyan);
 #endif
-
-    // Allows player to reset the level
-    if (Input::getKey(KeyCode::Back))
-    {
-        level.reset();
-    }
+   
 }
 
 void Game::loadLevel(size_t levelId, size_t characterId)

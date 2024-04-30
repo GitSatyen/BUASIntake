@@ -79,7 +79,6 @@ void Player::update(float deltaTime)
 		break;
 	}
 
-
 	// Detects players direction its facing
 	if (velocity.x < 0.0f)
 	{

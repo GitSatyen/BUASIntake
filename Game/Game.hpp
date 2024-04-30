@@ -10,6 +10,7 @@
 #include <Graphics/Image.hpp>
 #include <Graphics/Timer.hpp>
 #include <Graphics/Sprite.hpp>
+#include <memory>
 
 #include <Math/Camera2D.hpp>
 #include <Math/Rect.hpp>
@@ -39,7 +40,7 @@ public:
     }
 
     void loadLevel(size_t levelId, size_t characterId);
-
+  
 protected:
     ldtk::Project project;
     Background background;
@@ -55,6 +56,6 @@ protected:
     size_t nextLevelId = 0u;
 
     //Current status of the game
-    Status state;
+    Status status = Status::Start;
 };
 

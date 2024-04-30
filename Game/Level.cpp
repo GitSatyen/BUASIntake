@@ -157,24 +157,7 @@ Level::Level(const ldtk::Project& project, const ldtk::World& world, const ldtk:
         //Player start position
         const auto& startPos = entities.getEntitiesByName("Start")[0].get();
         playerStart = { startPos.getPosition().x, startPos.getPosition().y };
-        player = Player{ playerStart };    
-
-        //// Win sound effect
-       /* std::string winFile = "assets\\sounds\\win.mp3";
-        if (winFile; NULL != 0)
-        {
-            std::cerr << "Failed to open sound file" << std::endl;
-            {int i = 3; };
-        }
-        winSound.loadMusic(winFile);
-        winSound.setLooping(false);
-        winSound.setVolume(1.0f);
-
-        if(status == Status::End)
-        {
-            winSound.play();
-            return;
-        }*/
+        player = Player{ playerStart };
 }
 
 void Level::update(float deltaTime)
@@ -217,6 +200,12 @@ void Level::reset()
 
 void Level::draw(Graphics::Image& image)
 {
+    if (Finished == true) 
+{
+        bg_Map.clear();
+        tileMap.clear();
+        spikeMap.clear();
+    }
     //! Mind that images are drawn over eachother on top to down order
     bg_Map.draw(image);
     tileMap.draw(image);
@@ -439,5 +428,12 @@ void Level::updatePickups(float deltaTime)
         Finished = true;
     }
    
+}
+
+void Level::clearLevel(Graphics::Image& image)
+{
+        bg_Map.clear();
+        tileMap.clear();
+        spikeMap.clear();
 }
 

@@ -6,7 +6,6 @@
 #include "States.hpp"
 
 #include <Audio/Sound.hpp>
-
 #include <Graphics/Image.hpp>
 #include <Graphics/TileMap.hpp>
 #include <Math/Camera2D.hpp>
@@ -57,6 +56,8 @@ public:
     }
 
     void draw( Graphics::Image& image );
+
+    void clearLevel(Graphics::Image& image);
 
 protected:
     
