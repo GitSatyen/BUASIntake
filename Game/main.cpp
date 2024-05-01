@@ -83,7 +83,7 @@ int main()
 
 	window.create(L"Gold Adventure", SCREEN_WIDTH, SCREEN_HEIGHT);
 	window.show();
-	window.setFullscreen(true);
+	//window.setFullscreen(true);
 	//window.toggleVSync();
 
 	camera.setSize({ SCREEN_WIDTH, SCREEN_HEIGHT });
